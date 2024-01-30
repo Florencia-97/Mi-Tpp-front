@@ -8,15 +8,26 @@ import ChangeOwnersIdeasEndpoint from "./endpoints/ChangeOwnersIdeasEndpoint";
 import GetIdeaEndpoint from "./endpoints/GetIdeaEndpoint";
 import AddCommentToIdeaEndpoint from "./endpoints/AddCommentToIdeaEndpoint";
 import IdeaResponse from "./responses/IdeaResponse";
+import LoginEndpoint from "./endpoints/LoginEndpoint";
 
 export default class UniApiClient extends ApiClient {
-    async getIdeas(searchText=undefined) {
+    async getIdeas(searchText = undefined) {
         let values = {
             searchText: searchText || '',
         };
 
         const endpoint = new IdeasEndpoint();
         return new IdeasListResponse({});
+        return this._callEndpoint(endpoint, values);
+    }
+
+
+    async loginUser(user) {
+        let values = {
+            email: user.email(),
+        };
+
+        const endpoint = new LoginEndpoint();
         return this._callEndpoint(endpoint, values);
     }
 
