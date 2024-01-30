@@ -22,7 +22,7 @@ export default function HomeScreen({app}) {
     }
 
     return (
-        <DashboardDrawer setActiveScreen={setActiveScreen} activeScreen={activeScreen}>
+        <DashboardDrawer setActiveScreen={setActiveScreen} activeScreen={activeScreen} app={app}>
             {screenShowing}
         </DashboardDrawer>
     )

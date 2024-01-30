@@ -1,27 +1,16 @@
 export default class AnonymousUser {
 
-    fullName() {
-        return "Usuario Sin Nombre";
-    }
 
-    id(){
+    email() {
         return null;
     }
 
-    email(){
+    name() {
         return null;
     }
 
-    firstName(){
-        return null;
-    }
-
-    lastName(){
-        return null;
-    }
-
-    realStateName(){
-        return null;
+    picture() {
+        return "";
     }
 
     initials() {

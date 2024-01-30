@@ -4,6 +4,7 @@ import React from "react";
 import NotfoundScreen from '../screens/NotFoundScreen';
 import GlobalStyles from '../components/GlobalStyles';
 import HomeScreen from '../screens/HomeScreen';
+import LoginScreen from "../screens/LoginScreen";
 
 
 export default function AppComponent({app}) {
@@ -25,6 +26,15 @@ export default function AppComponent({app}) {
     }
 
     const renderRoutes = () => {
+        if (!_isLoggedIn()) {
+            return (
+                <BrowserRouter>
+                    <Routes>
+                        <Route path="/*" element={<LoginScreen app={app}/>}/>
+                    </Routes>
+                </BrowserRouter>
+            );
+        }
         return (
             <BrowserRouter>
                 <Routes>

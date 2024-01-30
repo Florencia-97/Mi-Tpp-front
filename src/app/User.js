@@ -1,45 +1,21 @@
 export default class User {
 
-    constructor({id, email, firstName, lastName, realStateName}) {
-        this._id = id;
+    constructor({email, name, picture}) {
         this._email = email;
-        this._firstName = firstName;
-        this._lastName = lastName;
-        this._realStateName = realStateName;
+        this._name = name;
+        this._picture = picture;
     }
 
-    id(){
-        return this._id;
-    }
-
-    email(){
+    email() {
         return this._email;
     }
 
-    firstName(){
-        return this._firstName;
+    name() {
+        return this._name;
     }
 
-    lastName(){
-        return this._lastName;
-    }
-
-    realStateName(){
-        return this._realStateName;
-    }
-
-    fullName() {
-        const fullName = (this._firstName + " " + this._lastName).replace(/\s\s+/g, ' ');
-        return fullName || this.defaultFullName();
-    }
-
-    initials() {
-        return this.fullName().split(" ").map(name => {
-            if (name) {
-                return name[0].toUpperCase();
-            }
-            return name;
-        }).join("").slice(0, 2);
+    picture() {
+        return this._picture;
     }
 
     defaultFullName() {

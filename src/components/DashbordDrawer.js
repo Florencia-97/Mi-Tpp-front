@@ -1,16 +1,16 @@
-import { useTheme } from '@mui/material/styles';
+import {useTheme} from '@mui/material/styles';
 
 // Icons
 import LogoutIcon from '@mui/icons-material/Logout';
 import LightbulbOutlinedIcon from '@mui/icons-material/LightbulbOutlined';
 import FolderOpenIcon from '@mui/icons-material/FolderOpen';
-import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import PublicIcon from '@mui/icons-material/Public';
 import IconButton from './buttons/IconButton';
 import ValidateActionIconDialog from './dialogs/ValidateActionIconDialog';
+import {Avatar, Button} from "@mui/material";
 
 
-export default function DashboardDrawer({children, setActiveScreen, activeScreen}) {
+export default function DashboardDrawer({app, children, setActiveScreen, activeScreen}) {
   const theme = useTheme();
   const style = styles(theme);
 
@@ -35,20 +35,30 @@ export default function DashboardDrawer({children, setActiveScreen, activeScreen
           icon={<LogoutIcon sx={{ color:'#ffffff'}}/>}
           acceptBtnLabel="Cerrar"
           actionLabel="cerrar sesión"
-          onAccept={() => console.log('cosas')}
+          onAccept={() => app.logoutUser()}
       />
       </div>
     );
+  }
+
+  // render user picture as icon
+
+  const userIcon = () => {
+    return (
+        <Button onClick={() => setActiveScreen("profile")}>
+          <Avatar alt="Remy Sharp" src={app.currentUser().picture()} />
+        </Button>
+    )
   }
 
 
   return (
     <main style={style.mainContainer}>
       <div style={style.drawerContainer}>
+        {userIcon()}
         {iconDrawerButton(<LightbulbOutlinedIcon sx={{ color:'#ffffff'}}/>, "my_ideas")}
         {iconDrawerButton(<PublicIcon sx={{ color:'#ffffff'}}/>, "public_ideas")}
         {iconDrawerButton(<FolderOpenIcon sx={{ color:'#ffffff'}}/>, "project")}
-        {iconDrawerButton(<PersonOutlineIcon sx={{ color:'#ffffff'}}/>, "profile")}
         {logOutBtn()}
       </div>
       <section style={style.sectionContainer}>

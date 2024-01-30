@@ -19,8 +19,9 @@ export default class SessionStore {
         return this._storage.storeJson(this._key, {
             token: session.token(),
             user: {
-                id: session.user().id(),
                 email: session.user().email(),
+                name: session.user().name(),
+                picture: session.user().picture(),
             },
             origin: session.origin()
         });
@@ -39,6 +40,6 @@ export default class SessionStore {
     }
 
     _isAnonymousUser(paramsObject) {
-        return paramsObject == null || paramsObject.id == null;
+        return paramsObject == null || paramsObject.email == null;
     }
 }

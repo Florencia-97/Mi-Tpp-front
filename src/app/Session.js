@@ -2,17 +2,9 @@ import AnonymousUser from "./AnonymousUser";
 import User from "./User";
 
 export default class Session {
-    constructor(user = null, token = null, origin=null) {
+    constructor(user = null, token = null) {
         this._user = user || new AnonymousUser();
         this._token = token
-        this._origin =  origin
-    }
-
-    loginUser(userId, email, token, origin, extra) {
-        this._user = new User({id: userId, email, ...extra});
-        this._token = token;
-        this._origin = origin;
-        return this._user;
     }
 
     user(){
@@ -28,6 +20,7 @@ export default class Session {
     }
 
     isLoggedIn() {
+        console.log("asdf")
         console.log(this._token);
         return this._token != null;
     }
