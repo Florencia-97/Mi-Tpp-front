@@ -15,6 +15,6 @@ export default class GetIdeaEndpoint extends Endpoint {
     }
 
     needsAuthorization() {
-        return false; // for now
+        return true;
     }
 }

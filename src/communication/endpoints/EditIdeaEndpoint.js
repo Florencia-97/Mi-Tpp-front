@@ -15,6 +15,6 @@ export default class EditIdeaEndpoint extends Endpoint {
     }
 
     needsAuthorization() {
-        return false; // for now
+        return true;
     }
 }

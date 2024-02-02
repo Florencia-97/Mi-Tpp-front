@@ -16,6 +16,6 @@ export default class AddCommentToIdeaEndpoint extends Endpoint {
     }
 
     needsAuthorization() {
-        return false; // for now
+        return true;
     }
 }

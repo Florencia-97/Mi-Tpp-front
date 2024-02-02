@@ -15,6 +15,6 @@ export default class PublishIdeaEndpoint extends Endpoint {
     }
 
     needsAuthorization() {
-        return false; // for now
+        return true;
     }
 }

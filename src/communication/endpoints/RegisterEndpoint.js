@@ -1,13 +1,13 @@
 import {Endpoint} from "@eryxcoop/appyx-comm";
 import IdeasListResponse from "../responses/IdeasListResponse";
 
-export default class DeleteIdeaEndpoint extends Endpoint {
+export default class RegisterEndpoint extends Endpoint {
     url() {
-        return 'ideas/'
+        return 'register'
     }
 
     method() {
-        this.constructor.getMethod()
+        this.constructor.postMethod()
     }
 
     ownResponses() {
@@ -15,6 +15,6 @@ export default class DeleteIdeaEndpoint extends Endpoint {
     }
 
     needsAuthorization() {
-        return true;
+        return false;
     }
 }

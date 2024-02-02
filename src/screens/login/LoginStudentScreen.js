@@ -2,20 +2,16 @@ import React from "react";
 import {useTheme} from "@emotion/react";
 import {Button, Typography} from "@mui/material";
 import {useGoogleLogin} from "@react-oauth/google";
-import axios from "axios";
 import {useNavigate} from "react-router-dom";
-import User from "../app/User";
 
 
-export default function LoginScreen({app}) {
+export default function LoginStudentScreen({app}) {
     const theme = useTheme();
     const navigation = useNavigate();
 
     const login = useGoogleLogin({
         onSuccess: async (codeResponse) => {
-            const appUser = await getUserProfile(codeResponse.access_token);
-            console.log(appUser);
-            //await app.apiClient().loginUser(appUser);
+            const appUser = await app.apiClient().loginUser(codeResponse.access_token);
             await app.loginUser(appUser, codeResponse.access_token);
             navigation('/home');
         },
@@ -24,32 +20,12 @@ export default function LoginScreen({app}) {
 
     const register = useGoogleLogin({
         onSuccess: async (codeResponse) => {
-            const appUser = await getUserProfile(codeResponse.access_token);
-            //await app.apiClient().registerUser(appUser);
+            const appUser = await app.apiClient().registerUser(codeResponse.access_token);
             await app.loginUser(appUser, codeResponse.access_token);
             navigation('/home');
         },
-        onError: (error) => console.log('Login Failed:', error)
+        onError: (error) => console.log('Register Failed:', error)
     });
-
-    const getUserProfile = async (accessToken) => {
-        const response = await axios
-            .get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${accessToken}`, {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                    Accept: 'application/json'
-                }
-            });
-        if (response.status !== 200) {
-            throw new Error(`Error retrieving user profile: ${response.status}`);
-        }
-        const user = new User({
-            email: response.data.email,
-            name: response.data.name,
-            picture: response.data.picture,
-        });
-        return user;
-    }
 
     const style = styles(theme);
 
@@ -61,12 +37,16 @@ export default function LoginScreen({app}) {
                 </div>
                 <div style={style.rightContainer}>
                     <Typography variant="h4"> Mi TPP </Typography>
-                    <Button variant={'outlined'} onClick={() => login()}>
-                        Sign in with Google 🚀
-                    </Button>
-                    <Button onClick={() => register()}>
-                        registrate
-                    </Button>
+                    <div style={{display:'flex', gap:'10px', flexDirection: 'column'}}>
+                        <Button style={{color: 'white', backgroundColor: theme.palette.primary.main, width: '100%'}}
+                                variant={'outlined'} onClick={() => login()}>
+                            Ingresá con Google
+                        </Button>
+                        <Button style={{color: theme.palette.primary.main, width: '100%'}} variant={'outlined'}
+                                onClick={() => register()}>
+                            registrate
+                        </Button>
+                    </div>
                 </div>
             </section>
         </main>
@@ -83,7 +63,8 @@ const styles = (theme) => {
         },
         leftContainer: {
             backgroundColor: theme.palette.primary.main,
-            flex: 1,
+            background: "linear-gradient(90deg, rgba(84,66,142,1) 21%, rgba(221,67,67,1) 80%, rgba(219,182,130,1) 100%)",
+            flex: 2,
         },
         rightContainer: {
             backgroundColor: theme.palette.background.default,

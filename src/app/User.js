@@ -17,8 +17,4 @@ export default class User {
     picture() {
         return this._picture;
     }
-
-    defaultFullName() {
-        return "Usuario Sin Nombre";
-    }
 }

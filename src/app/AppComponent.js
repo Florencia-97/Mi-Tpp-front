@@ -4,7 +4,8 @@ import React from "react";
 import NotfoundScreen from '../screens/NotFoundScreen';
 import GlobalStyles from '../components/GlobalStyles';
 import HomeScreen from '../screens/HomeScreen';
-import LoginScreen from "../screens/LoginScreen";
+import LoginStudentScreen from "../screens/login/LoginStudentScreen";
+import LoginProfessorScreen from "../screens/login/LoginProfessorScreen";
 
 
 export default function AppComponent({app}) {
@@ -30,7 +31,8 @@ export default function AppComponent({app}) {
             return (
                 <BrowserRouter>
                     <Routes>
-                        <Route path="/*" element={<LoginScreen app={app}/>}/>
+                        <Route path="/login-curricular" element={<LoginProfessorScreen app={app}/>}/>
+                        <Route path="/*" element={<LoginStudentScreen app={app}/>}/>
                     </Routes>
                 </BrowserRouter>
             );

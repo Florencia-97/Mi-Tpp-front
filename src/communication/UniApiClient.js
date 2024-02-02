@@ -9,6 +9,8 @@ import GetIdeaEndpoint from "./endpoints/GetIdeaEndpoint";
 import AddCommentToIdeaEndpoint from "./endpoints/AddCommentToIdeaEndpoint";
 import IdeaResponse from "./responses/IdeaResponse";
 import LoginEndpoint from "./endpoints/LoginEndpoint";
+import User from "../app/User";
+import RegisterEndpoint from "./endpoints/RegisterEndpoint";
 
 export default class UniApiClient extends ApiClient {
     async getIdeas(searchText = undefined) {
@@ -22,12 +24,33 @@ export default class UniApiClient extends ApiClient {
     }
 
 
-    async loginUser(user) {
+    async loginUser(accessToken) {
         let values = {
-            email: user.email(),
+            access_token: accessToken
         };
 
+        return new User({
+            email: 'flor@fmail.com',
+            name: 'Flor',
+            picture: ''
+        })
+
         const endpoint = new LoginEndpoint();
+        return this._callEndpoint(endpoint, values);
+    }
+
+    async registerUser(accessToken) {
+        let values = {
+            access_token: accessToken
+        };
+
+        return new User({
+            email: 'flor@fmail.com',
+            name: 'Flor',
+            picture: ''
+        })
+
+        const endpoint = new RegisterEndpoint();
         return this._callEndpoint(endpoint, values);
     }
 
