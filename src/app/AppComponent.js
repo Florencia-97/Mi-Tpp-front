@@ -6,9 +6,10 @@ import GlobalStyles from '../components/GlobalStyles';
 import HomeScreen from '../screens/HomeScreen';
 import LoginStudentScreen from "../screens/login/LoginStudentScreen";
 import LoginProfessorScreen from "../screens/login/LoginProfessorScreen";
+import {observer} from "mobx-react";
 
 
-export default function AppComponent({app}) {
+function AppComponent({app}) {
 
     const theme = createTheme({
         palette: {
@@ -23,7 +24,7 @@ export default function AppComponent({app}) {
     });
 
     const _isLoggedIn = () => {
-        return app.session().isLoggedIn();
+        return app.session.isLoggedIn();
     }
 
     const renderRoutes = () => {
@@ -55,4 +56,6 @@ export default function AppComponent({app}) {
         </ThemeProvider>
     );
 }
+
+export default observer(AppComponent);
 

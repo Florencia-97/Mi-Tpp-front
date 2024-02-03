@@ -4,6 +4,7 @@ import LocalStorage from "./LocalStorage";
 import AppAuthorizationManager from "./AppAuthorizationManager";
 import Session from "./Session";
 import UniApiClient from "../communication/UniApiClient";
+import {action, computed, makeObservable, observable} from "mobx";
 
 export class App {
 
@@ -11,9 +12,16 @@ export class App {
         this._sessionStore = new SessionStore(new LocalStorage())
         this._session = this._sessionStore.load();
         this._client = null;
+
+        makeObservable(this, {
+            _session: observable,
+            session: computed,
+            loginUser: action,
+            logoutUser: action,
+        })
     }
 
-    session() {
+    get session() {
         return this._session;
     }
 

@@ -20,7 +20,6 @@ export default class Session {
     }
 
     isLoggedIn() {
-        console.log("asdf")
         console.log(this._token);
         return this._token != null;
     }

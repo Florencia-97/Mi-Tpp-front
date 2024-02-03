@@ -11,6 +11,7 @@ export default function LoginStudentScreen({app}) {
 
     const login = useGoogleLogin({
         onSuccess: async (codeResponse) => {
+            console.log(codeResponse);
             const appUser = await app.apiClient().loginUser(codeResponse.access_token);
             appUser.setRole('STUDENT');
             await app.loginUser(appUser, codeResponse.access_token);
