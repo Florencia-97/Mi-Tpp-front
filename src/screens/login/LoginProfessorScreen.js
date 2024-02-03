@@ -12,6 +12,7 @@ export default function LoginProfessorScreen({app}) {
     const login = useGoogleLogin({
         onSuccess: async (codeResponse) => {
             const appUser = await app.apiClient().loginUser(codeResponse.access_token);
+            appUser.setRole('TEACHER');
             await app.loginUser(appUser, codeResponse.access_token);
             navigation('/home');
         },
@@ -38,7 +39,7 @@ export default function LoginProfessorScreen({app}) {
                 <div style={style.rightContainer}>
                     <Typography variant="h4"> Mi TPP </Typography>
                     <Typography variant="h6"> Profesores </Typography>
-                    <div style={{display:'flex', gap:'10px', flexDirection: 'column'}}>
+                    <div style={{display: 'flex', gap: '10px', flexDirection: 'column'}}>
                         <Button style={{color: 'white', backgroundColor: theme.palette.primary.main, width: '100%'}}
                                 variant={'outlined'} onClick={() => login()}>
                             Ingresá con Google
