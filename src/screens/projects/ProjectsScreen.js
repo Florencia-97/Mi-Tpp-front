@@ -11,6 +11,7 @@ import HardwareIcon from '@mui/icons-material/Hardware';
 import PendingActionsIcon from '@mui/icons-material/PendingActions';
 import ArticleIcon from '@mui/icons-material/Article';
 import PendingOfApprovalView from "./PendingOfApprovalView";
+import FinishedView from "./FinishedView";
 
 const currentStepFixed = 3;
 
@@ -85,7 +86,7 @@ export default function ProjectsScreen() {
                             :
                             currentStep === 3 ?
                                 <PendingOfApprovalView/>
-                                : null
+                                : <FinishedView/>
                 }
             </>
         )

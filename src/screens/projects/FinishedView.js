@@ -1,23 +1,22 @@
 import {TextField, Typography} from "@mui/material";
 import {useTheme} from "@emotion/react";
 
-export default function PendingOfApprovalView() {
+export default function FinishedView() {
     const theme = useTheme();
     const style = styles(theme);
 
     return (
         <>
             <div style={style.contentContainer}>
-                <Typography variant="h6">
-                    El proyecto está pendiente de revisión!
+                <Typography variant="h5">
+                    Felicitaciones por terminar tu proyecto!
                 </Typography>
                 <Typography variant="body1">
-                    Completá los siguientes campos para que podamos revisar tu proyecto.
+                    Te pedimos que completes un poco más de información para poder mostrar tu proyecto en la galería.
                 </Typography>
                 <div style={{display: 'flex', flexDirection: 'column', gap: '15px'}}>
-                    <TextField label="Link a slides"/>
-                    <TextField label="Link Informe"/>
-                    <TextField label="Link código fuente"/>
+                    <TextField multiline={true} rows={4} label="Descripción del proyecto"/>
+                    <TextField label="Link a Trabajo futuro"/>
                 </div>
             </div>
         </>
