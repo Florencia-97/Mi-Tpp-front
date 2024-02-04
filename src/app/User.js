@@ -19,6 +19,10 @@ export default class User {
         return this._picture;
     }
 
+    canOperate() {
+        return true;
+    }
+
     setRole(role) {
         this._role = role;
     }

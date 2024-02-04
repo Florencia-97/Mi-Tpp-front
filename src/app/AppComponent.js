@@ -7,6 +7,7 @@ import HomeScreen from '../screens/HomeScreen';
 import LoginStudentScreen from "../screens/login/LoginStudentScreen";
 import LoginProfessorScreen from "../screens/login/LoginProfessorScreen";
 import {observer} from "mobx-react";
+import TeacherWaitingForApprovalScreen from "../screens/TeacherWaitingForApprovalScreen";
 
 
 function AppComponent({app}) {
@@ -27,6 +28,10 @@ function AppComponent({app}) {
         return app.session.isLoggedIn();
     }
 
+    const _canOperate = () => {
+        return app.currentUser().canOperate();
+    }
+
     const renderRoutes = () => {
         if (!_isLoggedIn()) {
             return (
@@ -34,6 +39,15 @@ function AppComponent({app}) {
                     <Routes>
                         <Route path="/login-curricular" element={<LoginProfessorScreen app={app}/>}/>
                         <Route path="/*" element={<LoginStudentScreen app={app}/>}/>
+                    </Routes>
+                </BrowserRouter>
+            );
+        }
+        if (!_canOperate()) {
+            return (
+                <BrowserRouter>
+                    <Routes>
+                        <Route path="/*" element={<TeacherWaitingForApprovalScreen app={app}/>}/>
                     </Routes>
                 </BrowserRouter>
             );
