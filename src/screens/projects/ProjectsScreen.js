@@ -13,7 +13,7 @@ import ArticleIcon from '@mui/icons-material/Article';
 import PendingOfApprovalView from "./PendingOfApprovalView";
 import FinishedView from "./FinishedView";
 
-const currentStepFixed = 3;
+const currentStepFixed = 2;
 
 function StepsProjectState() {
     const theme = useTheme();

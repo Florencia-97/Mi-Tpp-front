@@ -20,6 +20,9 @@ function AppComponent({app}) {
             background: {
                 default: '#f5f8fa',
                 white: '#ffffff'
+            },
+            text:{
+              black: "#353535"
             }
         },
     });
