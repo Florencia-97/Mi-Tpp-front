@@ -13,7 +13,7 @@ import ArticleIcon from '@mui/icons-material/Article';
 import PendingOfApprovalView from "./PendingOfApprovalView";
 import FinishedView from "./FinishedView";
 
-const currentStepFixed = 3;
+const currentStepFixed = 2;
 
 function StepsProjectState() {
     const theme = useTheme();
@@ -84,10 +84,10 @@ export default function ProjectsScreen({app}) {
                     <PendingOfProposalView/>
                     :
                     currentStep === 1 ?
-                        <PendingOfRevisionView/>
+                        <PendingOfRevisionView app={app} isStudent={isStudent}/>
                         :
                         currentStep === 2 ?
-                            <BinnacleView/>
+                            <BinnacleView app={app}/>
                             :
                             currentStep === 3 ?
                                 <PendingOfApprovalView isStudent={isStudent}/>

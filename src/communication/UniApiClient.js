@@ -54,6 +54,10 @@ export default class UniApiClient extends ApiClient {
         return this._callEndpoint(endpoint, values);
     }
 
+    async addBinnacleEntry(newBinnacle) {
+        return;
+    }
+
     async editIdea(idea) {
         let values = {
             id: idea.id,

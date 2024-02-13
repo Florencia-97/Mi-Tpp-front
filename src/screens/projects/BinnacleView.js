@@ -19,9 +19,11 @@ const binnacleEntries = [
     {text: "Prueba 3", date: "14/2/2024"},
 ]
 
-export default function BinnacleView() {
+export default function BinnacleView({app}) {
     const theme = useTheme();
     const [binnacleEntriesSelected, setBinnacleEntriesSelected] = useState(binnacleEntries);
+    const [newBinnacleEntry, setNewBinnacleEntry] = useState('');
+    const [dateSelected, setDateSelected] = useState('');
     const style = styles(theme);
 
     const deleteIdeaModal = () => {
@@ -38,6 +40,14 @@ export default function BinnacleView() {
                 </FormGroup>
             </BaseIconButtonDialog>
         );
+    }
+
+    const addNewBinnacle = () => {
+        const newBinnacleEntryCreated = {
+            text: newBinnacleEntry,
+            date: dateSelected // to string?
+        }
+        app.apiClient().addBinnacleEntry(newBinnacleEntryCreated);
     }
 
     const binnacle = () => {
@@ -78,8 +88,19 @@ export default function BinnacleView() {
                     </div>
                     <div style={style.calendarContainer}>
                         <Calendar dateSelectedChanged={dateSelectedChanged}/>
-                        <TextField fullWidth label={"Nueva entrada"} multiline rows={3}
-                                   value={"Un mensaje nuevo e interesante"}/>
+                        <div style={{display: 'flex', gap: '5px'}}>
+                            <TextField fullWidth label={"Nueva entrada"} multiline rows={3}
+                                       onChange={(event) => {
+                                           setNewBinnacleEntry(event.target.value)
+                                       }}
+                                       value={newBinnacleEntry}/>
+                            <FillButton label={"+"} styles={{width: 'fit-content'}} onClick={
+                                async () => {
+                                    await addNewBinnacle();
+                                    setNewBinnacleEntry('');
+                                }
+                            }/>
+                        </div>
                     </div>
                 </div>
             </div>

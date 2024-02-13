@@ -1,20 +1,36 @@
-import {Button, TextField, Typography} from "@mui/material";
+import {Button, Typography} from "@mui/material";
 import {useTheme} from "@emotion/react";
 
-export default function PendingOfRevisionView() {
+export default function PendingOfRevisionView({app, isStudent}) {
     const theme = useTheme();
     const style = styles(theme);
 
-    return (
-        <>
+    const studentView = () => {
+        return (
             <div style={style.contentContainer}>
                 <Typography variant="h6">
-                    El proyecto está en revisión!
+                    Tu proyecto está en revisión!
                 </Typography>
                 <Typography variant="body1">
-                    Cuando el proyecto sea apropiado, se te notificará por mail y podrás verlo en la sección de bitácora.
+                    Cuando el proyecto sea aprobado, se te notificará por mail y podrás verlo en la sección de desarrollo.
                 </Typography>
             </div>
+        )
+    }
+
+    const teacherView = () => {
+        return (
+            <div style={style.teacherContentContainer}>
+                <Button variant="contained" color="primary" onClick={() => {}}>
+                    Aprobar proyecto
+                </Button>
+            </div>
+        )
+    }
+
+    return (
+        <>
+            {isStudent ? studentView() : teacherView()}
         </>
     );
 }
@@ -54,6 +70,16 @@ const styles = (theme) => {
             padding: '1rem',
             borderRadius: '5px',
             width: 'fit-content'
+        },
+        teacherContentContainer: {
+            backgroundColor: theme.palette.background.white,
+            width: '100%',
+            padding: '2rem',
+            borderRadius: '5px',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '15px',
+            height: '100%'
         }
     }
 }
