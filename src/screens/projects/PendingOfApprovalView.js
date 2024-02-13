@@ -1,12 +1,15 @@
 import {TextField, Typography} from "@mui/material";
 import {useTheme} from "@emotion/react";
+import {useState} from "react";
 
-export default function PendingOfApprovalView() {
+export default function PendingOfApprovalView({isStudent}) {
     const theme = useTheme();
     const style = styles(theme);
 
-    return (
-        <>
+    const [linkToDrive, setLinkToDrive] = useState('https://google.com');
+
+    const studentView = () => {
+        return (
             <div style={style.contentContainer}>
                 <Typography variant="h6">
                     El proyecto está pendiente de revisión!
@@ -15,11 +18,33 @@ export default function PendingOfApprovalView() {
                     Completá los siguientes campos para que podamos revisar tu proyecto.
                 </Typography>
                 <div style={{display: 'flex', flexDirection: 'column', gap: '15px'}}>
-                    <TextField label="Link a slides"/>
-                    <TextField label="Link Informe"/>
-                    <TextField label="Link código fuente"/>
+                    <TextField label="Link a carpeta en drive" onChange={(link) => {
+                        setLinkToDrive(link.target.value);
+                    }} value={linkToDrive}/>
                 </div>
             </div>
+        )
+    }
+
+    const teacherView = () => {
+        return (
+            <div style={style.contentContainer}>
+                <Typography variant="h6">
+                    El proyecto está pendiente de revisión!
+                </Typography>
+                <Typography variant="body1">
+                    Drive al proyecto completado por el equipo.
+                </Typography>
+                <Typography>
+                    Link: <a rel='noopener noreferrer' href={linkToDrive} target="_blank">{linkToDrive}</a>
+                </Typography>
+            </div>
+        )
+    }
+
+    return (
+        <>
+            {isStudent ? studentView() : teacherView()}
         </>
     );
 }

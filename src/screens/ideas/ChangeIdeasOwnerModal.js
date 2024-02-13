@@ -37,7 +37,6 @@ export default function ChangeIdeasOwnerModal({onChangeInOwner, app}) {
                     value={selectedOwner}
                     onChange={(event) => {
                         setSelectedOwner(event.target.value);
-                        console.log(event.target.value);
                     }}
                 >
                     <MenuItem value={0}>{"Delfi Brea"}</MenuItem>

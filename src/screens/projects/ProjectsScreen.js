@@ -13,7 +13,7 @@ import ArticleIcon from '@mui/icons-material/Article';
 import PendingOfApprovalView from "./PendingOfApprovalView";
 import FinishedView from "./FinishedView";
 
-const currentStepFixed = 2;
+const currentStepFixed = 3;
 
 function StepsProjectState() {
     const theme = useTheme();
@@ -62,9 +62,12 @@ function StepsProjectState() {
 }
 
 
-export default function ProjectsScreen() {
+export default function ProjectsScreen({app}) {
     const theme = useTheme();
     const style = styles(theme);
+
+    const isStudent = app.currentUser().isStudent();
+
 
     const hasStartedProject = true;
     const currentStep = currentStepFixed;
@@ -72,7 +75,9 @@ export default function ProjectsScreen() {
         return (
             <>
                 <div style={style.ideasBarContainer}>
-                    <Typography variant="h5">Tu proyecto</Typography>
+                    <Typography variant="h5">
+                        Tu proyecto
+                    </Typography>
                 </div>
                 <StepsProjectState/>
                 {currentStep === 0 ?
@@ -85,7 +90,7 @@ export default function ProjectsScreen() {
                             <BinnacleView/>
                             :
                             currentStep === 3 ?
-                                <PendingOfApprovalView/>
+                                <PendingOfApprovalView isStudent={isStudent}/>
                                 : <FinishedView/>
                 }
             </>

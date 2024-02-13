@@ -1,4 +1,4 @@
-import {FormGroup, Typography} from "@mui/material";
+import {FormGroup, TextField, Typography} from "@mui/material";
 import {useTheme} from "@emotion/react";
 
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
@@ -12,7 +12,10 @@ const binnacleEntries = [
     {text: "Se creó el proyecto", date: "1/2/2024"},
     {text: "Juntada", date: "12/2/2024"},
     {text: "Prueba 1", date: "13/2/2024"},
-    {text: "Prueba 2", date: "12/2/2024"},
+    {
+        text: "Lorem ipsum es el texto que se usa habitualmente en diseño gráfico en demostraciones de tipografías o de borradores de diseño para probar el diseño visual",
+        date: "12/2/2024"
+    },
     {text: "Prueba 3", date: "14/2/2024"},
 ]
 
@@ -75,6 +78,8 @@ export default function BinnacleView() {
                     </div>
                     <div style={style.calendarContainer}>
                         <Calendar dateSelectedChanged={dateSelectedChanged}/>
+                        <TextField fullWidth label={"Nueva entrada"} multiline rows={3}
+                                   value={"Un mensaje nuevo e interesante"}/>
                     </div>
                 </div>
             </div>
@@ -133,6 +138,9 @@ const styles = (theme) => {
         },
         calendarContainer: {
             marginLeft: '3rem',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '1.5rem'
         }
     }
 }
