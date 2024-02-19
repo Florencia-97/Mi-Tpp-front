@@ -3,14 +3,14 @@ import {useTheme} from "@emotion/react";
 import ValidateActionTextDialog from "../../components/dialogs/ValidateActionTextDialog";
 import {deepOrange} from "@mui/material/colors";
 
-export default function PendingOfProposalView() {
+export default function PendingOfProposalView({presentProposal}) {
     const theme = useTheme();
     const style = styles(theme);
 
     const presentBtn = () => {
         return (
             <ValidateActionTextDialog buttonLabel="Lista para presentar" actionLabel={"presentar"}
-                                      acceptBtnLabel={"presentar"} onAccept={() => console.log('asdf')}/>
+                                      acceptBtnLabel={"presentar"} onAccept={() => presentProposal()}/>
         );
     }
 
@@ -54,6 +54,8 @@ export default function PendingOfProposalView() {
                     </Typography>
                     {presentBtn()}
                 </div>
+                <TextField id="drive-link" label="Titulo" variant="outlined"/>
+                <TextField id="description" label="Breve descripción" multiline rows={3} variant="outlined"/>
                 <TextField id="drive-link" label="Link Drive" variant="outlined"/>
                 <div style={{display: "flex", justifyContent: "space-between"}}>
                     <div style={{flex:1}}>

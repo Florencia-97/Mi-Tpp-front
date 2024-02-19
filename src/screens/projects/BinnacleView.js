@@ -7,6 +7,7 @@ import BaseIconButtonDialog from "../../components/dialogs/BaseIconButtonDialog"
 import FillButton from "../../components/buttons/FillButton";
 import Calendar from "../../components/Calendar";
 import {useState} from "react";
+import ValidateActionTextDialog from "../../components/dialogs/ValidateActionTextDialog";
 
 const binnacleEntries = [
     {text: "Se creó el proyecto", date: "1/2/2024"},
@@ -19,12 +20,19 @@ const binnacleEntries = [
     {text: "Prueba 3", date: "14/2/2024"},
 ]
 
-export default function BinnacleView({app}) {
+export default function BinnacleView({app, finishProject}) {
     const theme = useTheme();
     const [binnacleEntriesSelected, setBinnacleEntriesSelected] = useState(binnacleEntries);
     const [newBinnacleEntry, setNewBinnacleEntry] = useState('');
     const [dateSelected, setDateSelected] = useState('');
     const style = styles(theme);
+
+    const finishBtn = () => {
+        return (
+            <ValidateActionTextDialog buttonLabel="Finalizar" actionLabel={"finalizar de desarrollar este proyecto"}
+                                      acceptBtnLabel={"finalizar"} onAccept={() => finishProject()}/>
+        );
+    }
 
     const deleteIdeaModal = () => {
         return (
@@ -34,8 +42,7 @@ export default function BinnacleView({app}) {
                 <FormGroup style={style.newIdeaFormContainer}>
                     Estas seguro que deseas eliminar esta bitacora?
                     <div style={style.buttonsContainer}>
-                        <FillButton styles={{width: 'fit-content'}} label="Eliminar" onClick={() => {
-                        }}/>
+                        <FillButton styles={{width: 'fit-content'}} label="Eliminar" onClick={() => {}}/>
                     </div>
                 </FormGroup>
             </BaseIconButtonDialog>
@@ -79,9 +86,12 @@ export default function BinnacleView({app}) {
     return (
         <>
             <div style={style.mainContainer}>
-                <Typography variant="h5">
-                    Bitácora
-                </Typography>
+                <div style={style.topBarContainer}>
+                    <Typography variant="h5">
+                        Bitácora
+                    </Typography>
+                    {finishBtn()}
+                </div>
                 <div style={style.contentContainer}>
                     <div style={style.binnacleContainer}>
                         {binnacle()}
@@ -119,6 +129,11 @@ const styles = (theme) => {
             flexDirection: 'column',
             gap: '2rem',
             height: '100%'
+        },
+        topBarContainer: {
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-between',
         },
         contentContainer: {
             display: 'flex',

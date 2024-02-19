@@ -1,7 +1,8 @@
 import {Button, Typography} from "@mui/material";
 import {useTheme} from "@emotion/react";
+import ValidateActionTextDialog from "../../components/dialogs/ValidateActionTextDialog";
 
-export default function PendingOfRevisionView({app, isStudent}) {
+export default function PendingOfRevisionView({app, isStudent, approveProject}) {
     const theme = useTheme();
     const style = styles(theme);
 
@@ -12,18 +13,24 @@ export default function PendingOfRevisionView({app, isStudent}) {
                     Tu proyecto está en revisión!
                 </Typography>
                 <Typography variant="body1">
-                    Cuando el proyecto sea aprobado, se te notificará por mail y podrás verlo en la sección de desarrollo.
+                    Cuando el proyecto sea aprobado, se te notificará por mail y podrás verlo en la sección de
+                    desarrollo.
                 </Typography>
             </div>
         )
     }
 
+    const approveBtn = () => {
+        return (
+            <ValidateActionTextDialog buttonLabel="Aprobar" actionLabel={"aprobar"}
+                                      acceptBtnLabel={"aprobar"} onAccept={() => approveProject()}/>
+        );
+    }
+
     const teacherView = () => {
         return (
             <div style={style.teacherContentContainer}>
-                <Button variant="contained" color="primary" onClick={() => {}}>
-                    Aprobar proyecto
-                </Button>
+                {approveBtn()}
             </div>
         )
     }

@@ -1,7 +1,7 @@
-import {Typography} from "@mui/material";
+import {Button, Typography} from "@mui/material";
 import {useTheme} from "@emotion/react";
 
-export default function NoProjectView() {
+export default function NoProjectView({startProject}) {
     const theme = useTheme();
     const style = styles(theme);
 
@@ -10,9 +10,9 @@ export default function NoProjectView() {
             <Typography variant='h4'>
                 No tenés un proyecto todavía!
             </Typography>
-            <Typography variant='body1'>
-                Para crearlo debes primero crear una idea.
-            </Typography>
+            <Button onClick={() => startProject()}>
+                Comenzar Proyecto
+            </Button>
         </section>
     )
 }

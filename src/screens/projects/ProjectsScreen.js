@@ -12,18 +12,19 @@ import PendingActionsIcon from '@mui/icons-material/PendingActions';
 import ArticleIcon from '@mui/icons-material/Article';
 import PendingOfApprovalView from "./PendingOfApprovalView";
 import FinishedView from "./FinishedView";
+import {useState} from "react";
 
-const currentStepFixed = 2;
+const currentStepFixed = 0;
 
-function StepsProjectState() {
+function StepsProjectState({currentStep}) {
     const theme = useTheme();
     const style = styles(theme);
 
     const steps = [
         {name: 'Pendiente de propuesta', icon: ArticleIcon},
-        {name: 'Pendiente de revisión', icon: PendingActionsIcon},
+        {name: 'En revisión', icon: PendingActionsIcon},
         {name: 'En desarrollo', icon: HardwareIcon},
-        {name: 'Pendiente de Aprobación', icon: AlarmOnIcon},
+        {name: 'Pendiente de Presentación', icon: AlarmOnIcon},
         {name: 'Finalizada', icon: SchoolIcon},
     ]
 
@@ -32,8 +33,6 @@ function StepsProjectState() {
     // en desarollo -> se va completando la bitacora tanto como se quiera. botón a pendiente de aprobación
     // pendiente de aprobación -> seria mas poner la nota y el comentario del tutor. Solo el tutor
     // finalizada -> no se puede hacer nada. Permitir avisar que se va publicar.
-
-    const currentStep = currentStepFixed;
 
     const newAvatar = (step, index) => {
         const backgroundColor = index < currentStep ? '#ccffcc' : index === currentStep ? '#80b1db' : 'lightgray';
@@ -64,13 +63,12 @@ function StepsProjectState() {
 
 export default function ProjectsScreen({app}) {
     const theme = useTheme();
+    const [hasStartedProject, setHasStartedProject] = useState(false);
+    const [currentStep, setCurrentStep] = useState(currentStepFixed);
     const style = styles(theme);
 
     const isStudent = app.currentUser().isStudent();
 
-
-    const hasStartedProject = true;
-    const currentStep = currentStepFixed;
     const project = () => {
         return (
             <>
@@ -79,18 +77,18 @@ export default function ProjectsScreen({app}) {
                         Tu proyecto
                     </Typography>
                 </div>
-                <StepsProjectState/>
+                <StepsProjectState currentStep={currentStep}/>
                 {currentStep === 0 ?
-                    <PendingOfProposalView/>
+                    <PendingOfProposalView presentProposal={() => setCurrentStep((1))}/>
                     :
                     currentStep === 1 ?
-                        <PendingOfRevisionView app={app} isStudent={isStudent}/>
+                        <PendingOfRevisionView app={app} isStudent={isStudent} approveProject={() => setCurrentStep((2))}/>
                         :
                         currentStep === 2 ?
-                            <BinnacleView app={app}/>
+                            <BinnacleView app={app} finishProject={() => setCurrentStep((3))}/>
                             :
                             currentStep === 3 ?
-                                <PendingOfApprovalView isStudent={isStudent}/>
+                                <PendingOfApprovalView isStudent={isStudent} gradeProject={() => setCurrentStep((4))}/>
                                 : <FinishedView/>
                 }
             </>
@@ -102,7 +100,7 @@ export default function ProjectsScreen({app}) {
             {hasStartedProject ?
                 project()
                 :
-                <NoProjectView/>
+                <NoProjectView startProject={() => setHasStartedProject(true)}/>
             }
         </>
     );
