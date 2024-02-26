@@ -1,51 +1,65 @@
 import {TextField, Typography} from "@mui/material";
 import {useTheme} from "@emotion/react";
+import ProjectFinished from "../../components/ProjectFinished";
+import ValidateActionTextDialog from "../../components/dialogs/ValidateActionTextDialog";
+import {useState} from "react";
 
-function ProjectFinished() {
+export default function FinishedView({publishProject}) {
     const theme = useTheme();
+    // Form
+    const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
+    const [link, setLink] = useState('');
+    const [futureLink, setFutureLink] = useState('');
+
     const style = styles(theme);
 
-    return (
-        <div style={style.projectFinishedContainer}>
-            <img alt="image"
-                 style={{width: '170px', height: '100%', borderRadius: '5px'}}
-                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9oqPFPYBx7G1Uyvz6oxU8dkd_01sZ_vRzcv9uDj5_f2Xe1-rmbf5dYWBaYVjygULIztY&usqp=CAU"></img>
-            <div style={style.projectInfoContainer}>
-                <Typography variant="h5">
-                    IA en Twitter
-                </Typography>
-                <Typography variant="body1">
-                    Lorem ipsum es el texto que se usa habitualmente en diseño gráfico en demostraciones de tipografías o de borradores de diseño para probar el diseño visual antes de insertar el texto final.
-                </Typography>
-                <Typography variant="body1">
-                    Trabajo futuro: https://www.google.com
-                </Typography>
-            </div>
-        </div>
-    );
-}
+    const publishBtn = () => {
+        return (
+            <ValidateActionTextDialog buttonLabel="Publicar" actionLabel={"publicar proyecto"}
+                                      acceptBtnLabel={"publicar"} onAccept={publishProject}/>
+        );
+    }
 
-export default function FinishedView() {
-    const theme = useTheme();
-    const style = styles(theme);
+    const textField = (label, value, onChange, maxLenght, isMultiline = false, rows = 1) => {
+        return (
+            <TextField required label={label}
+                       multiline={isMultiline} rows={rows}
+                       fullWidth
+                       inputProps={{maxLength: maxLenght}}
+                       onChange={(event) => onChange(event.target.value)}
+                       value={value}/>
+        );
+    }
 
     return (
         <>
             <div style={style.contentContainer}>
-                <Typography variant="h5">
-                    Felicitaciones por terminar tu proyecto!
-                </Typography>
+                <div style={style.headerContainer}>
+                    <Typography variant="h5">
+                        Felicitaciones por terminar tu proyecto!
+                    </Typography>
+                    {publishBtn()}
+                </div>
                 <Typography variant="body1">
-                Te pedimos que completes un poco más de información para poder mostrar tu proyecto en la galería.
+                    Te pedimos que completes un poco más de información para poder mostrar tu proyecto en la galería.
+                    De esta manera podremos mostrar tu trabajo a futuros estudiantes e interesados. Podés ver ejemplos
+                    siguiendo el link <a target='_blank' href={'http://localhost:3000/projects'}>Todos los proyectos</a>
                 </Typography>
-                <div style={{display: 'flex', flexDirection: 'column', gap: '15px'}}>
-                    <TextField multiline={true} rows={4} label="Descripción del proyecto"/>
-                    <TextField label="Link a Trabajo futuro"/>
+                <div style={{display: 'flex', flexDirection: 'row', gap: '15px', width: '100%'}}>
+                    <div style={{display: 'flex', flexDirection: 'column', gap: '15px', flex: 1}}>
+                        {textField('Título del proyecto', title, setTitle, 50)}
+                        {textField('Link al trabajo', link, setLink, 50)}
+                        {textField('Link al trabajo futuro', futureLink, setFutureLink, 50)}
+                    </div>
+                    <div style={{flex: 1}}>
+                        {textField('Descripción del proyecto', description, setDescription, 250, true, 4)}
+                    </div>
                 </div>
                 <Typography variant="h5">
                     Preview
                 </Typography>
-                <ProjectFinished/>
+                <ProjectFinished title={title} description={description} workLink={link} futureWorkLink={futureLink}/>
             </div>
         </>
     );
@@ -60,8 +74,14 @@ const styles = (theme) => {
             borderRadius: '5px',
             display: 'flex',
             flexDirection: 'column',
-            gap: '15px',
+            gap: '1.5rem',
             height: '100%'
+        },
+        headerContainer: {
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            marginBottom: '2rem'
         },
         noProjectContainer: {
             display: 'flex',
@@ -84,21 +104,6 @@ const styles = (theme) => {
             padding: '1rem',
             borderRadius: '5px',
             width: 'fit-content'
-        },
-        projectFinishedContainer: {
-            display: 'flex',
-            gap: '15px',
-            padding: '1rem',
-            borderRadius: '5px',
-            border: 'grey solid',
-            borderWidth: '2px',
-            width: '800px',
-            height: "200px"
-        },
-        projectInfoContainer: {
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '15px'
         }
     }
 }

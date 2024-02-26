@@ -8,6 +8,7 @@ import LoginStudentScreen from "../screens/login/LoginStudentScreen";
 import LoginProfessorScreen from "../screens/login/LoginProfessorScreen";
 import {observer} from "mobx-react";
 import TeacherWaitingForApprovalScreen from "../screens/TeacherWaitingForApprovalScreen";
+import PublicProjectsScreen from "../screens/PublicProjectsScreen";
 
 
 function AppComponent({app}) {
@@ -41,6 +42,7 @@ function AppComponent({app}) {
                 <BrowserRouter>
                     <Routes>
                         <Route path="/login-curricular" element={<LoginProfessorScreen app={app}/>}/>
+                        <Route path="/projects" element={<PublicProjectsScreen app={app}/>}/>
                         <Route path="/*" element={<LoginStudentScreen app={app}/>}/>
                     </Routes>
                 </BrowserRouter>
@@ -50,6 +52,7 @@ function AppComponent({app}) {
             return (
                 <BrowserRouter>
                     <Routes>
+                        <Route path="/projects" element={<PublicProjectsScreen app={app}/>}/>
                         <Route path="/*" element={<TeacherWaitingForApprovalScreen app={app}/>}/>
                     </Routes>
                 </BrowserRouter>
@@ -60,6 +63,7 @@ function AppComponent({app}) {
                 <Routes>
                     <Route path="/home" element={<HomeScreen app={app}/>}/>
                     <Route path="/404" element={<NotfoundScreen/>}/>
+                    <Route path="/projects" element={<PublicProjectsScreen app={app}/>}/>
                     <Route path="*" element={<Navigate to="/404"/>}/>
                 </Routes>
             </BrowserRouter>

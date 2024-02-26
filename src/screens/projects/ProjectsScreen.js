@@ -12,9 +12,8 @@ import PendingActionsIcon from '@mui/icons-material/PendingActions';
 import ArticleIcon from '@mui/icons-material/Article';
 import PendingOfApprovalView from "./PendingOfApprovalView";
 import FinishedView from "./FinishedView";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
-const currentStepFixed = 0;
 
 function StepsProjectState({currentStep}) {
     const theme = useTheme();
@@ -63,11 +62,24 @@ function StepsProjectState({currentStep}) {
 
 export default function ProjectsScreen({app}) {
     const theme = useTheme();
-    const [hasStartedProject, setHasStartedProject] = useState(false);
-    const [currentStep, setCurrentStep] = useState(currentStepFixed);
+    const [hasStartedProject, setHasStartedProject] = useState(true);
+    const [currentStep, setCurrentStep] = useState(4);
     const style = styles(theme);
 
     const isStudent = app.currentUser().isStudent();
+
+    const projectId = 1; // change
+
+    useEffect(() => {
+        app.apiClient().getProjectInfoFor().then((state) => {
+            setCurrentStep(state);
+        });
+    }, []);
+
+    const startProject = () => {
+        //app.apiClient().startProject();
+        setHasStartedProject(true);
+    }
 
     const project = () => {
         return (
@@ -82,10 +94,11 @@ export default function ProjectsScreen({app}) {
                     <PendingOfProposalView presentProposal={() => setCurrentStep((1))}/>
                     :
                     currentStep === 1 ?
-                        <PendingOfRevisionView app={app} isStudent={isStudent} approveProject={() => setCurrentStep((2))}/>
+                        <PendingOfRevisionView app={app} isStudent={isStudent}
+                                               approveProject={() => setCurrentStep((2))}/>
                         :
                         currentStep === 2 ?
-                            <BinnacleView app={app} finishProject={() => setCurrentStep((3))}/>
+                            <BinnacleView app={app} projectId={projectId} finishProject={() => setCurrentStep((3))}/>
                             :
                             currentStep === 3 ?
                                 <PendingOfApprovalView isStudent={isStudent} gradeProject={() => setCurrentStep((4))}/>
@@ -100,7 +113,7 @@ export default function ProjectsScreen({app}) {
             {hasStartedProject ?
                 project()
                 :
-                <NoProjectView startProject={() => setHasStartedProject(true)}/>
+                <NoProjectView startProject={startProject}/>
             }
         </>
     );

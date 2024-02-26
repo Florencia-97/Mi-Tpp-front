@@ -10,7 +10,7 @@ export default function NoProjectView({startProject}) {
             <Typography variant='h4'>
                 No tenés un proyecto todavía!
             </Typography>
-            <Button onClick={() => startProject()}>
+            <Button onClick={startProject}>
                 Comenzar Proyecto
             </Button>
         </section>

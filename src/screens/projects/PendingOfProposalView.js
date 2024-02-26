@@ -2,15 +2,31 @@ import {Avatar, TextField, Typography} from "@mui/material";
 import {useTheme} from "@emotion/react";
 import ValidateActionTextDialog from "../../components/dialogs/ValidateActionTextDialog";
 import {deepOrange} from "@mui/material/colors";
+import {useState} from "react";
 
 export default function PendingOfProposalView({presentProposal}) {
     const theme = useTheme();
+    const [project, setProject] = useState({});
     const style = styles(theme);
 
     const presentBtn = () => {
+        const project = {
+            title: 'title',
+            description: 'description',
+            tags: '',
+            students: 'flor@gmail.com,nnn@gmail.com',
+            professors: 'flor@gmail.com,nnn@gmail.com',
+            link: 'link'
+        }
+
+        const onAccept = () => {
+            //app.apiClient().createProject(project);
+            presentProposal();
+        }
+
         return (
             <ValidateActionTextDialog buttonLabel="Lista para presentar" actionLabel={"presentar"}
-                                      acceptBtnLabel={"presentar"} onAccept={() => presentProposal()}/>
+                                      acceptBtnLabel={"presentar"} onAccept={onAccept}/>
         );
     }
 

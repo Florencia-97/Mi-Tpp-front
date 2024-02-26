@@ -29,15 +29,10 @@ export default function PendingOfApprovalView({isStudent, gradeProject}) {
                     <TextField label="Link a carpeta" onChange={(link) => {
                         setLinkToDrive(link.target.value);
                     }} value={linkToDrive}/>
-                    <TextField label="Presentacion" onChange={(link) => {
-                        setLinkToDrive(link.target.value);
-                    }} value={""}/>
-                    <TextField label="Informe" onChange={(link) => {
-                        setLinkToDrive(link.target.value);
-                    }} value={""}/>
-                    <TextField label="Github" onChange={(link) => {
-                        setLinkToDrive(link.target.value);
-                    }} value={""}/>
+                    <Typography variant="body1">
+                        Recomendamos que la carpeta tenga permisos de lectura para que podamos revisar tu proyecto.
+                        Además Presentación, doc projecto y links a repositorios externos.
+                    </Typography>
                 </div>
             </div>
         )

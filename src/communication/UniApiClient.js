@@ -11,6 +11,10 @@ import IdeaResponse from "./responses/IdeaResponse";
 import LoginEndpoint from "./endpoints/LoginEndpoint";
 import User from "../app/User";
 import RegisterEndpoint from "./endpoints/RegisterEndpoint";
+import AddBinnacleEntryEndpoint from "./endpoints/binnacle/AddBinnacleEntryEndpoint";
+import GetBinnacleEntriesEndpoint from "./endpoints/binnacle/GetBinnacleEntriesEndpoint";
+import CreateProjectEndpoint from "./endpoints/project/CreateProjectEndpoint";
+import FinishProjectEndpoint from "./endpoints/project/FinishProjectEndpoint";
 
 export default class UniApiClient extends ApiClient {
     async getIdeas(searchText = undefined) {
@@ -54,8 +58,19 @@ export default class UniApiClient extends ApiClient {
         return this._callEndpoint(endpoint, values);
     }
 
-    async addBinnacleEntry(newBinnacle) {
-        return;
+    async addBinnacleEntry(projectId, newBinnacle) {
+        let values = {
+            comment: newBinnacle.text,
+            date: newBinnacle.date
+        };
+
+        const endpoint = new AddBinnacleEntryEndpoint(projectId);
+        return this._callEndpoint(endpoint, values);
+    }
+
+    async getBinnacleEntries(projectId) {
+        const endpoint = new GetBinnacleEntriesEndpoint(projectId);
+        return this._callEndpoint(endpoint, {});
     }
 
     async editIdea(idea) {
@@ -101,6 +116,51 @@ export default class UniApiClient extends ApiClient {
         let values = {};
 
         const endpoint = new ChangeOwnersIdeasEndpoint();
+        return this._callEndpoint(endpoint, values);
+    }
+
+    async getPublicProjects() {
+        return [];
+    }
+
+    // Projects
+
+    async createProject(newProject) {
+        const values = {
+            title: 'title',
+            description: 'description',
+            tags: '',
+            students: 'flor@gmail.com,nnn@gmail.com',
+            professors: 'flor@gmail.com,nnn@gmail.com',
+            link: 'link'
+        }
+        const endpoint = new CreateProjectEndpoint();
+    }
+
+    async getProjectInfoFor(projectId) {
+        return 4;
+    }
+
+    async approveProject(projectId) {
+        return 4;
+    }
+
+    async finishProject(projectId) {
+        return 4;
+    }
+
+    async gradeProject(projectId) {
+        return 4;
+    }
+
+    async publishProject(projectId, title, description, link_to_project, link_to_future_work) {
+        const values = {
+            title: title,
+            description: description,
+            link_to_project: link_to_project,
+            link_to_future_work: link_to_future_work
+        }
+        const endpoint = new FinishProjectEndpoint(projectId);
         return this._callEndpoint(endpoint, values);
     }
 }

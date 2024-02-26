@@ -20,7 +20,7 @@ const binnacleEntries = [
     {text: "Prueba 3", date: "14/2/2024"},
 ]
 
-export default function BinnacleView({app, finishProject}) {
+export default function BinnacleView({app, projectId, finishProject}) {
     const theme = useTheme();
     const [binnacleEntriesSelected, setBinnacleEntriesSelected] = useState(binnacleEntries);
     const [newBinnacleEntry, setNewBinnacleEntry] = useState('');
@@ -54,7 +54,7 @@ export default function BinnacleView({app, finishProject}) {
             text: newBinnacleEntry,
             date: dateSelected // to string?
         }
-        app.apiClient().addBinnacleEntry(newBinnacleEntryCreated);
+        app.apiClient().addBinnacleEntry(projectId, newBinnacleEntryCreated);
     }
 
     const binnacle = () => {
