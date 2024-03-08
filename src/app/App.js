@@ -1,15 +1,16 @@
-import {FakeRequester, RemoteRequester} from "@eryxcoop/appyx-comm";
+import {FakeRequester} from "@eryxcoop/appyx-comm";
 import SessionStore from "./SessionStore";
 import LocalStorage from "./LocalStorage";
 import AppAuthorizationManager from "./AppAuthorizationManager";
 import Session from "./Session";
 import UniApiClient from "../communication/UniApiClient";
 import {action, computed, makeObservable, observable} from "mobx";
+import RemoteRequesterUni from "./RemoteRequesterUni";
 
 export class App {
 
     constructor() {
-        this._sessionStore = new SessionStore(new LocalStorage())
+        this._sessionStore = new SessionStore(new LocalStorage());
         this._session = this._sessionStore.load();
         this._client = null;
 
@@ -51,13 +52,6 @@ export class App {
         return this._client;
     }
 
-    routes() {
-        return {
-            login: '/',
-            home: '/app/home',
-        }
-    }
-
 
     "Privates"
 
@@ -73,7 +67,7 @@ export class App {
 
         const remoteApiUrl = this._defineApiUrl();
         const authorizationManager = new AppAuthorizationManager(this);
-        return new RemoteRequester(remoteApiUrl, authorizationManager);
+        return new RemoteRequesterUni(remoteApiUrl, authorizationManager);
     }
 
     _isUsingFakeApi() {
@@ -81,7 +75,7 @@ export class App {
     }
 
     _defineApiUrl() {
-        return '/'
+        return process.env.REACT_APP_BACKEND_URL;
     };
 
 }

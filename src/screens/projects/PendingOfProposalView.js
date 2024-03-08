@@ -4,24 +4,39 @@ import ValidateActionTextDialog from "../../components/dialogs/ValidateActionTex
 import {deepOrange} from "@mui/material/colors";
 import {useState} from "react";
 
-export default function PendingOfProposalView({presentProposal}) {
+export default function PendingOfProposalView({app, presentProposal}) {
+    const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
+    const [link, setLink] = useState('');
+    const [students, setStudents] = useState('');
+    const [professors, setProfessors] = useState('');
+    const [tags, setTags] = useState('');
+
     const theme = useTheme();
-    const [project, setProject] = useState({});
     const style = styles(theme);
 
     const presentBtn = () => {
         const project = {
-            title: 'title',
+            title: title,
             description: 'description',
             tags: '',
-            students: 'flor@gmail.com,nnn@gmail.com',
-            professors: 'flor@gmail.com,nnn@gmail.com',
+            students: 'flor@gmail.com, nnn@gmail.com',
+            professors: 'pablo@gmail.com',
             link: 'link'
         }
 
         const onAccept = () => {
-            //app.apiClient().createProject(project);
-            presentProposal();
+            const project = {
+                title: title,
+                description: description,
+                tags: tags,
+                students: students,
+                professors: professors,
+                link: link
+            }
+            app.apiClient().createProject(project).then((response) => {
+                presentProposal();
+            })
         }
 
         return (
@@ -74,13 +89,13 @@ export default function PendingOfProposalView({presentProposal}) {
                 <TextField id="description" label="Breve descripción" multiline rows={3} variant="outlined"/>
                 <TextField id="drive-link" label="Link Drive" variant="outlined"/>
                 <div style={{display: "flex", justifyContent: "space-between"}}>
-                    <div style={{flex:1}}>
+                    <div style={{flex: 1}}>
                         <Typography variant="h6">
                             Alumnos
                         </Typography>
                         {renderStudents()}
                     </div>
-                    <div style={{flex:1}}>
+                    <div style={{flex: 1}}>
                         <Typography variant="h6">
                             Tutor/co-tutor
                         </Typography>

@@ -1,24 +1,22 @@
 import {Typography} from "@mui/material";
 import {useTheme} from "@emotion/react";
 import {observer} from "mobx-react";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 
 
 function ProjectsAsTeacherScreen({app}) {
     const theme = useTheme();
+    const [projects, setProjects] = useState({})
+    const style = styles(theme);
 
     useEffect(() => {
         getProjects();
     }, []);
 
     const getProjects = async () => {
-        //const response = await app.apiClient().getTeacherProjects();
-        return [];
+        const response = await app.apiClient().getTeacherProjects();
+        setProjects(response.projects());
     }
-
-
-    const style = styles(theme);
-
 
     return (
         <>
@@ -26,9 +24,6 @@ function ProjectsAsTeacherScreen({app}) {
                 <Typography variant="h5">
                     Tus proyectos
                 </Typography>
-            </div>
-            <div style={style.ideasContainer}>
-                hola
             </div>
         </>
     );

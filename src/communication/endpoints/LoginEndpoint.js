@@ -1,17 +1,17 @@
 import {Endpoint} from "@eryxcoop/appyx-comm";
-import IdeasListResponse from "../responses/IdeasListResponse";
+import LoginResponse from "../responses/LoginResponse";
 
 export default class LoginEndpoint extends Endpoint {
     url() {
-        return 'login'
+        return 'users/login'
     }
 
     method() {
-        this.constructor.postMethod()
+        return this.constructor.postMethod()
     }
 
     ownResponses() {
-        return [IdeasListResponse];
+        return [LoginResponse];
     }
 
     needsAuthorization() {

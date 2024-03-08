@@ -7,9 +7,10 @@ import {useState} from "react";
 
 export default function EditIdeaModal({app, idea, onEdit}) {
     const theme = useTheme();
-    const style = styles(theme);
-
     const [loading, setLoading] = useState(false);
+    const [open, setOpen] = useState(false);
+
+    const style = styles(theme);
 
     const editIdea = async () => {
         setLoading(true);
@@ -40,7 +41,7 @@ export default function EditIdeaModal({app, idea, onEdit}) {
     }
 
     return (
-        <BaseIconButtonDialog title={"Editar idea"} icon={<EditIcon sx={{color: '#ffgfff'}}/>}>
+        <BaseIconButtonDialog title={"Editar idea"}  open={open} setOpen={setOpen} icon={<EditIcon sx={{color: '#ffgfff'}}/>}>
             <FormGroup style={style.newIdeaFormContainer}>
                 {idea.title}
                 <TextField

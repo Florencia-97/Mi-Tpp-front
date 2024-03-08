@@ -5,9 +5,8 @@ import { useTheme } from '@emotion/react';
 import { Typography } from '@mui/material';
 
 
-export default function BaseTextButtonDialog({children, title, buttonLabel}) {
+export default function BaseTextButtonDialog({children, title, buttonLabel, open, setOpen}) {
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
   const style = styles(theme);
 
   const handleClickOpen = () => {
@@ -22,7 +21,7 @@ export default function BaseTextButtonDialog({children, title, buttonLabel}) {
     <>
       <FillButton label={buttonLabel} onClick={handleClickOpen}/>
       <Dialog 
-        onClose={handleClose} 
+        onClose={handleClose}
         open={open}>
         <div style={style.modalContainer}>
             <Typography variant="h5" fontWeight="700" marginBottom="25px">

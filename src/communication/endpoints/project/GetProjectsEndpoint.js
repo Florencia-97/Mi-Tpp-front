@@ -1,9 +1,10 @@
 import {Endpoint} from "@eryxcoop/appyx-comm";
-import IdeasListResponse from "../responses/IdeasListResponse";
+import TeacherProjectsResponse from "../../responses/TeacherProjectsResponse";
 
-export default class IdeasEndpoint extends Endpoint {
+export default class GetProjectsEndpoint extends Endpoint {
+
     url() {
-        return 'ideas'
+        return 'projects';
     }
 
     method() {
@@ -11,7 +12,7 @@ export default class IdeasEndpoint extends Endpoint {
     }
 
     ownResponses() {
-        return [IdeasListResponse];
+        return [TeacherProjectsResponse];
     }
 
     needsAuthorization() {

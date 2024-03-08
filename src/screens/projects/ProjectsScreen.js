@@ -62,26 +62,29 @@ function StepsProjectState({currentStep}) {
 
 export default function ProjectsScreen({app}) {
     const theme = useTheme();
-    const [hasStartedProject, setHasStartedProject] = useState(true);
+    const [hasStartedProject, setHasStartedProject] = useState(false);
+    const [project, setProject] = useState({});
     const [currentStep, setCurrentStep] = useState(4);
     const style = styles(theme);
 
     const isStudent = app.currentUser().isStudent();
 
-    const projectId = 1; // change
-
     useEffect(() => {
-        app.apiClient().getProjectInfoFor().then((state) => {
-            setCurrentStep(state);
-        });
+        app.apiClient().getProjectInfoFor().then((response) => {
+            setHasStartedProject(true);
+            setProject(response.project());
+            setCurrentStep(1)
+        }).catch((e) => {
+            setHasStartedProject(false);
+        })
     }, []);
 
     const startProject = () => {
-        //app.apiClient().startProject();
         setHasStartedProject(true);
+        setCurrentStep(0);
     }
 
-    const project = () => {
+    const renderProject = () => {
         return (
             <>
                 <div style={style.ideasBarContainer}>
@@ -91,14 +94,14 @@ export default function ProjectsScreen({app}) {
                 </div>
                 <StepsProjectState currentStep={currentStep}/>
                 {currentStep === 0 ?
-                    <PendingOfProposalView presentProposal={() => setCurrentStep((1))}/>
+                    <PendingOfProposalView app={app} presentProposal={() => setCurrentStep((1))}/>
                     :
                     currentStep === 1 ?
                         <PendingOfRevisionView app={app} isStudent={isStudent}
                                                approveProject={() => setCurrentStep((2))}/>
                         :
                         currentStep === 2 ?
-                            <BinnacleView app={app} projectId={projectId} finishProject={() => setCurrentStep((3))}/>
+                            <BinnacleView app={app} projectId={project.id} finishProject={() => setCurrentStep((3))}/>
                             :
                             currentStep === 3 ?
                                 <PendingOfApprovalView isStudent={isStudent} gradeProject={() => setCurrentStep((4))}/>
@@ -111,7 +114,7 @@ export default function ProjectsScreen({app}) {
     return (
         <>
             {hasStartedProject ?
-                project()
+                renderProject()
                 :
                 <NoProjectView startProject={startProject}/>
             }

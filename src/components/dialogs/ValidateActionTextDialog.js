@@ -1,6 +1,5 @@
 import {Typography} from "@mui/material";
 import {useTheme} from "@emotion/react";
-import BaseIconButtonDialog from "./BaseIconButtonDialog";
 import FillButton from "../buttons/FillButton";
 import OutlineButton from "../buttons/OutlineButton";
 import {useState} from "react";
@@ -8,9 +7,10 @@ import BaseTextButtonDialog from "./BaseTextButtonDialog";
 
 export default function ValidateActionTextDialog({actionLabel, buttonLabel, acceptBtnLabel, onAccept}) {
     const theme = useTheme();
-    const style = styles(theme);
-
     const [loading, setLoading] = useState(false);
+    const [open, setOpen] = useState(false);
+
+    const style = styles(theme);
     const _onAccept = () => {
         setLoading(true);
         onAccept();
@@ -24,7 +24,8 @@ export default function ValidateActionTextDialog({actionLabel, buttonLabel, acce
     }
 
     return (
-        <BaseTextButtonDialog title={"Cuidado!"} buttonLabel={buttonLabel}>
+        <BaseTextButtonDialog title={"Cuidado!"} open={open}
+                              setOpen={setOpen} buttonLabel={buttonLabel}>
             <div style={style.bodyContainer}>
                 <Typography>
                     Estás seguro que {actionLabel} ?

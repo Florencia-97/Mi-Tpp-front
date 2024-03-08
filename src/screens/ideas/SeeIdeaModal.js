@@ -9,12 +9,14 @@ import {DataPerson, PersonComment} from "../../components/comments/PersonComment
 
 export default function SeeIdeaModal({app, ideaId}) {
     const theme = useTheme();
-    const style = styles(theme);
-
     const [comment, setComment] = useState('');
     const [loading, setLoading] = useState(true);
     const [uploadingComment, setUploadingComment] = useState(false);
     const [idea, setIdea] = useState(undefined);
+
+    const [open, setOpen] = useState(false);
+
+    const style = styles(theme);
 
     useEffect(() => {
         getIdea();
@@ -42,7 +44,7 @@ export default function SeeIdeaModal({app, ideaId}) {
     }
 
     return (
-        <BaseIconButtonDialog title={idea.title} icon={<VisibilityIcon sx={{color: '#ffgfff'}}/>}>
+        <BaseIconButtonDialog title={idea.title} open={open} setOpen={setOpen} icon={<VisibilityIcon sx={{color: '#ffgfff'}}/>}>
             <FormGroup style={style.newIdeaFormContainer}>
                 <DataPerson initials={"DB"} name={idea.owner.name} career={idea.owner.career}/>
                 {idea.description}

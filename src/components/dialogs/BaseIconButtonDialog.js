@@ -5,9 +5,8 @@ import {Typography} from '@mui/material';
 import IconButton from '../buttons/IconButton';
 
 
-export default function BaseIconButtonDialog({children, title, icon, ref=undefined, iconStyle=undefined}) {
+export default function BaseIconButtonDialog({children, title, icon, open, setOpen, iconStyle=undefined}) {
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
   const style = styles(theme);
 
   const handleClickOpen = () => {
@@ -23,7 +22,6 @@ export default function BaseIconButtonDialog({children, title, icon, ref=undefin
       <IconButton onClick={handleClickOpen} icon={icon} styles={iconStyle || {}}/>
       <Dialog 
         onClose={handleClose}
-        ref={ref}
         open={open}>
         <div style={style.modalContainer}>
             <Typography variant="h5" fontWeight="700" marginBottom="25px">

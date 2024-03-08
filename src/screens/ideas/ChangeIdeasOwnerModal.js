@@ -9,6 +9,7 @@ import {useState} from "react";
 export default function ChangeIdeasOwnerModal({onChangeInOwner, app}) {
     const theme = useTheme();
     const [selectedOwner, setSelectedOwner] = useState(0);
+    const [open, setOpen] = useState(false);
     const style = styles(theme);
 
     const changeOwner = (idea) => {
@@ -29,7 +30,7 @@ export default function ChangeIdeasOwnerModal({onChangeInOwner, app}) {
     ]
 
     return (
-        <BaseIconButtonDialog title={"Cambiar dueño"} icon={<ManageAccountsIcon sx={{color: '#ffgfff'}}/>}>
+        <BaseIconButtonDialog title={"Cambiar dueño"} open={open} setOpen={setOpen} icon={<ManageAccountsIcon sx={{color: '#ffgfff'}}/>}>
             <FormGroup style={style.newIdeaFormContainer}>
                 <Select
                     labelId="demo-simple-select-label"

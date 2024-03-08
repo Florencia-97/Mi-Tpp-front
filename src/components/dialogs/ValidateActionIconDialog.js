@@ -8,12 +8,14 @@ import {useState} from "react";
 export default function ValidateActionIconDialog({actionLabel, icon, acceptBtnLabel, onAccept}) {
     const theme = useTheme();
     const style = styles(theme);
-
+    const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
+
     const _onAccept = () => {
         setLoading(true);
         onAccept();
         setLoading(false);
+        setOpen(false);
     }
 
     if (loading) {
@@ -23,13 +25,13 @@ export default function ValidateActionIconDialog({actionLabel, icon, acceptBtnLa
     }
 
     return (
-        <BaseIconButtonDialog title={"Cuidado!"} icon={icon}>
+        <BaseIconButtonDialog title={"Cuidado!"} icon={icon} open={open} setOpen={setOpen}>
             <div style={style.bodyContainer}>
                 <Typography>
                     Estás seguro que {actionLabel} ?
                 </Typography>
                 <div style={style.buttonsContainer}>
-                    <FillButton styles={{width: 'fit-content'}} label={acceptBtnLabel} onClick={onAccept}/>
+                    <FillButton styles={{width: 'fit-content'}} label={acceptBtnLabel} onClick={_onAccept}/>
                     <OutlineButton styles={{width: 'fit-content'}} label="Cancelar"/>
                 </div>
             </div>

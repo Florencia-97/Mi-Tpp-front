@@ -3,6 +3,7 @@ import {useTheme} from "@emotion/react";
 import {Button, Typography} from "@mui/material";
 import {useGoogleLogin} from "@react-oauth/google";
 import {useNavigate} from "react-router-dom";
+import User from "../../app/User";
 
 
 export default function LoginStudentScreen({app}) {
@@ -12,9 +13,14 @@ export default function LoginStudentScreen({app}) {
     const login = useGoogleLogin({
         onSuccess: async (codeResponse) => {
             console.log(codeResponse);
-            const appUser = await app.apiClient().loginUser(codeResponse.access_token);
+            const response = await app.apiClient().loginUser(codeResponse.access_token);
+            const appUser = new User({
+                email: 'flor@fmail.com',
+                name: 'Flor',
+                picture: ''
+            })
             appUser.setRole('STUDENT');
-            await app.loginUser(appUser, codeResponse.access_token);
+            await app.loginUser(appUser, response.token());
             navigation('/home');
         },
         onError: (error) => console.log('Login Failed:', error)
@@ -22,8 +28,15 @@ export default function LoginStudentScreen({app}) {
 
     const register = useGoogleLogin({
         onSuccess: async (codeResponse) => {
-            const appUser = await app.apiClient().registerUser(codeResponse.access_token);
-            await app.loginUser(appUser, codeResponse.access_token);
+            const response = await app.apiClient().registerUser(codeResponse.access_token);
+
+            const appUser = new User({
+                email: 'flor@fmail.com',
+                name: 'Flor',
+                picture: ''
+            })
+            appUser.setRole('STUDENT');
+            await app.loginUser(appUser, response.token());
             navigation('/home');
         },
         onError: (error) => console.log('Register Failed:', error)

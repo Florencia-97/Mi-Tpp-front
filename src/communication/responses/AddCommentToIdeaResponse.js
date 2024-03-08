@@ -1,6 +1,6 @@
 import {SuccessfulApiResponse} from "@eryxcoop/appyx-comm";
 
-export default class IdeasListResponse extends SuccessfulApiResponse {
+export default class AddCommentToIdeaResponse extends SuccessfulApiResponse {
     static defaultResponse() {
         return {
             object: {

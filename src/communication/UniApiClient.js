@@ -1,6 +1,5 @@
 import {ApiClient} from "@eryxcoop/appyx-comm";
 import IdeasEndpoint from "./endpoints/IdeasEndpoint";
-import IdeasListResponse from "./responses/IdeasListResponse";
 import DeleteIdeaEndpoint from "./endpoints/DeleteIdeaEndpoint";
 import EditIdeaEndpoint from "./endpoints/EditIdeaEndpoint";
 import PublishIdeaEndpoint from "./endpoints/PublishIdeaEndpoint";
@@ -9,12 +8,15 @@ import GetIdeaEndpoint from "./endpoints/GetIdeaEndpoint";
 import AddCommentToIdeaEndpoint from "./endpoints/AddCommentToIdeaEndpoint";
 import IdeaResponse from "./responses/IdeaResponse";
 import LoginEndpoint from "./endpoints/LoginEndpoint";
-import User from "../app/User";
 import RegisterEndpoint from "./endpoints/RegisterEndpoint";
 import AddBinnacleEntryEndpoint from "./endpoints/binnacle/AddBinnacleEntryEndpoint";
 import GetBinnacleEntriesEndpoint from "./endpoints/binnacle/GetBinnacleEntriesEndpoint";
 import CreateProjectEndpoint from "./endpoints/project/CreateProjectEndpoint";
 import FinishProjectEndpoint from "./endpoints/project/FinishProjectEndpoint";
+import CreateIdeaEndpoint from "./endpoints/CreateIdeaEndpoint";
+import PublishedIdeasEndpoint from "./endpoints/PublishedIdeasEndpoint";
+import GetProjectEndpoint from "./endpoints/project/GetProjectEndpoint";
+import GetProjectsEndpoint from "./endpoints/project/GetProjectsEndpoint";
 
 export default class UniApiClient extends ApiClient {
     async getIdeas(searchText = undefined) {
@@ -23,37 +25,42 @@ export default class UniApiClient extends ApiClient {
         };
 
         const endpoint = new IdeasEndpoint();
-        return new IdeasListResponse({});
+        return this._callEndpoint(endpoint, values);
+    }
+
+    async getPublicIdeas(searchText = undefined) {
+        let values = {
+            searchText: searchText || '',
+        };
+
+        const endpoint = new PublishedIdeasEndpoint();
+        return this._callEndpoint(endpoint, values);
+    }
+
+    async createIdea(idea) {
+        let values = {
+            title: idea.title,
+            description: idea.description,
+            tags: idea.tags,
+        };
+
+        const endpoint = new CreateIdeaEndpoint();
         return this._callEndpoint(endpoint, values);
     }
 
 
     async loginUser(accessToken) {
         let values = {
-            access_token: accessToken
+            token: accessToken
         };
-
-        return new User({
-            email: 'flor@fmail.com',
-            name: 'Flor',
-            picture: ''
-        })
-
         const endpoint = new LoginEndpoint();
         return this._callEndpoint(endpoint, values);
     }
 
     async registerUser(accessToken) {
         let values = {
-            access_token: accessToken
+            token: accessToken
         };
-
-        return new User({
-            email: 'flor@fmail.com',
-            name: 'Flor',
-            picture: ''
-        })
-
         const endpoint = new RegisterEndpoint();
         return this._callEndpoint(endpoint, values);
     }
@@ -99,10 +106,8 @@ export default class UniApiClient extends ApiClient {
     }
 
     async deleteIdea(idea) {
-        let values = {};
-
-        const endpoint = new DeleteIdeaEndpoint();
-        return this._callEndpoint(endpoint, values);
+        const endpoint = new DeleteIdeaEndpoint(idea.id);
+        return this._callEndpoint(endpoint, {});
     }
 
     async publishIdea(idea) {
@@ -127,18 +132,25 @@ export default class UniApiClient extends ApiClient {
 
     async createProject(newProject) {
         const values = {
-            title: 'title',
-            description: 'description',
-            tags: '',
+            title: newProject.title,
+            description: newProject.description,
+            tags: newProject.tags,
             students: 'flor@gmail.com,nnn@gmail.com',
             professors: 'flor@gmail.com,nnn@gmail.com',
-            link: 'link'
+            link: newProject.link
         }
         const endpoint = new CreateProjectEndpoint();
+        return this._callEndpoint(endpoint, values);
     }
 
-    async getProjectInfoFor(projectId) {
-        return 4;
+    async getProjectInfoFor() {
+        const endpoint = new GetProjectEndpoint();
+        return this._callEndpoint(endpoint, {});
+    }
+
+    async getTeacherProjects() {
+        const endpoint = new GetProjectsEndpoint();
+        return this._callEndpoint(endpoint, {});
     }
 
     async approveProject(projectId) {

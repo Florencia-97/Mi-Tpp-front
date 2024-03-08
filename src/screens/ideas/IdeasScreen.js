@@ -1,8 +1,8 @@
 import {Alert, Typography} from "@mui/material";
-import { useTheme } from "@emotion/react";
+import {useTheme} from "@emotion/react";
 import CreateIdeaModal from "./CreateIdeaModal";
 import IdeaItemList from "../../components/IdeaItemList";
-import { observer } from "mobx-react";
+import {observer} from "mobx-react";
 import {useEffect, useState} from "react";
 
 
@@ -20,6 +20,15 @@ function IdeasScreen({app}) {
         setIdeas(response.ideas());
     }
 
+    const createIdea = async (idea) => {
+        const response = await app.apiClient().createIdea(idea);
+        if (response.hasError()) {
+            setAlert({message: response.error(), type: 'No se pudo crear la idea. Intentar nuevamente más adelante.'});
+        } else {
+            showSuccessAlert("Se ha creado la idea correctamente.")
+            await getIdeas();
+        }
+    }
 
     const style = styles(theme);
 
@@ -32,9 +41,14 @@ function IdeasScreen({app}) {
         showSuccessAlert(message);
     }
 
-    const deleteIdea = (idea) => {
-        //const response = app.apiClient().deleteIdea();
-        showSuccessAlert("Se ha eliminado la idea correctamente.");
+    const deleteIdea = async (idea) => {
+        const response = await app.apiClient().deleteIdea(idea);
+        if (response.hasError()) {
+            setAlert({message: 'No se pudo eliminar la idea.', type: 'error'});
+        } else {
+            showSuccessAlert("Se ha eliminado la idea correctamente.");
+            await getIdeas();
+        }
     }
 
     const publishIdea = (idea) => {
@@ -49,12 +63,12 @@ function IdeasScreen({app}) {
                              deleteIdea={() => deleteIdea(idea)}
                              publishIdea={() => publishIdea(idea)}/>
     });
-    
+
     return (
         <>
             <div style={style.ideasBarContainer}>
                 <Typography variant="h5">Tus ideas</Typography>
-                <CreateIdeaModal createIdea={() => {console.log('af')}}/>
+                <CreateIdeaModal createIdea={createIdea}/>
             </div>
             <div style={style.ideasContainer}>
                 {alert.message !== '' ?

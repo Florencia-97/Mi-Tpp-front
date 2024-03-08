@@ -18,14 +18,14 @@ function PublicIdeasScreen({app}) {
     }, []);
 
     const getIdeas = async () => {
-        const response = await app.apiClient().getIdeas();
+        const response = await app.apiClient().getPublicIdeas();
         setIdeas(response.ideas());
     }
 
     const onSearchTextChanged = async (event) => {
         setSearchText(event.target.value);
-        //const response = await app.apiClient().getIdeas(searchText);
-        //setIdeas(response.ideas());
+        const response = await app.apiClient().getPublicIdeas(searchText);
+        setIdeas(response.ideas());
         setIdeas(ideas.filter(idea => idea.name.toLowerCase().includes(searchText.toLowerCase())));
     }
 

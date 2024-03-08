@@ -1,24 +1,18 @@
 import {Endpoint} from "@eryxcoop/appyx-comm";
-import SuccessfulApiResponse from "@eryxcoop/appyx-comm/src/responses/generalResponses/SuccessfulApiResponse";
+import ProjectResponse from "../../responses/ProjectResponse";
 
 export default class GetProjectEndpoint extends Endpoint {
 
-    constructor(projectId) {
-        super();
-        this._projectId = projectId;
-    }
-
-
     url() {
-        return 'project/' + this._projectId;
+        return 'projects'
     }
 
     method() {
-        this.constructor.getMethod()
+        return this.constructor.getMethod()
     }
 
     ownResponses() {
-        return [SuccessfulApiResponse];
+        return [ProjectResponse];
     }
 
     needsAuthorization() {
