@@ -17,6 +17,12 @@ import CreateIdeaEndpoint from "./endpoints/CreateIdeaEndpoint";
 import PublishedIdeasEndpoint from "./endpoints/PublishedIdeasEndpoint";
 import GetProjectEndpoint from "./endpoints/project/GetProjectEndpoint";
 import GetProjectsEndpoint from "./endpoints/project/GetProjectsEndpoint";
+import GetAdminUsersEndpoints from "./endpoints/admin/GetAdminUsersEndpoints";
+import GetTeachersUsersEndpoints from "./endpoints/admin/GetTeachersUsersEndpoints";
+import ApproveTeacherUserEndpoints from "./endpoints/admin/ApproveTeacherUserEndpoints";
+import RemoveAdminUserEndpoints from "./endpoints/admin/RemoveAdminUserEndpoints";
+import RemoveTeacherUserEndpoints from "./endpoints/admin/RemoveTeacherUserEndpoints";
+import AddAdminUserEndpoints from "./endpoints/admin/AddAdminUserEndpoints";
 
 export default class UniApiClient extends ApiClient {
     async getIdeas(searchText = undefined) {
@@ -174,5 +180,37 @@ export default class UniApiClient extends ApiClient {
         }
         const endpoint = new FinishProjectEndpoint(projectId);
         return this._callEndpoint(endpoint, values);
+    }
+
+    // Admin functions
+
+    async getAdminUsers() {
+        const endpoint = new GetAdminUsersEndpoints();
+        return this._callEndpoint(endpoint, {});
+    }
+
+    async getTeacherUsers() {
+        const endpoint = new GetTeachersUsersEndpoints();
+        return this._callEndpoint(endpoint, {});
+    }
+
+    async approveTeacherUser(teacherEmail) {
+        const endpoint = new ApproveTeacherUserEndpoints();
+        return this._callEndpoint(endpoint, {email: teacherEmail});
+    }
+
+    async addAdminUser(adminEmail) {
+        const endpoint = new AddAdminUserEndpoints();
+        return this._callEndpoint(endpoint, {email: adminEmail});
+    }
+
+    async removeTeacherUser(teacherEmail) {
+        const endpoint = new RemoveTeacherUserEndpoints(teacherEmail);
+        return this._callEndpoint(endpoint, {});
+    }
+
+    async removeAdminUser(adminEmail) {
+        const endpoint = new RemoveAdminUserEndpoints(adminEmail);
+        return this._callEndpoint(endpoint, {});
     }
 }

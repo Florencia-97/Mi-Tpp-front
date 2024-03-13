@@ -13,7 +13,7 @@ export default function HomeScreen({app}) {
     const [activeScreen, setActiveScreen] = useState('my_ideas');
 
     //const isStudent = app.currentUser().isStudent();
-    const isStudent = true;
+    const isStudent = false;
 
     let screenShowing = undefined
     if (activeScreen === "my_ideas") {
@@ -26,6 +26,8 @@ export default function HomeScreen({app}) {
         screenShowing = <PublicIdeasScreen app={app}/>
     } else if (activeScreen === "stats") {
         screenShowing = <StatsScreen app={app}/>
+    } else if (activeScreen === "projects_list") {
+        screenShowing = <ProjectsAsTeacherScreen app={app}/>
     } else if (activeScreen === "projects_list") {
         screenShowing = <ProjectsAsTeacherScreen app={app}/>
     }

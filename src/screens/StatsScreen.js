@@ -1,4 +1,5 @@
 import {useTheme} from "@emotion/react";
+import HorizontalBarChart from "../components/charts/HorizontalBarChart";
 
 
 export default function StatsScreen({app}) {
@@ -8,7 +9,12 @@ export default function StatsScreen({app}) {
     return (
         <>
             <div style={style.mainContainer}>
-                tbd
+                <section style={style.chartsContainer}>
+                    <HorizontalBarChart name={"Ideas más comentadas"}/>
+                    <HorizontalBarChart name={"Promedio estados"}/>
+                    <HorizontalBarChart name={"Tags más populares"}/>
+                    <HorizontalBarChart name={"Cantidad por estado"}/>
+                </section>
             </div>
         </>
     );
@@ -22,6 +28,11 @@ const styles = (theme) => {
             justifyContent: 'center',
             alignItems: 'center',
             height: '100vh',
+        },
+        chartsContainer: {
+            display: 'flex',
+            flexDirection: 'row',
+            wrap: 'wrap',
         }
     }
 }
