@@ -2,9 +2,11 @@ import {useTheme} from "@emotion/react";
 import {Avatar, Button, TextField, Typography} from "@mui/material";
 
 
-export default function ProfileScreen() {
+export default function ProfileScreen({app}) {
     const theme = useTheme();
     const style = styles(theme);
+
+    const currentUser = app.currentUser();
 
     return (
         <>
@@ -14,7 +16,7 @@ export default function ProfileScreen() {
                         Actualizar
                     </Button>
                     <div style={style.leftContainer}>
-                        <Avatar alt="Remy Sharp" src="" style={{width: '150px', height: '150px'}}/>
+                        <Avatar alt="Remy Sharp" src={currentUser.picture()} style={{width: '150px', height: '150px'}}/>
                         <Typography variant="body1">
                             flrodriguez@fi.uba.ar
                         </Typography>

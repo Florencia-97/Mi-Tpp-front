@@ -20,7 +20,7 @@ export default function LoginStudentScreen({app}) {
             const appUser = new User({
                 email: response.email(),
                 name: '',
-                picture: '',
+                picture: response.picture(),
                 canOperate: response.canUserOperate(),
                 role: userLogin
             })
@@ -38,7 +38,7 @@ export default function LoginStudentScreen({app}) {
             const appUser = new User({
                 email: 'flor@fmail.com',
                 name: 'Flor',
-                picture: '',
+                picture: response.picture(),
                 canOperate: response.canOperate,
                 role: userLogin
             })

@@ -1,11 +1,12 @@
 import {SuccessfulApiResponse} from "@eryxcoop/appyx-comm";
 
-export default class LoginResponse extends SuccessfulApiResponse {
+export default class AccessResponse extends SuccessfulApiResponse {
     static defaultResponse() {
         return {
             object: {
                 token: 'afsdfasdf',
                 can_operate: false,
+                picture: 'picture.png',
                 email: 'email',
             },
         }
@@ -21,5 +22,9 @@ export default class LoginResponse extends SuccessfulApiResponse {
 
     email() {
         return this.content().email;
+    }
+
+    picture() {
+        return this.content().picture;
     }
 }

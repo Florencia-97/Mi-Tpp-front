@@ -1,5 +1,5 @@
 import {Endpoint} from "@eryxcoop/appyx-comm";
-import LoginResponse from "../responses/LoginResponse";
+import AccessResponse from "../responses/AccessResponse";
 
 export default class LoginEndpoint extends Endpoint {
     url() {
@@ -11,7 +11,7 @@ export default class LoginEndpoint extends Endpoint {
     }
 
     ownResponses() {
-        return [LoginResponse];
+        return [AccessResponse];
     }
 
     needsAuthorization() {
