@@ -6,14 +6,13 @@ import ProfileScreen from "./ProfileScreen";
 import PublicIdeasScreen from "./ideas/PublicIdeasScreen";
 import StatsScreen from "./StatsScreen";
 import ProjectsAsTeacherScreen from "./ProjectsAsTeacherScreen";
+import AdminListScreen from "./admin/AdminListScreen";
+import TeacherListScreen from "./admin/TeacherListScreen";
 
 
 export default function HomeScreen({app}) {
 
     const [activeScreen, setActiveScreen] = useState('my_ideas');
-
-    //const isStudent = app.currentUser().isStudent();
-    const isStudent = false;
 
     let screenShowing = undefined
     if (activeScreen === "my_ideas") {
@@ -28,13 +27,15 @@ export default function HomeScreen({app}) {
         screenShowing = <StatsScreen app={app}/>
     } else if (activeScreen === "projects_list") {
         screenShowing = <ProjectsAsTeacherScreen app={app}/>
-    } else if (activeScreen === "projects_list") {
-        screenShowing = <ProjectsAsTeacherScreen app={app}/>
+    } else if (activeScreen === "admins_list") {
+        screenShowing = <AdminListScreen app={app}/>
+    } else if (activeScreen === "teachers_list") {
+        screenShowing = <TeacherListScreen app={app}/>
     }
 
     return (
         <DashboardDrawer setActiveScreen={setActiveScreen} activeScreen={activeScreen} app={app}
-                         isStudent={isStudent}>
+                         user={app.currentUser()}>
             {screenShowing}
         </DashboardDrawer>
     )

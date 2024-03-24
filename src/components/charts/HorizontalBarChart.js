@@ -3,7 +3,7 @@ import {BarChart} from "@mui/x-charts/BarChart";
 const chartSetting = {
     xAxis: [
         {
-            label: 'rainfall (mm)',
+            label: 'cantidad',
         },
     ],
     width: 500,
@@ -40,7 +40,7 @@ export default function HorizontalBarChart({name}) {
         <BarChart
             dataset={dataset}
             yAxis={[{scaleType: 'band', dataKey: 'name'}]}
-            series={[{dataKey: 'name', label: name, valueFormatter}]}
+            series={[{dataKey: 'value', label: name, valueFormatter}]}
             layout="horizontal"
             {...chartSetting}
         />

@@ -1,11 +1,10 @@
-import {ApiClient} from "@eryxcoop/appyx-comm";
+import {ApiClient, SuccessfulApiResponse} from "@eryxcoop/appyx-comm";
 import IdeasEndpoint from "./endpoints/IdeasEndpoint";
 import DeleteIdeaEndpoint from "./endpoints/DeleteIdeaEndpoint";
 import EditIdeaEndpoint from "./endpoints/EditIdeaEndpoint";
 import PublishIdeaEndpoint from "./endpoints/PublishIdeaEndpoint";
 import ChangeOwnersIdeasEndpoint from "./endpoints/ChangeOwnersIdeasEndpoint";
 import GetIdeaEndpoint from "./endpoints/GetIdeaEndpoint";
-import AddCommentToIdeaEndpoint from "./endpoints/AddCommentToIdeaEndpoint";
 import IdeaResponse from "./responses/IdeaResponse";
 import LoginEndpoint from "./endpoints/LoginEndpoint";
 import RegisterEndpoint from "./endpoints/RegisterEndpoint";
@@ -23,6 +22,10 @@ import ApproveTeacherUserEndpoints from "./endpoints/admin/ApproveTeacherUserEnd
 import RemoveAdminUserEndpoints from "./endpoints/admin/RemoveAdminUserEndpoints";
 import RemoveTeacherUserEndpoints from "./endpoints/admin/RemoveTeacherUserEndpoints";
 import AddAdminUserEndpoints from "./endpoints/admin/AddAdminUserEndpoints";
+import UsersListResponse from "./responses/UsersListResponse";
+import GetCommentsEndpoint from "./endpoints/comments/GetCommentsEndpoint";
+import DeleteCommentEndpoint from "./endpoints/comments/DeleteCommentEndpoint";
+import AddCommentEndpoint from "./endpoints/comments/AddCommentEndpoint";
 
 export default class UniApiClient extends ApiClient {
     async getIdeas(searchText = undefined) {
@@ -90,7 +93,7 @@ export default class UniApiClient extends ApiClient {
         let values = {
             id: idea.id,
             title: idea.title,
-            shortDescription: idea.shortDescription,
+            description: idea.description,
             labels: idea.labels,
         };
 
@@ -105,21 +108,22 @@ export default class UniApiClient extends ApiClient {
         return this._callEndpoint(endpoint, values);
     }
 
-    async addCommentToIdea(ideaId, comment) {
-        let values = {};
-        const endpoint = new AddCommentToIdeaEndpoint();
-        return this._callEndpoint(endpoint, values);
-    }
-
     async deleteIdea(idea) {
         const endpoint = new DeleteIdeaEndpoint(idea.id);
         return this._callEndpoint(endpoint, {});
     }
 
     async publishIdea(idea) {
-        let values = {};
+        let values = {
+            title: idea.id,
+            description: idea.description,
+            published: 'True',
+            owner: 'frodriguez@eryxsoluciones.com.ar'
+        };
 
-        const endpoint = new PublishIdeaEndpoint();
+        console.log(values, idea)
+
+        const endpoint = new PublishIdeaEndpoint(idea);
         return this._callEndpoint(endpoint, values);
     }
 
@@ -185,6 +189,7 @@ export default class UniApiClient extends ApiClient {
     // Admin functions
 
     async getAdminUsers() {
+        return new UsersListResponse({});
         const endpoint = new GetAdminUsersEndpoints();
         return this._callEndpoint(endpoint, {});
     }
@@ -200,6 +205,7 @@ export default class UniApiClient extends ApiClient {
     }
 
     async addAdminUser(adminEmail) {
+        return new SuccessfulApiResponse({});
         const endpoint = new AddAdminUserEndpoints();
         return this._callEndpoint(endpoint, {email: adminEmail});
     }
@@ -211,6 +217,24 @@ export default class UniApiClient extends ApiClient {
 
     async removeAdminUser(adminEmail) {
         const endpoint = new RemoveAdminUserEndpoints(adminEmail);
+        return this._callEndpoint(endpoint, {});
+    }
+
+    // Comments
+
+    async getComments(ideaId) {
+        const endpoint = new GetCommentsEndpoint(ideaId);
+        return this._callEndpoint(endpoint, {});
+    }
+
+    async addCommentToIdea(ideaId, comment) {
+        let values = {comment};
+        const endpoint = new AddCommentEndpoint(ideaId);
+        return this._callEndpoint(endpoint, values);
+    }
+
+    async deleteComment(ideaId, commentId) {
+        const endpoint = new DeleteCommentEndpoint(ideaId, commentId);
         return this._callEndpoint(endpoint, {});
     }
 }

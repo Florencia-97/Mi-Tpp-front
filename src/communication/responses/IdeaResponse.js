@@ -14,19 +14,7 @@ export default class IdeaResponse extends SuccessfulApiResponse {
                         "avatar": "string",
                         "career": "string"
                     },
-                    maxSimiliratyTitle: "bool",
-                    comments: [
-                        {
-                            "owner": {
-                                "name": "string",
-                                "email": "string",
-                                "avatar": "string",
-                                "career": "string"
-                            },
-                            "comment": "string",
-                            "date": "date"
-                        }
-                    ]
+                    maxSimiliratyTitle: "bool"
                 }
 
             },
@@ -34,7 +22,7 @@ export default class IdeaResponse extends SuccessfulApiResponse {
     }
 
     idea() {
-        //return this.content().ideas;
+        return this.content().ideas;
         return {
             title: "Sitio de recomendacion.",
             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",

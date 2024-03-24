@@ -22,9 +22,9 @@ export default class SessionStore {
                 email: session.user().email(),
                 name: session.user().name(),
                 picture: session.user().picture(),
-                role: session.user().role()
+                role: session.user().role(),
+                canOperate: session.user().canOperate()
             },
-            origin: session.origin()
         });
     }
 

@@ -4,27 +4,27 @@ export default class UsersListResponse extends SuccessfulApiResponse {
     static defaultResponse() {
         return {
             object: [{
-                'title': 'title',
-                'description': 'short description',
-                'published': true,
-                'owner': 'owner',
-                'tags': "tag1,tag2, tag3",
-                'maxSimilarityTitle': "title"
+                'email': 'adf@asdf.com',
+                'can_operate': true,
             }],
         }
     }
 
-    _parseIdea(idea) {
+    _parseUser(user) {
         return {
-            id: idea.title,
-            name: idea.title,
-            type: idea.published ? 'published' : 'draft',
-            shortDescription: idea.description,
+            email: user.email,
+            canOperate: user.can_operate,
         }
     }
 
-    ideas() {
-        const ideas = this.content();
-        return ideas.map(idea => this._parseIdea(idea));
+    users() {
+        return [
+            {email:'hola@gola.com' , canOperate: true},
+            {email:'chau@asdf.com' , canOperate: false},
+            {email:'mmama@asdf.com' , canOperate: true},
+            {email:'daleqda.com' , canOperate: true},
+        ]
+        const users = this.content();
+        return users.map(idea => this._parseUser(idea));
     }
 }

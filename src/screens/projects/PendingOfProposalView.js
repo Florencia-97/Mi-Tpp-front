@@ -53,15 +53,15 @@ export default function PendingOfProposalView({app, presentProposal}) {
                         FR
                     </Avatar>
                     <Typography style={{fontSize: "12px"}}>
-                        Fernando
+                        Flor
                     </Typography>
                 </div>
                 <div style={style.personContainer}>
                     <Avatar sx={{bgcolor: deepOrange[500], width: 50, height: 50, fontSize: 20}}>
-                        FR
+                        PC
                     </Avatar>
                     <Typography style={{fontSize: "12px"}}>
-                        Fernando
+                        Brai
                     </Typography>
                 </div>
                 <div style={style.personContainer}>

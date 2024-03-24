@@ -32,7 +32,7 @@ export default function IdeaItemList({app, idea, deleteIdea, publishIdea, onActi
                     {idea.name}
                 </Typography>
                 <Typography variant="body2">
-                    {idea.shortDescription}
+                    {idea.description}
                 </Typography>
             </div>
             <div style={{backgroundColor: typeColors[idea.type], ...style.ideaState}}>
@@ -49,8 +49,7 @@ export default function IdeaItemList({app, idea, deleteIdea, publishIdea, onActi
                     acceptBtnLabel="Publicar"
                     actionLabel="publicar esta idea"
                     onAccept={async () => {
-                        await app.apiClient().publishIdea(idea.id);
-                        onActionSucceded("Se ha publicado la idea correctamente.");
+                        publishIdea(idea);
                     }}
                 />
                 <ChangeIdeasOwnerModal

@@ -62,14 +62,14 @@ function StepsProjectState({currentStep}) {
 
 export default function ProjectsScreen({app}) {
     const theme = useTheme();
-    const [hasStartedProject, setHasStartedProject] = useState(false);
+    const [hasStartedProject, setHasStartedProject] = useState(false); // false
     const [project, setProject] = useState({});
     const [currentStep, setCurrentStep] = useState(4);
     const style = styles(theme);
 
     const isStudent = app.currentUser().isStudent();
 
-    useEffect(() => {
+/*    useEffect(() => {
         app.apiClient().getProjectInfoFor().then((response) => {
             setHasStartedProject(true);
             setProject(response.project());
@@ -77,11 +77,11 @@ export default function ProjectsScreen({app}) {
         }).catch((e) => {
             setHasStartedProject(false);
         })
-    }, []);
+    }, []);*/
 
     const startProject = () => {
         setHasStartedProject(true);
-        setCurrentStep(0);
+        setCurrentStep(4);
     }
 
     const renderProject = () => {

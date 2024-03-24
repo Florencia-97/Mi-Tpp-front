@@ -56,10 +56,10 @@ export default function FinishedView({publishProject}) {
                         {textField('Descripción del proyecto', description, setDescription, 250, true, 4)}
                     </div>
                 </div>
-                <Typography variant="h5">
+{/*                <Typography variant="h5">
                     Preview
                 </Typography>
-                <ProjectFinished title={title} description={description} workLink={link} futureWorkLink={futureLink}/>
+                <ProjectFinished title={title} description={description} workLink={link} futureWorkLink={futureLink}/>*/}
             </div>
         </>
     );

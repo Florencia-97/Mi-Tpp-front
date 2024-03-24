@@ -22,6 +22,7 @@ export default function BaseIconButtonDialog({children, title, icon, open, setOp
       <IconButton onClick={handleClickOpen} icon={icon} styles={iconStyle || {}}/>
       <Dialog 
         onClose={handleClose}
+        style={style.dialogContainer}
         open={open}>
         <div style={style.modalContainer}>
             <Typography variant="h5" fontWeight="700" marginBottom="25px">
@@ -44,8 +45,12 @@ const styles = (theme) => {
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
-            minWidth: '400px',
             minHeight: '300px',
+        },
+        dialogContainer: {
+            overflowX: 'hidden',
+            overflowY: 'scroll',
+            minWidth: '500px',
         }
     }
 }

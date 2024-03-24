@@ -28,7 +28,7 @@ export default function GeneralIdeaItemList({idea, app }) {
                     {idea.name}
                 </Typography>
                 <Typography variant="body2">
-                    {idea.shortDescription}
+                    {idea.description}
                 </Typography>
             </div>
             <div style={{display: 'flex', gap: '15px', alignItems: 'center'}}>
@@ -38,12 +38,12 @@ export default function GeneralIdeaItemList({idea, app }) {
                     </Typography>
                 </div>
                 <Typography fontSize="12px">
-                    Dueño: Delfi Brea
+                    Dueño: {idea.owner}
                 </Typography>
             </div>
         </div>
             <div style={style.iconsContainer}>
-                <SeeIdeaModal idea={idea.id} app={app}/>
+                <SeeIdeaModal idea={idea} app={app}/>
             </div>
         </div>
     )

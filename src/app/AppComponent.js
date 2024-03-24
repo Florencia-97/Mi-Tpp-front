@@ -5,7 +5,6 @@ import NotfoundScreen from '../screens/NotFoundScreen';
 import GlobalStyles from '../components/GlobalStyles';
 import HomeScreen from '../screens/HomeScreen';
 import LoginStudentScreen from "../screens/login/LoginStudentScreen";
-import LoginProfessorScreen from "../screens/login/LoginProfessorScreen";
 import {observer} from "mobx-react";
 import TeacherWaitingForApprovalScreen from "../screens/TeacherWaitingForApprovalScreen";
 import PublicProjectsScreen from "../screens/PublicProjectsScreen";
@@ -41,7 +40,6 @@ function AppComponent({app}) {
             return (
                 <BrowserRouter>
                     <Routes>
-                        <Route path="/login-curricular" element={<LoginProfessorScreen app={app}/>}/>
                         <Route path="/projects" element={<PublicProjectsScreen app={app}/>}/>
                         <Route path="/*" element={<LoginStudentScreen app={app}/>}/>
                     </Routes>

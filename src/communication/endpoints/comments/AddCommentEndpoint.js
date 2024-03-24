@@ -1,17 +1,17 @@
 import {Endpoint, SuccessfulApiResponse} from "@eryxcoop/appyx-comm";
-import IdeasListResponse from "../responses/IdeasListResponse";
 
-export default class PublishIdeaEndpoint extends Endpoint {
-    constructor(idea) {
+export default class AddCommentEndpoint extends Endpoint {
+    constructor(title) {
         super();
-        this._idea = idea;
+        this._title = title;
     }
+
     url() {
-        return 'ideas/'+ this._idea.id
+        return './public-ideas/' + this._title + '/comments';
     }
 
     method() {
-        return 'PUT';
+        return this.constructor.postMethod();
     }
 
     ownResponses() {

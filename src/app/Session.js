@@ -15,10 +15,6 @@ export default class Session {
         return this._token
     }
 
-    origin() {
-        return this._origin;
-    }
-
     isLoggedIn() {
         return this._token != null;
     }

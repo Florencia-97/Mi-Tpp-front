@@ -9,21 +9,26 @@ import User from "../../app/User";
 export default function LoginStudentScreen({app}) {
     const theme = useTheme();
     const navigation = useNavigate();
+    const [userLogin, setUserLogin] = React.useState('STUDENT');
+
+    const roleOptions = ['STUDENT', 'TEACHER', 'ADMIN'];
+    const otherRoleOptions = roleOptions.filter(role => role !== userLogin);
 
     const login = useGoogleLogin({
         onSuccess: async (codeResponse) => {
-            console.log(codeResponse);
             const response = await app.apiClient().loginUser(codeResponse.access_token);
             const appUser = new User({
-                email: 'flor@fmail.com',
-                name: 'Flor',
-                picture: ''
+                email: response.email(),
+                name: '',
+                picture: '',
+                canOperate: response.canUserOperate(),
+                role: userLogin
             })
-            appUser.setRole('STUDENT');
             await app.loginUser(appUser, response.token());
-            navigation('/home');
         },
-        onError: (error) => console.log('Login Failed:', error)
+        onError: (error) => {
+            console.log('Login Failed:', error)
+        }
     });
 
     const register = useGoogleLogin({
@@ -33,11 +38,11 @@ export default function LoginStudentScreen({app}) {
             const appUser = new User({
                 email: 'flor@fmail.com',
                 name: 'Flor',
-                picture: ''
+                picture: '',
+                canOperate: response.canOperate,
+                role: userLogin
             })
-            appUser.setRole('STUDENT');
             await app.loginUser(appUser, response.token());
-            navigation('/home');
         },
         onError: (error) => console.log('Register Failed:', error)
     });
@@ -48,7 +53,9 @@ export default function LoginStudentScreen({app}) {
         <main>
             <section style={style.mainContainer}>
                 <div style={style.leftContainer}>
-
+                    <Typography variant="h3" style={{color: '#c7c7c7'}} fontWeight={'900'}>
+                        {userLogin === 'STUDENT' ? 'Alumnos' : userLogin === 'TEACHER' ? 'Profesores' : 'Administradores'}
+                    </Typography>
                 </div>
                 <div style={style.rightContainer}>
                     <Typography variant="h4"> Mi TPP </Typography>
@@ -61,6 +68,13 @@ export default function LoginStudentScreen({app}) {
                                 onClick={() => register()}>
                             registrate
                         </Button>
+                    </div>
+                    <div style={style.optionsContainer}>
+                        {otherRoleOptions.map(role => {
+                            return <button onClick={() => setUserLogin(role)} style={style.roleButton}>
+                                Soy {role === 'STUDENT' ? 'Alumno' : role === 'TEACHER' ? 'Profesor' : 'Administrador'}
+                            </button>
+                        })}
                     </div>
                 </div>
             </section>
@@ -80,6 +94,9 @@ const styles = (theme) => {
             backgroundColor: theme.palette.primary.main,
             background: "linear-gradient(90deg, rgba(84,66,142,1) 21%, rgba(221,67,67,1) 80%, rgba(219,182,130,1) 100%)",
             flex: 2,
+            display: 'flex',
+            alignItems: 'flex-end',
+            padding: '1rem',
         },
         rightContainer: {
             backgroundColor: theme.palette.background.default,
@@ -89,6 +106,22 @@ const styles = (theme) => {
             flexDirection: 'column',
             justifyContent: 'center',
             alignItems: 'center',
+        },
+        optionsContainer: {
+            display: 'flex',
+            gap: '10px',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center'
+        },
+        roleButton: {
+            background: 'none',
+            border: 'none',
+            color: 'blue',
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center'
         }
     }
 }

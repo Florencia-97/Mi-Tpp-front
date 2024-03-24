@@ -9,11 +9,15 @@ import IconButton from './buttons/IconButton';
 import ValidateActionIconDialog from './dialogs/ValidateActionIconDialog';
 import {Avatar, Button} from "@mui/material";
 import BarChartIcon from '@mui/icons-material/BarChart';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import SchoolIcon from '@mui/icons-material/School';
 
-
-export default function DashboardDrawer({app, children, setActiveScreen, activeScreen, isStudent}) {
+export default function DashboardDrawer({app, children, setActiveScreen, activeScreen, user}) {
     const theme = useTheme();
     const style = styles(theme);
+
+    const isStudent = user.isStudent();
+    const isTeacher = user.isTeacher();
 
     const iconDrawerButton = (icon, name) => {
         const onClick = () => {
@@ -71,12 +75,20 @@ export default function DashboardDrawer({app, children, setActiveScreen, activeS
             {logOutBtn()}
         </>
     }
+    const adminDrawer = () => {
+        return <>
+            {iconDrawerButton(<AdminPanelSettingsIcon sx={{color: '#ffffff'}}/>, "admins_list")}
+            {iconDrawerButton(<SchoolIcon sx={{color: '#ffffff'}}/>, "teachers_list")}
+            {iconDrawerButton(<BarChartIcon sx={{color: '#ffffff'}}/>, "stats")}
+            {logOutBtn()}
+        </>
+    }
 
 
     return (
         <main style={style.mainContainer}>
             <div style={style.drawerContainer}>
-                {isStudent ? studentDrawer() : teacherDrawer()}
+                {isStudent ? studentDrawer() : isTeacher ? teacherDrawer() : adminDrawer()}
             </div>
             <section style={style.sectionContainer}>
                 {children}

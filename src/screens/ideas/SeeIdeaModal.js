@@ -7,54 +7,67 @@ import {useEffect, useState} from "react";
 import {DataPerson, PersonComment} from "../../components/comments/PersonComment";
 
 
-export default function SeeIdeaModal({app, ideaId}) {
+export default function SeeIdeaModal({app, idea}) {
     const theme = useTheme();
     const [comment, setComment] = useState('');
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [uploadingComment, setUploadingComment] = useState(false);
-    const [idea, setIdea] = useState(undefined);
-
+    const [comments, setComments] = useState([]);
     const [open, setOpen] = useState(false);
+
+    useEffect(() => {
+        if (open) {
+            getComments();
+        }
+    }, [open]);
+
+    const getComments = async () => {
+        setLoading(true);
+        const response = await app.apiClient().getComments(idea.id);
+        setComments(response.comments());
+        setLoading(false);
+    }
 
     const style = styles(theme);
 
-    useEffect(() => {
-        getIdea();
-    }, []);
-
-    const getIdea = async () => {
-        setLoading(true);
-        const response = await app.apiClient().getIdea(ideaId);
-        setIdea(response.idea());
-        setLoading(false);
-    }
 
     const addCommentToIdea = async () => {
         setUploadingComment(true);
         await app.apiClient().addCommentToIdea(idea.id, comment);
-        await getIdea();
+        await getComments();
         setUploadingComment(false);
         setComment("");
     }
 
-    if (loading) {
-        return (
-            <div>Loading</div>
-        );
+    const onCommentDeleted = async (commentId) => {
+        setLoading(true);
+        await app.apiClient().deleteComment(idea.id, commentId);
+        await getComments();
+        setLoading(false);
+    }
+
+    const renderComments = () => {
+        if (loading) {
+            return (
+                <div>Loading</div>
+            );
+        }
+        return comments.map(comment => {
+            return <PersonComment handleDelete={onCommentDeleted}
+                                  comment={comment} userEmail={app.currentUser().email()}/>
+        })
     }
 
     return (
-        <BaseIconButtonDialog title={idea.title} open={open} setOpen={setOpen} icon={<VisibilityIcon sx={{color: '#ffgfff'}}/>}>
+        <BaseIconButtonDialog title={idea.title} open={open} setOpen={setOpen}
+                              icon={<VisibilityIcon sx={{color: '#ffgfff'}}/>}>
             <FormGroup style={style.newIdeaFormContainer}>
-                <DataPerson initials={"DB"} name={idea.owner.name} career={idea.owner.career}/>
+                <DataPerson initials={"DB"} name={idea.owner} career={idea.owner}/>
                 {idea.description}
                 <Typography variant="h6" fontWeight='700'>
                     Comentarios
                 </Typography>
-                {idea.comments.map(comment => {
-                    return <PersonComment initials={"DB"} name={comment.owner.name} career={comment.owner.career}
-                                          comment={comment.comment}/>
-                })}
+                {renderComments()}
                 <div style={{width: '100%'}}>
                     <TextField fullWidth label={"Comentario"} multiline rows={2} id={"comment"}
                                value={comment}

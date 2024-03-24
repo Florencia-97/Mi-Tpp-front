@@ -51,9 +51,14 @@ function IdeasScreen({app}) {
         }
     }
 
-    const publishIdea = (idea) => {
-        const response = app.apiClient().publishIdea();
-        showSuccessAlert("Se ha publicado la idea correctamente.");
+    const publishIdea = async (idea) => {
+        const response = await app.apiClient().publishIdea(idea);
+        if (response.hasError()) {
+            setAlert({message: 'No se pudo publicar la idea.', type: 'error'});
+        } else {
+            showSuccessAlert("Se ha publicado la idea correctamente.");
+            await getIdeas();
+        }
     }
 
     const renderedIdeas = ideas.map(idea => {
@@ -61,7 +66,7 @@ function IdeasScreen({app}) {
                              app={app}
                              onActionSucceded={onActionSucceded}
                              deleteIdea={() => deleteIdea(idea)}
-                             publishIdea={() => publishIdea(idea)}/>
+                             publishIdea={(idea) => publishIdea(idea)}/>
     });
 
     return (

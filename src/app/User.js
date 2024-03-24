@@ -1,10 +1,11 @@
 export default class User {
 
-    constructor({email, name, picture}) {
+    constructor({email, name, picture, role, canOperate}) {
         this._email = email;
         this._name = name;
         this._picture = picture;
-        this._role = 'STUDENT';
+        this._role = role;
+        this._canOperate = true; // TODO: fix
     }
 
     email() {
@@ -20,11 +21,7 @@ export default class User {
     }
 
     canOperate() {
-        return true;
-    }
-
-    setRole(role) {
-        this._role = role;
+        return this._canOperate;
     }
 
     role() {

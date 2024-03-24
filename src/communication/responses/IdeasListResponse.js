@@ -1,4 +1,5 @@
 import {SuccessfulApiResponse} from "@eryxcoop/appyx-comm";
+import IdeaAdapter from "../adapters/IdeaAdapter";
 
 export default class IdeasListResponse extends SuccessfulApiResponse {
     static defaultResponse() {
@@ -14,17 +15,8 @@ export default class IdeasListResponse extends SuccessfulApiResponse {
         }
     }
 
-    _parseIdea(idea) {
-        return {
-            id: idea.title,
-            name: idea.title,
-            type: idea.published ? 'published' : 'draft',
-            shortDescription: idea.description,
-        }
-    }
-
     ideas() {
         const ideas = this.content();
-        return ideas.map(idea => this._parseIdea(idea));
+        return ideas.map(idea => new IdeaAdapter(idea).parse());
     }
 }

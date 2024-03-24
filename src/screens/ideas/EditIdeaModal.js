@@ -46,7 +46,7 @@ export default function EditIdeaModal({app, idea, onEdit}) {
                 {idea.title}
                 <TextField
                     label="Idea"
-                    value={idea.shortDescription}
+                    value={idea.description}
                     multiline
                     rows={5}
                     id="idea-body"/>
