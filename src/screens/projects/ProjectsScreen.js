@@ -64,7 +64,7 @@ export default function ProjectsScreen({app}) {
     const theme = useTheme();
     const [hasStartedProject, setHasStartedProject] = useState(false); // false
     const [project, setProject] = useState({});
-    const [currentStep, setCurrentStep] = useState(4);
+    const [currentStep, setCurrentStep] = useState(0);
     const style = styles(theme);
 
     const isStudent = app.currentUser().isStudent();
@@ -81,7 +81,7 @@ export default function ProjectsScreen({app}) {
 
     const startProject = () => {
         setHasStartedProject(true);
-        setCurrentStep(4);
+        setCurrentStep(0);
     }
 
     const renderProject = () => {

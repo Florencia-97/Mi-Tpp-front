@@ -8,6 +8,7 @@ export default class AccessResponse extends SuccessfulApiResponse {
                 can_operate: false,
                 picture: 'picture.png',
                 email: 'email',
+                username: 'a b'
             },
         }
     }
@@ -26,5 +27,9 @@ export default class AccessResponse extends SuccessfulApiResponse {
 
     picture() {
         return this.content().picture;
+    }
+
+    username() {
+        return this.content().username;
     }
 }

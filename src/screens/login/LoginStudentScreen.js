@@ -33,11 +33,11 @@ export default function LoginStudentScreen({app}) {
 
     const register = useGoogleLogin({
         onSuccess: async (codeResponse) => {
-            const response = await app.apiClient().registerUser(codeResponse.access_token);
+            const response = await app.apiClient().registerUser(codeResponse.access_token, userLogin);
 
             const appUser = new User({
-                email: 'flor@fmail.com',
-                name: 'Flor',
+                email: response.email(),
+                name: response.username(),
                 picture: response.picture(),
                 canOperate: response.canOperate,
                 role: userLogin

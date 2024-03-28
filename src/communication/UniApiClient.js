@@ -1,10 +1,10 @@
 import {ApiClient, SuccessfulApiResponse} from "@eryxcoop/appyx-comm";
-import IdeasEndpoint from "./endpoints/IdeasEndpoint";
-import DeleteIdeaEndpoint from "./endpoints/DeleteIdeaEndpoint";
-import EditIdeaEndpoint from "./endpoints/EditIdeaEndpoint";
-import PublishIdeaEndpoint from "./endpoints/PublishIdeaEndpoint";
-import ChangeOwnersIdeasEndpoint from "./endpoints/ChangeOwnersIdeasEndpoint";
-import GetIdeaEndpoint from "./endpoints/GetIdeaEndpoint";
+import IdeasEndpoint from "./endpoints/ideas/IdeasEndpoint";
+import DeleteIdeaEndpoint from "./endpoints/ideas/DeleteIdeaEndpoint";
+import EditIdeaEndpoint from "./endpoints/ideas/EditIdeaEndpoint";
+import PublishIdeaEndpoint from "./endpoints/ideas/PublishIdeaEndpoint";
+import ChangeOwnersIdeasEndpoint from "./endpoints/ideas/ChangeOwnersIdeasEndpoint";
+import GetIdeaEndpoint from "./endpoints/ideas/GetIdeaEndpoint";
 import IdeaResponse from "./responses/IdeaResponse";
 import LoginEndpoint from "./endpoints/LoginEndpoint";
 import RegisterEndpoint from "./endpoints/RegisterEndpoint";
@@ -12,8 +12,8 @@ import AddBinnacleEntryEndpoint from "./endpoints/binnacle/AddBinnacleEntryEndpo
 import GetBinnacleEntriesEndpoint from "./endpoints/binnacle/GetBinnacleEntriesEndpoint";
 import CreateProjectEndpoint from "./endpoints/project/CreateProjectEndpoint";
 import FinishProjectEndpoint from "./endpoints/project/FinishProjectEndpoint";
-import CreateIdeaEndpoint from "./endpoints/CreateIdeaEndpoint";
-import PublishedIdeasEndpoint from "./endpoints/PublishedIdeasEndpoint";
+import CreateIdeaEndpoint from "./endpoints/ideas/CreateIdeaEndpoint";
+import PublishedIdeasEndpoint from "./endpoints/ideas/PublishedIdeasEndpoint";
 import GetProjectEndpoint from "./endpoints/project/GetProjectEndpoint";
 import GetProjectsEndpoint from "./endpoints/project/GetProjectsEndpoint";
 import GetAdminUsersEndpoints from "./endpoints/admin/GetAdminUsersEndpoints";
@@ -26,6 +26,10 @@ import UsersListResponse from "./responses/UsersListResponse";
 import GetCommentsEndpoint from "./endpoints/comments/GetCommentsEndpoint";
 import DeleteCommentEndpoint from "./endpoints/comments/DeleteCommentEndpoint";
 import AddCommentEndpoint from "./endpoints/comments/AddCommentEndpoint";
+import UpdateUserProfileEndpoint from "./endpoints/UpdateUserProfileEndpoint";
+import GetUserProfileEndpoint from "./endpoints/GetUserProfileEndpoint";
+import GetStudentsWithoutProjectsEndpoint from "./endpoints/project/GetStudentsWithoutProjectsEndpoint";
+import GetTeachersForProjectsEndpoint from "./endpoints/project/GetTeachersForProjectsEndpoint";
 
 export default class UniApiClient extends ApiClient {
     async getIdeas(searchText = undefined) {
@@ -66,9 +70,10 @@ export default class UniApiClient extends ApiClient {
         return this._callEndpoint(endpoint, values);
     }
 
-    async registerUser(accessToken) {
+    async registerUser(accessToken, userLogin) {
         let values = {
-            token: accessToken
+            token: accessToken,
+            user_type: userLogin === 'TEACHER' ? 'Professor' : 'Student'
         };
         const endpoint = new RegisterEndpoint();
         return this._callEndpoint(endpoint, values);
@@ -145,8 +150,8 @@ export default class UniApiClient extends ApiClient {
             title: newProject.title,
             description: newProject.description,
             tags: newProject.tags,
-            students: 'flor@gmail.com,nnn@gmail.com',
-            professors: 'flor@gmail.com,nnn@gmail.com',
+            students: newProject.students,
+            professors: newProject.professors,
             link: newProject.link
         }
         const endpoint = new CreateProjectEndpoint();
@@ -158,8 +163,18 @@ export default class UniApiClient extends ApiClient {
         return this._callEndpoint(endpoint, {});
     }
 
-    async getTeacherProjects() {
+    async getTeacherProjects(errorHandler) {
         const endpoint = new GetProjectsEndpoint();
+        return this._callEndpoint(endpoint, {}, errorHandler);
+    }
+
+    async getStudentsWithoutProjects() {
+        const endpoint = new GetStudentsWithoutProjectsEndpoint();
+        return this._callEndpoint(endpoint, {});
+    }
+
+    async getTeachersToSelect() {
+        const endpoint = new GetTeachersForProjectsEndpoint();
         return this._callEndpoint(endpoint, {});
     }
 
@@ -235,6 +250,22 @@ export default class UniApiClient extends ApiClient {
 
     async deleteComment(ideaId, commentId) {
         const endpoint = new DeleteCommentEndpoint(ideaId, commentId);
+        return this._callEndpoint(endpoint, {});
+    }
+
+    // Users
+
+    updateUserProfile(email, career) {
+        const values = {
+            career: career,
+            username: 'username?',
+        };
+        const endpoint = new UpdateUserProfileEndpoint(email);
+        return this._callEndpoint(endpoint, values);
+    }
+
+    getUserProfile(email) {
+        const endpoint = new GetUserProfileEndpoint(email);
         return this._callEndpoint(endpoint, {});
     }
 }

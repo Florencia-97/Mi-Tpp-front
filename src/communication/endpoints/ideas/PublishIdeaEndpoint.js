@@ -1,5 +1,5 @@
 import {Endpoint, SuccessfulApiResponse} from "@eryxcoop/appyx-comm";
-import IdeasListResponse from "../responses/IdeasListResponse";
+import IdeasListResponse from "../../responses/IdeasListResponse";
 
 export default class PublishIdeaEndpoint extends Endpoint {
     constructor(idea) {

@@ -19,7 +19,7 @@ export default class TeacherProjectsResponse extends SuccessfulApiResponse {
         }
     }
 
-    project() {
+    projects() {
         return this.content();
     }
 }

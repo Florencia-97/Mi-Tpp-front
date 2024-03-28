@@ -3,17 +3,12 @@ import SuccessfulApiResponse from "@eryxcoop/appyx-comm/src/responses/generalRes
 
 export default class CreateProjectEndpoint extends Endpoint {
 
-    constructor(projectId) {
-        super();
-        this._projectId = projectId;
-    }
-
     url() {
-        return 'projects/' + this._projectId + '/binnacle'
+        return 'projects'
     }
 
     method() {
-        this.constructor.postMethod()
+        return this.constructor.postMethod()
     }
 
     ownResponses() {

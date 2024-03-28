@@ -1,13 +1,13 @@
 import {Endpoint} from "@eryxcoop/appyx-comm";
-import IdeasListResponse from "../responses/IdeasListResponse";
+import IdeasListResponse from "../../responses/IdeasListResponse";
 
-export default class CreateIdeaEndpoint extends Endpoint {
+export default class EditIdeaEndpoint extends Endpoint {
     url() {
-        return 'ideas'
+        return 'ideas/'
     }
 
     method() {
-        return this.constructor.postMethod();
+        this.constructor.postMethod()
     }
 
     ownResponses() {

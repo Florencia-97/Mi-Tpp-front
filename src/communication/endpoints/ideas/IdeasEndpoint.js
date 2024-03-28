@@ -1,5 +1,5 @@
 import {Endpoint} from "@eryxcoop/appyx-comm";
-import IdeasListResponse from "../responses/IdeasListResponse";
+import IdeasListResponse from "../../responses/IdeasListResponse";
 
 export default class IdeasEndpoint extends Endpoint {
     url() {

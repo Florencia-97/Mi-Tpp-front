@@ -32,7 +32,7 @@ export default function ValidateActionTextDialog({actionLabel, buttonLabel, acce
                 </Typography>
                 <div style={style.buttonsContainer}>
                     <FillButton styles={{width: 'fit-content'}} label={acceptBtnLabel} onClick={onAccept}/>
-                    <OutlineButton styles={{width: 'fit-content'}} label="Cancelar"/>
+                    <OutlineButton styles={{width: 'fit-content'}} label="Cancelar" onClick={() => setOpen(false)}/>
                 </div>
             </div>
         </BaseTextButtonDialog>

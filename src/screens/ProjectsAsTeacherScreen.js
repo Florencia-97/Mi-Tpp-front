@@ -2,51 +2,77 @@ import {Typography} from "@mui/material";
 import {useTheme} from "@emotion/react";
 import {observer} from "mobx-react";
 import {useEffect, useState} from "react";
+import ProjectItemList from "../components/ProjectItemList";
 
+// States:
+
+// WAITING_FOR_APPROVE
 
 function ProjectsAsTeacherScreen({app}) {
-    const theme = useTheme();
-    const [projects, setProjects] = useState({})
-    const style = styles(theme);
+  const theme = useTheme();
+  const [projects, setProjects] = useState([])
+  const style = styles(theme);
 
-    useEffect(() => {
-        getProjects();
-    }, []);
+  useEffect(() => {
+    getProjects();
+  }, []);
 
-    const getProjects = async () => {
-        const response = await app.apiClient().getTeacherProjects();
-        setProjects(response.projects());
+  const getProjects = async () => {
+    const errorHandler = (error) => {
+      setProjects([]);
     }
+    const response = await app.apiClient().getTeacherProjects(errorHandler);
+    if (!response.hasError()) {
+      setProjects(response.projects());
+    }
+  }
 
-    return (
-        <>
-            <div style={style.ideasBarContainer}>
-                <Typography variant="h5">
-                    Tus proyectos
-                </Typography>
-            </div>
-        </>
-    );
+  return (
+    <>
+      <div style={style.barContainer}>
+        <Typography variant="h5">
+          Tus proyectos
+        </Typography>
+      </div>
+      <div style={style.projectListContainer}>
+        { projects.map(
+          project => {
+            return (
+              <div style={style.projectContainer}>
+                <ProjectItemList project={project}/>
+              </div>
+            )
+          }
+        ) }
+      </div>
+    </>
+  );
 }
 
 const styles = (theme) => {
-    return {
-        ideasBarContainer: {
-            backgroundColor: theme.palette.background.white,
-            width: '100%',
-            padding: '1rem',
-            borderRadius: '5px',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-        },
-        ideasContainer: {
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'flex-start',
-            gap: '15px'
-        }
+  return {
+    barContainer: {
+      backgroundColor: theme.palette.background.white,
+      width: '100%',
+      padding: '1rem',
+      borderRadius: '5px',
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+    },
+    projectListContainer: {
+      width: '100%',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'flex-start',
+      gap: '15px'
+    },
+    projectContainer: {
+      backgroundColor: theme.palette.background.white,
+      width: '100%',
+      padding: '1rem',
     }
+  }
 }
 
 export default observer(ProjectsAsTeacherScreen);
