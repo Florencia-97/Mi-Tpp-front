@@ -30,6 +30,7 @@ import UpdateUserProfileEndpoint from "./endpoints/UpdateUserProfileEndpoint";
 import GetUserProfileEndpoint from "./endpoints/GetUserProfileEndpoint";
 import GetStudentsWithoutProjectsEndpoint from "./endpoints/project/GetStudentsWithoutProjectsEndpoint";
 import GetTeachersForProjectsEndpoint from "./endpoints/project/GetTeachersForProjectsEndpoint";
+import ApproveProjectEndpoint from "./endpoints/project/ApproveProjectEndpoint";
 
 export default class UniApiClient extends ApiClient {
     async getIdeas(searchText = undefined) {
@@ -179,7 +180,8 @@ export default class UniApiClient extends ApiClient {
     }
 
     async approveProject(projectId) {
-        return 4;
+        const endpoint = new ApproveProjectEndpoint(projectId);
+        return this._callEndpoint(endpoint, {});
     }
 
     async finishProject(projectId) {
@@ -204,7 +206,6 @@ export default class UniApiClient extends ApiClient {
     // Admin functions
 
     async getAdminUsers() {
-        return new UsersListResponse({});
         const endpoint = new GetAdminUsersEndpoints();
         return this._callEndpoint(endpoint, {});
     }
@@ -219,10 +220,9 @@ export default class UniApiClient extends ApiClient {
         return this._callEndpoint(endpoint, {email: teacherEmail});
     }
 
-    async addAdminUser(adminEmail) {
-        return new SuccessfulApiResponse({});
+    async addAdminUser(newAdminEmail) {
         const endpoint = new AddAdminUserEndpoints();
-        return this._callEndpoint(endpoint, {email: adminEmail});
+        return this._callEndpoint(endpoint, {email: newAdminEmail});
     }
 
     async removeTeacherUser(teacherEmail) {

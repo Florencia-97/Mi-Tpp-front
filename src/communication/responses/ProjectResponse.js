@@ -11,7 +11,7 @@ export default class ProjectResponse extends SuccessfulApiResponse {
                     'tags': 'tags',
                     'link': 'link',
                     'students': 'students',
-                    'professors': 'professors',
+                    'professors': 'professors1,professors2',
                     'status': 'status'
                 }
             ],
@@ -20,6 +20,6 @@ export default class ProjectResponse extends SuccessfulApiResponse {
     }
 
     project() {
-        return this.content();
+        return this.content()[0];
     }
 }

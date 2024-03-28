@@ -12,7 +12,7 @@ export default class RemoveAdminUserEndpoints extends Endpoint {
     }
 
     method() {
-        return "DELETE"
+        return "DELETE";
     }
 
     ownResponses() {

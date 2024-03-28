@@ -1,8 +1,8 @@
-import {Button, Typography} from "@mui/material";
+import {Button, TextField, Typography} from "@mui/material";
 import {useTheme} from "@emotion/react";
 import ValidateActionTextDialog from "../../components/dialogs/ValidateActionTextDialog";
 
-export default function PendingOfRevisionView({app, isStudent, approveProject}) {
+export default function PendingOfRevisionView({project, isStudent, approveProject}) {
     const theme = useTheme();
     const style = styles(theme);
 
@@ -30,6 +30,10 @@ export default function PendingOfRevisionView({app, isStudent, approveProject}) 
     const teacherView = () => {
         return (
             <div style={style.teacherContentContainer}>
+                <TextField value={project.title} label="Título" disabled/>
+                <TextField multiline rows={3} value={project.description} label="Descripcion" disabled/>
+                <TextField value={project.link} label="Link" disabled/>
+                <TextField value={project.students} label="Alumnos" disabled/>
                 {approveBtn()}
             </div>
         )

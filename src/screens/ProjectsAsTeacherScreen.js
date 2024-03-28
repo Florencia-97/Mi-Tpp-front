@@ -3,6 +3,7 @@ import {useTheme} from "@emotion/react";
 import {observer} from "mobx-react";
 import {useEffect, useState} from "react";
 import ProjectItemList from "../components/ProjectItemList";
+import {useNavigate} from "react-router-dom";
 
 // States:
 
@@ -10,6 +11,7 @@ import ProjectItemList from "../components/ProjectItemList";
 
 function ProjectsAsTeacherScreen({app}) {
   const theme = useTheme();
+  const navigate = useNavigate();
   const [projects, setProjects] = useState([])
   const style = styles(theme);
 
@@ -39,7 +41,11 @@ function ProjectsAsTeacherScreen({app}) {
           project => {
             return (
               <div style={style.projectContainer}>
-                <ProjectItemList project={project}/>
+                <ProjectItemList project={project} goToProject={
+                  (id) => {
+                    navigate('/see_project/' + id)
+                  }
+                }/>
               </div>
             )
           }

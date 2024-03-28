@@ -8,7 +8,7 @@ export default class GetProjectEndpoint extends Endpoint {
     }
 
     method() {
-        return this.constructor.getMethod()
+        return this.constructor.getMethod();
     }
 
     ownResponses() {

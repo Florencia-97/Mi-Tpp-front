@@ -10,11 +10,11 @@ export default class ApproveProjectEndpoint extends Endpoint {
 
 
     url() {
-        return 'project/' + this._projectId + '/approve';
+        return 'projects/' + this._projectId + '/approve';
     }
 
     method() {
-        this.constructor.postMethod()
+        return this.constructor.postMethod();
     }
 
     ownResponses() {

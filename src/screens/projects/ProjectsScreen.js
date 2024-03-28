@@ -13,6 +13,7 @@ import ArticleIcon from '@mui/icons-material/Article';
 import PendingOfApprovalView from "./PendingOfApprovalView";
 import FinishedView from "./FinishedView";
 import {useEffect, useState} from "react";
+import {useParams} from "react-router-dom";
 
 
 function StepsProjectState({currentStep}) {
@@ -65,11 +66,12 @@ export default function ProjectsScreen({app}) {
     const [hasStartedProject, setHasStartedProject] = useState(false); // false
     const [project, setProject] = useState({});
     const [currentStep, setCurrentStep] = useState(0);
+    let { id } = useParams();
     const style = styles(theme);
 
     const isStudent = app.currentUser().isStudent();
 
-/*    useEffect(() => {
+    useEffect(() => {
         app.apiClient().getProjectInfoFor().then((response) => {
             setHasStartedProject(true);
             setProject(response.project());
@@ -77,7 +79,7 @@ export default function ProjectsScreen({app}) {
         }).catch((e) => {
             setHasStartedProject(false);
         })
-    }, []);*/
+    }, [id]);
 
     const startProject = () => {
         setHasStartedProject(true);
@@ -97,8 +99,11 @@ export default function ProjectsScreen({app}) {
                     <PendingOfProposalView app={app} presentProposal={() => setCurrentStep((1))}/>
                     :
                     currentStep === 1 ?
-                        <PendingOfRevisionView app={app} isStudent={isStudent}
-                                               approveProject={() => setCurrentStep((2))}/>
+                        <PendingOfRevisionView project={project} isStudent={isStudent}
+                                               approveProject={() => {
+                                                   app.apiClient().approveProject(project.id);
+                                                   setCurrentStep(2);
+                                               }}/>
                         :
                         currentStep === 2 ?
                             <BinnacleView app={app} projectId={project.id} finishProject={() => setCurrentStep((3))}/>

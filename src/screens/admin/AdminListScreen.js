@@ -16,10 +16,12 @@ export default function AdminListScreen({app}) {
     }, []);
 
     const style = styles(theme);
+    const currentAdmin = app.currentUser();
 
     const getAdminUsers = async () => {
         const response = await app.apiClient().getAdminUsers();
-        setAdminUsers(response.users());
+        const users = response.users();
+        setAdminUsers(users.filter(user => user.canOperate));
     }
 
     const addAdminUser = async () => {
@@ -43,7 +45,7 @@ export default function AdminListScreen({app}) {
 
     const eliminateUserBtn = (userEmail) => {
         const onConfirm = async () => {
-            const response = await app.apiClient().removeAdminUser();
+            const response = await app.apiClient().removeAdminUser(userEmail);
             if (response.hasError()) {
                 showErrorAlert('No se pudo eliminar al usuario. Intentar nuevamente más adelante.');
             } else {
@@ -80,7 +82,7 @@ export default function AdminListScreen({app}) {
                         return (
                             <div key={adminUser.email} style={style.listElementContainer}>
                                 <p>{adminUser.email}</p>
-                                {eliminateUserBtn(adminUser.email)}
+                                {currentAdmin.email() !== adminUser.email && eliminateUserBtn(adminUser.email)}
                             </div>
                         );
                     })

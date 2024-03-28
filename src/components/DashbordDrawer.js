@@ -11,9 +11,11 @@ import {Avatar, Button} from "@mui/material";
 import BarChartIcon from '@mui/icons-material/BarChart';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import SchoolIcon from '@mui/icons-material/School';
+import {useNavigate} from "react-router-dom";
 
 export default function DashboardDrawer({app, children, setActiveScreen, activeScreen, user}) {
     const theme = useTheme();
+    const navigate = useNavigate();
     const style = styles(theme);
 
     const isStudent = user.isStudent();
@@ -22,7 +24,13 @@ export default function DashboardDrawer({app, children, setActiveScreen, activeS
     const iconDrawerButton = (icon, name) => {
         const onClick = () => {
             setActiveScreen(name);
+            if (name === "see_project") {
+                navigate(name + '/0');
+            } else {
+                navigate(name);
+            }
         }
+
         if (activeScreen === name) {
             return (
                 <IconButton onClick={onClick} icon={icon} styles={{backgroundColor: 'violet'}}/>
@@ -50,7 +58,10 @@ export default function DashboardDrawer({app, children, setActiveScreen, activeS
 
     const userIcon = () => {
         return (
-            <Button onClick={() => setActiveScreen("profile")}>
+            <Button onClick={() => {
+                setActiveScreen("profile");
+                navigate("profile");
+            }}>
                 <Avatar alt="Remy Sharp" src={app.currentUser().picture()}/>
             </Button>
         )
@@ -61,7 +72,7 @@ export default function DashboardDrawer({app, children, setActiveScreen, activeS
             {userIcon()}
             {iconDrawerButton(<LightbulbOutlinedIcon sx={{color: '#ffffff'}}/>, "my_ideas")}
             {iconDrawerButton(<PublicIcon sx={{color: '#ffffff'}}/>, "public_ideas")}
-            {iconDrawerButton(<FolderOpenIcon sx={{color: '#ffffff'}}/>, "project")}
+            {iconDrawerButton(<FolderOpenIcon sx={{color: '#ffffff'}}/>, "see_project")}
             {logOutBtn()}
         </>
     }

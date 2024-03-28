@@ -12,9 +12,8 @@ export default function ValidateActionTextDialog({actionLabel, buttonLabel, acce
 
     const style = styles(theme);
     const _onAccept = () => {
-        setLoading(true);
         onAccept();
-        setLoading(false);
+        setOpen(false);
     }
 
     if (loading) {
@@ -31,7 +30,7 @@ export default function ValidateActionTextDialog({actionLabel, buttonLabel, acce
                     Estás seguro que {actionLabel} ?
                 </Typography>
                 <div style={style.buttonsContainer}>
-                    <FillButton styles={{width: 'fit-content'}} label={acceptBtnLabel} onClick={onAccept}/>
+                    <FillButton styles={{width: 'fit-content'}} label={acceptBtnLabel} onClick={_onAccept}/>
                     <OutlineButton styles={{width: 'fit-content'}} label="Cancelar" onClick={() => setOpen(false)}/>
                 </div>
             </div>
