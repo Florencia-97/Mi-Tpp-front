@@ -10,10 +10,14 @@ export default function StatsScreen({app}) {
         <>
             <div style={style.mainContainer}>
                 <section style={style.chartsContainer}>
-                    <HorizontalBarChart name={"Ideas más comentadas"}/>
-                    <HorizontalBarChart name={"Promedio estados"}/>
-                    <HorizontalBarChart name={"Tags más populares"}/>
-                    <HorizontalBarChart name={"Cantidad por estado"}/>
+                    <div>
+                        <HorizontalBarChart name={"Ideas más comentadas"}/>
+                        <HorizontalBarChart name={"Promedio estados"}/>
+                    </div>
+                    <div>
+                        <HorizontalBarChart name={"Tags más populares"}/>
+                        <HorizontalBarChart name={"Cantidad por estado"}/>
+                    </div>
                 </section>
             </div>
         </>

@@ -70,12 +70,16 @@ export default function ProjectsScreen({app}) {
     const style = styles(theme);
 
     const isStudent = app.currentUser().isStudent();
+    const stepsDic = {
+        'WAITING_FOR_APPROVE': 1,
+        'IN_DEVELOPMENT': 2,
+    }
 
     useEffect(() => {
         app.apiClient().getProjectInfoFor().then((response) => {
             setHasStartedProject(true);
             setProject(response.project());
-            setCurrentStep(1)
+            setCurrentStep(stepsDic[response.project().status]);
         }).catch((e) => {
             setHasStartedProject(false);
         })
@@ -91,7 +95,7 @@ export default function ProjectsScreen({app}) {
             <>
                 <div style={style.ideasBarContainer}>
                     <Typography variant="h5">
-                        Tu proyecto
+                        {isStudent ? 'Tu proyecto' : 'Seguimiento de proyecto'}
                     </Typography>
                 </div>
                 <StepsProjectState currentStep={currentStep}/>

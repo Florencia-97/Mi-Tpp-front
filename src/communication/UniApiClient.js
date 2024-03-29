@@ -215,14 +215,14 @@ export default class UniApiClient extends ApiClient {
         return this._callEndpoint(endpoint, {});
     }
 
-    async approveTeacherUser(teacherEmail) {
-        const endpoint = new ApproveTeacherUserEndpoints();
-        return this._callEndpoint(endpoint, {email: teacherEmail});
-    }
-
     async addAdminUser(newAdminEmail) {
         const endpoint = new AddAdminUserEndpoints();
         return this._callEndpoint(endpoint, {email: newAdminEmail});
+    }
+
+    async approveTeacherUser(teacherEmail) {
+        const endpoint = new ApproveTeacherUserEndpoints();
+        return this._callEndpoint(endpoint, {email: teacherEmail});
     }
 
     async removeTeacherUser(teacherEmail) {

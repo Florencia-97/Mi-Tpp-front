@@ -26,6 +26,7 @@ export default function BinnacleView({app, projectId, finishProject}) {
     const [newBinnacleEntry, setNewBinnacleEntry] = useState('');
     const [dateSelected, setDateSelected] = useState('');
     const style = styles(theme);
+    const isStudent = app.currentUser().isStudent();
 
     const finishBtn = () => {
         return (
@@ -90,7 +91,7 @@ export default function BinnacleView({app, projectId, finishProject}) {
                     <Typography variant="h5">
                         Bitácora
                     </Typography>
-                    {finishBtn()}
+                    {!isStudent && finishBtn()}
                 </div>
                 <div style={style.contentContainer}>
                     <div style={style.binnacleContainer}>

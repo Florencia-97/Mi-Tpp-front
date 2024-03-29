@@ -31,6 +31,14 @@ function AppComponent({app}) {
             },
             text:{
               black: "#353535"
+            },
+            green: {
+                main: '#8dd391',
+                contrastText: '#ffffff'
+            },
+            grey: {
+                main: '#a1a1a1',
+                contrastText: '#ffffff'
             }
         },
     });

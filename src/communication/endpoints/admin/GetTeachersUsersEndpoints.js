@@ -3,11 +3,11 @@ import UsersListResponse from "../../responses/UsersListResponse";
 
 export default class GetTeachersUsersEndpoints extends Endpoint {
     url() {
-        return 'admin/admin'
+        return 'admin/professors'
     }
 
     method() {
-        return this.constructor.getMethod()
+        return this.constructor.getMethod();
     }
 
     ownResponses() {

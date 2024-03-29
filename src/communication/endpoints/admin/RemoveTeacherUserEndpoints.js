@@ -12,7 +12,7 @@ export default class RemoveTeacherUserEndpoints extends Endpoint {
     }
 
     method() {
-        return "DELETE"
+        return "DELETE";
     }
 
     ownResponses() {

@@ -5,10 +5,6 @@ import {useEffect, useState} from "react";
 import ProjectItemList from "../components/ProjectItemList";
 import {useNavigate} from "react-router-dom";
 
-// States:
-
-// WAITING_FOR_APPROVE
-
 function ProjectsAsTeacherScreen({app}) {
   const theme = useTheme();
   const navigate = useNavigate();
@@ -37,7 +33,7 @@ function ProjectsAsTeacherScreen({app}) {
         </Typography>
       </div>
       <div style={style.projectListContainer}>
-        { projects.map(
+        {projects.map(
           project => {
             return (
               <div style={style.projectContainer}>
@@ -49,7 +45,7 @@ function ProjectsAsTeacherScreen({app}) {
               </div>
             )
           }
-        ) }
+        )}
       </div>
     </>
   );

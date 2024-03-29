@@ -1,20 +1,20 @@
 import {Endpoint, SuccessfulApiResponse} from "@eryxcoop/appyx-comm";
-import UsersListResponse from "../../responses/UsersListResponse";
 
 export default class ApproveTeacherUserEndpoints extends Endpoint {
-    url() {
-        return 'admin/admin'
-    }
 
-    method() {
-        return this.constructor.postMethod();
-    }
+  url() {
+    return 'admin/add_teacher'
+  }
 
-    ownResponses() {
-        return [SuccessfulApiResponse];
-    }
+  method() {
+    return this.constructor.postMethod();
+  }
 
-    needsAuthorization() {
-        return true;
-    }
+  ownResponses() {
+    return [SuccessfulApiResponse];
+  }
+
+  needsAuthorization() {
+    return true;
+  }
 }
