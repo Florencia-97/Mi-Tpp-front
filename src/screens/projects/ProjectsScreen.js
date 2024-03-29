@@ -73,6 +73,7 @@ export default function ProjectsScreen({app}) {
     const stepsDic = {
         'WAITING_FOR_APPROVE': 1,
         'IN_DEVELOPMENT': 2,
+        'PENDING_OF_PRESENTATION': 3
     }
 
     useEffect(() => {
@@ -110,10 +111,13 @@ export default function ProjectsScreen({app}) {
                                                }}/>
                         :
                         currentStep === 2 ?
-                            <BinnacleView app={app} projectId={project.id} finishProject={() => setCurrentStep((3))}/>
+                            <BinnacleView app={app} projectId={project.id} finishProject={() => {
+                                app.apiClient().finishProject(project.id);
+                                setCurrentStep(3);
+                            }}/>
                             :
                             currentStep === 3 ?
-                                <PendingOfApprovalView isStudent={isStudent} gradeProject={() => setCurrentStep((4))}/>
+                                <PendingOfApprovalView project={project} isStudent={isStudent} gradeProject={() => setCurrentStep((4))}/>
                                 : <FinishedView/>
                 }
             </>

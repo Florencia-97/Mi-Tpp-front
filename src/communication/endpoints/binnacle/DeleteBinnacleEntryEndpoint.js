@@ -4,13 +4,14 @@ import SuccessfulApiResponse from "@eryxcoop/appyx-comm/src/responses/generalRes
 
 export default class DeleteBinnacleEntryEndpoint extends Endpoint {
 
-    constructor(projectId) {
+    constructor(projectId, binnacleId) {
         super();
         this._projectId = projectId;
+        this._binnacleId = binnacleId;
     }
 
     url() {
-        return 'projects/'+this._projectId+'/binnacle'
+        return 'projects/'+this._projectId+'/binnacle/'+this._binnacleId;
     }
 
     method() {

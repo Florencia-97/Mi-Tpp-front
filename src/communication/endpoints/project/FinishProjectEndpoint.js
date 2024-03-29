@@ -10,11 +10,11 @@ export default class FinishProjectEndpoint extends Endpoint {
 
 
     url() {
-        return 'project/' + this._projectId + '/finish';
+        return 'projects/' + this._projectId + '/finish';
     }
 
     method() {
-        this.constructor.postMethod()
+        return this.constructor.postMethod();
     }
 
     ownResponses() {

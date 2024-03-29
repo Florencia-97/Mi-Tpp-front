@@ -1,31 +1,11 @@
 import {useTheme} from "@emotion/react";
 import * as React from "react";
 import {Button, Typography} from "@mui/material";
+import {amountOfDaysInMonth, currentDay, currentMonth, currentMonthName, currentYear} from "../utils";
+import IconButton from "./buttons/IconButton";
 
-function currentDay() {
-    const date = new Date();
-    return date.getDate();
-}
-
-function currentMonth() {
-    const date = new Date();
-    return date.getMonth();
-}
-
-function currentMonthName() {
-    const months = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
-    return months[currentMonth()];
-}
-
-function currentYear() {
-    const date = new Date();
-    return date.getFullYear();
-}
-
-function amountOfDaysInMonth(monthNumber, year) {
-    const date = new Date(year, monthNumber+1, 0);
-    return date.getDate();
-}
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 const addEmptyDaysTo = (days, amount) => {
     for (let i = 0; i < amount; i++) {
@@ -36,16 +16,18 @@ const addEmptyDaysTo = (days, amount) => {
 export default function Calendar({dateSelectedChanged}) {
     const theme = useTheme();
     const [daySelected, setDaySelected] = React.useState(currentDay());
+    const [monthSelected, setMonthSelected] = React.useState(currentMonth());
+    const [yearSelected, setYearSelected] = React.useState(currentYear());
     const style = styles(theme);
 
     // Arrays with numbers one to 31
-    const _amountOfDaysInMonth = amountOfDaysInMonth(currentMonth(), currentYear());
+    const _amountOfDaysInMonth = amountOfDaysInMonth(monthSelected, yearSelected);
     const days = Array.from(Array(_amountOfDaysInMonth).keys()).map(i => i + 1);
     addEmptyDaysTo(days, new Date(currentYear(), currentMonth(), 1).getDay());
 
     const onDaySelected = (day) => {
         setDaySelected(day);
-        dateSelectedChanged(day);
+        dateSelectedChanged(day, monthSelected, yearSelected);
     }
 
     const renderDayCell = (day) => {
@@ -65,11 +47,36 @@ export default function Calendar({dateSelectedChanged}) {
         )
     }
 
+    const goBackMonth = async () => {
+        if (monthSelected === 0) {
+            setMonthSelected(11);
+            setYearSelected(yearSelected - 1);
+        } else {
+            setMonthSelected(monthSelected - 1);
+        }
+    }
+
+    const goForwardMonth = async () => {
+        if (monthSelected === 11) {
+            setMonthSelected(0);
+            setYearSelected(yearSelected + 1);
+        } else {
+            setMonthSelected(monthSelected + 1);
+        }
+    }
+
+    const getMonthSelectedName = () => {
+        const months = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+        return months[monthSelected];
+    }
+
     return (
         <div style={style.mainContainer}>
             <div>
                 <div style={style.calendarHeader}>
-                    <h3>{currentMonthName()} {currentYear()}</h3>
+                    <IconButton icon={<ArrowBackIosIcon/>} onClick={goBackMonth}/>
+                    <h3>{getMonthSelectedName()} {yearSelected}</h3>
+                    <IconButton icon={<ArrowForwardIosIcon/>} onClick={goForwardMonth}/>
                 </div>
                 <div style={style.calendarDays}>
                     {['D', 'L', 'M', 'M', 'J', 'V', 'S'].map(day => {
@@ -103,7 +110,8 @@ const styles = (theme) => {
         },
         calendarHeader: {
             display: 'flex',
-            marginBottom: '1rem'
+            marginBottom: '1rem',
+            justifyContent: 'space-between',
         },
         calendarDays: {
             display: 'grid',

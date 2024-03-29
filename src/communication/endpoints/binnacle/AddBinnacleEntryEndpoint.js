@@ -13,7 +13,7 @@ export default class AddBinnacleEntryEndpoint extends Endpoint {
     }
 
     method() {
-        this.constructor.postMethod()
+        return this.constructor.postMethod();
     }
 
     ownResponses() {

@@ -1,26 +1,26 @@
 import {Endpoint} from "@eryxcoop/appyx-comm";
-import SuccessfulApiResponse from "@eryxcoop/appyx-comm/src/responses/generalResponses/SuccessfulApiResponse";
+import BinnacleEntriesResponse from "../../responses/BinnacleEntriesResponse";
 
 export default class GetBinnacleEntriesEndpoint extends Endpoint {
 
-    constructor(projectId) {
-        super();
-        this._projectId = projectId;
-    }
+  constructor(projectId) {
+    super();
+    this._projectId = projectId;
+  }
 
-    url() {
-        return 'projects/'+this._projectId+'/binnacle'
-    }
+  url() {
+    return 'projects/' + this._projectId + '/binnacle'
+  }
 
-    method() {
-        this.constructor.getMethod()
-    }
+  method() {
+    return this.constructor.getMethod();
+  }
 
-    ownResponses() {
-        return [SuccessfulApiResponse];
-    }
+  ownResponses() {
+    return [BinnacleEntriesResponse];
+  }
 
-    needsAuthorization() {
-        return true;
-    }
+  needsAuthorization() {
+    return true;
+  }
 }
