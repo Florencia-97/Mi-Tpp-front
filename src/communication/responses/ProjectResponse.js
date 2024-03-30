@@ -20,6 +20,10 @@ export default class ProjectResponse extends SuccessfulApiResponse {
     }
 
     project() {
-        return this.content()[0];
+        return this.content();
+    }
+
+    projects() {
+        return this.content();
     }
 }

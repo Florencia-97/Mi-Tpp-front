@@ -2,6 +2,7 @@ import {TextField, Typography} from "@mui/material";
 import {useTheme} from "@emotion/react";
 import {useState} from "react";
 import ValidateActionTextDialog from "../../components/dialogs/ValidateActionTextDialog";
+import GradeProjectDialog from "./GradeProjectDialog";
 
 export default function PendingOfApprovalView({isStudent, gradeProject, project}) {
   const theme = useTheme();
@@ -11,8 +12,7 @@ export default function PendingOfApprovalView({isStudent, gradeProject, project}
 
   const gradeBtn = () => {
     return (
-      <ValidateActionTextDialog buttonLabel="Aprobar" actionLabel={"aprobar proyecto"}
-                                acceptBtnLabel={"aprobar"} onAccept={gradeProject}/>
+      <GradeProjectDialog onGrade={gradeProject}/>
     );
   }
 

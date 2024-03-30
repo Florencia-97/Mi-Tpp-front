@@ -132,7 +132,9 @@ const styles = (theme) => {
             justifyContent: 'flex-start',
             padding: '2rem',
             width: '100%',
-            gap: '25px'
+            gap: '25px',
+            overflowY: 'auto',
+            overflowX: 'hidden'
         }
     }
 }

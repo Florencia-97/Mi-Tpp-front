@@ -5,7 +5,7 @@ import { useTheme } from '@emotion/react';
 import { Typography } from '@mui/material';
 
 
-export default function BaseTextButtonDialog({children, title, buttonLabel, open, setOpen}) {
+export default function BaseTextButtonDialog({children, title, buttonLabel, open, setOpen, disabled=false}) {
   const theme = useTheme();
   const style = styles(theme);
 
@@ -19,7 +19,7 @@ export default function BaseTextButtonDialog({children, title, buttonLabel, open
 
   return (
     <>
-      <FillButton label={buttonLabel} onClick={handleClickOpen}/>
+      <FillButton label={buttonLabel} onClick={handleClickOpen} disabled={disabled}/>
       <Dialog 
         onClose={handleClose}
         open={open}>

@@ -3,7 +3,6 @@ import {useTheme} from "@emotion/react";
 import {Typography} from "@mui/material";
 import ProjectFinished from "../components/ProjectFinished";
 
-// TODO: Design 404
 
 export default function PublicProjectsScreen({app}) {
     const theme = useTheme();
@@ -12,8 +11,8 @@ export default function PublicProjectsScreen({app}) {
     const [projects, setProjects] = React.useState([]);
 
     useEffect(() => {
-        app.apiClient().getPublicProjects().then((projects) => {
-            setProjects(projects);
+        app.apiClient().getPublishedProjects().then((response) => {
+            setProjects(response.projects());
         });
     }, []);
 
@@ -22,14 +21,23 @@ export default function PublicProjectsScreen({app}) {
             <div style={style.header}>
                 Fiuba
             </div>
-            <Typography variant="body1">
-                Explora todos los proyectos públicos de FIUBA.
-            </Typography>
-            <div style={style.projectsListContainer}>
-                <ProjectFinished/>
-                <ProjectFinished/>
-                <ProjectFinished/>
-                <ProjectFinished/>
+            <div style={style.mainContainer}>
+                <Typography variant="body1">
+                    Explora todos los proyectos públicos de FIUBA.
+                </Typography>
+                <div style={style.projectsListContainer}>
+                    {projects.map((project) => {
+                        return (
+                            <ProjectFinished
+                                key={project.id}
+                                title={project.title}
+                                description={project.description}
+                                workLink={project.link_to_project}
+                                futureWorkLink={project.link_to_future_work}
+                            />
+                        );
+                    })}
+                </div>
             </div>
         </main>
     )
@@ -45,13 +53,20 @@ const styles = (theme) => {
             backgroundColor: theme.palette.primary.main,
             color: 'white',
             fontSize: '1.5rem',
+            padding: '0 2rem',
+            marginBottom: '2rem'
+        },
+        mainContainer: {
+            padding: '0 2rem',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '2rem'
         },
         projectsListContainer: {
             display: 'flex',
             flexDirection: 'column',
             gap: '15px',
             flexWrap: 'wrap',
-            padding: '2rem'
         }
     }
 }

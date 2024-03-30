@@ -66,6 +66,7 @@ export default function ProjectsScreen({app}) {
     const [hasStartedProject, setHasStartedProject] = useState(false); // false
     const [project, setProject] = useState({});
     const [currentStep, setCurrentStep] = useState(0);
+    const [loading, setLoading] = useState(false);
     let { id } = useParams();
     const style = styles(theme);
 
@@ -73,22 +74,66 @@ export default function ProjectsScreen({app}) {
     const stepsDic = {
         'WAITING_FOR_APPROVE': 1,
         'IN_DEVELOPMENT': 2,
-        'PENDING_OF_PRESENTATION': 3
+        'PENDING_OF_PRESENTATION': 3,
+        'GRADED': 4,
+        'PUBLISHED': 4,
     }
 
     useEffect(() => {
+        updateProject();
+    }, [id]);
+
+    const updateProject = async () => {
+        if (!isStudent) {
+            getProjectForTeacher();
+        } else {
+            getProjectForStudent();
+        }
+    }
+
+    const getProjectForTeacher = async () => {
+        setLoading(true);
         app.apiClient().getProjectInfoFor().then((response) => {
             setHasStartedProject(true);
-            setProject(response.project());
-            setCurrentStep(stepsDic[response.project().status]);
+            const projects = response.projects();
+            const projectSelected = projects.find((project) => project.id === id);
+            setProject(projectSelected);
+            setCurrentStep(stepsDic[projectSelected.status]);
         }).catch((e) => {
             setHasStartedProject(false);
-        })
-    }, [id]);
+        }).finally(
+          () => setLoading(false)
+        )
+    }
+
+    const getProjectForStudent = async () => {
+        setLoading(true);
+        app.apiClient().getProjectInfoFor().then((response) => {
+            const project = response.project();
+            if (project) {
+                setProject(project);
+                setCurrentStep(stepsDic[response.project().status]);
+                setHasStartedProject(true);
+            }
+        }).catch((e) => {
+            setHasStartedProject(false);
+        }).finally(
+          () => setLoading(false)
+        )
+    }
 
     const startProject = () => {
         setHasStartedProject(true);
         setCurrentStep(0);
+    }
+
+    const publishProject = async () => {
+        await app.apiClient().publishProject(project.id);
+        await updateProject();
+    }
+
+    const updateProjectToPublish = (title, description, linkToProject, linkToFutureWork) => {
+        app.apiClient().updateProjectToPublishProject(project.id, title, description, linkToProject, linkToFutureWork);
     }
 
     const renderProject = () => {
@@ -117,11 +162,24 @@ export default function ProjectsScreen({app}) {
                             }}/>
                             :
                             currentStep === 3 ?
-                                <PendingOfApprovalView project={project} isStudent={isStudent} gradeProject={() => setCurrentStep((4))}/>
-                                : <FinishedView/>
+                                <PendingOfApprovalView project={project} isStudent={isStudent} gradeProject={
+                                    (comment) => {
+                                        app.apiClient().gradeProject(project.id, comment);
+                                        setCurrentStep(4);
+                                    }}/>
+                                : <FinishedView project={project} isStudent={isStudent}
+                                                updateProjectToPublish={updateProjectToPublish}
+                                                publishProject={publishProject}/>
                 }
             </>
         )
+    }
+
+    if (loading) {
+        // Todo: make prettier
+        return (
+            <div>Loading</div>
+        );
     }
 
     return (

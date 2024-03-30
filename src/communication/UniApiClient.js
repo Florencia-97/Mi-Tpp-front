@@ -31,6 +31,10 @@ import GetStudentsWithoutProjectsEndpoint from "./endpoints/project/GetStudentsW
 import GetTeachersForProjectsEndpoint from "./endpoints/project/GetTeachersForProjectsEndpoint";
 import ApproveProjectEndpoint from "./endpoints/project/ApproveProjectEndpoint";
 import DeleteBinnacleEntryEndpoint from "./endpoints/binnacle/DeleteBinnacleEntryEndpoint";
+import GradeProjectEndpoint from "./endpoints/project/GradeProjectEndpoint";
+import PublishProjectEndpoint from "./endpoints/project/PublishProjectEndpoint";
+import UpdateProjectEndpoint from "./endpoints/project/UpdateProjectEndpoint";
+import GetAllPublishedProjectsEndpoint from "./endpoints/project/GetAllProjectsEndpoint";
 
 export default class UniApiClient extends ApiClient {
   async getIdeas(searchText = undefined) {
@@ -134,8 +138,6 @@ export default class UniApiClient extends ApiClient {
       owner: 'frodriguez@eryxsoluciones.com.ar'
     };
 
-    console.log(values, idea)
-
     const endpoint = new PublishIdeaEndpoint(idea);
     return this._callEndpoint(endpoint, values);
   }
@@ -145,10 +147,6 @@ export default class UniApiClient extends ApiClient {
 
     const endpoint = new ChangeOwnersIdeasEndpoint();
     return this._callEndpoint(endpoint, values);
-  }
-
-  async getPublicProjects() {
-    return [];
   }
 
   // Projects
@@ -168,6 +166,11 @@ export default class UniApiClient extends ApiClient {
 
   async getProjectInfoFor() {
     const endpoint = new GetProjectEndpoint();
+    return this._callEndpoint(endpoint, {});
+  }
+
+  async getPublishedProjects() {
+    const endpoint = new GetAllPublishedProjectsEndpoint();
     return this._callEndpoint(endpoint, {});
   }
 
@@ -196,18 +199,25 @@ export default class UniApiClient extends ApiClient {
     return this._callEndpoint(endpoint, {});
   }
 
-  async gradeProject(projectId) {
-    return 4;
+  async gradeProject(projectId, comment) {
+    const endpoint = new GradeProjectEndpoint(projectId);
+    return this._callEndpoint(endpoint, {comment});
   }
 
-  async publishProject(projectId, title, description, link_to_project, link_to_future_work) {
+  async publishProject(projectId) {
+    const endpoint = new PublishProjectEndpoint(projectId);
+    return this._callEndpoint(endpoint, {});
+  }
+
+  async updateProjectToPublishProject(projectId, title, description, linkToProject, linkToFutureWork) {
     const values = {
       title: title,
       description: description,
-      link_to_project: link_to_project,
-      link_to_future_work: link_to_future_work
+      link_to_project: linkToProject,
+      link_to_future_work: linkToFutureWork,
+      tags: 'ia,ml'
     }
-    const endpoint = new FinishProjectEndpoint(projectId);
+    const endpoint = new UpdateProjectEndpoint(projectId);
     return this._callEndpoint(endpoint, values);
   }
 

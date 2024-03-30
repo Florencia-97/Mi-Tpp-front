@@ -34,7 +34,7 @@ const styles = (theme) => {
             borderRadius: '5px',
             border: '#d3d3d3 solid',
             borderWidth: '2px',
-            width: '1200px',
+            width: '1000px',
             height: "220px",
             borderLeft: "solid #ff9ef3 2rem"
         },

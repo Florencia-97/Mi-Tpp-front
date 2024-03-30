@@ -5,7 +5,7 @@ import OutlineButton from "../buttons/OutlineButton";
 import {useState} from "react";
 import BaseTextButtonDialog from "./BaseTextButtonDialog";
 
-export default function ValidateActionTextDialog({actionLabel, buttonLabel, acceptBtnLabel, onAccept}) {
+export default function ValidateActionTextDialog({actionLabel, buttonLabel, acceptBtnLabel, onAccept, disabled=false}) {
     const theme = useTheme();
     const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState(false);
@@ -24,6 +24,7 @@ export default function ValidateActionTextDialog({actionLabel, buttonLabel, acce
 
     return (
         <BaseTextButtonDialog title={"Cuidado!"} open={open}
+                              disabled={disabled}
                               setOpen={setOpen} buttonLabel={buttonLabel}>
             <div style={style.bodyContainer}>
                 <Typography>

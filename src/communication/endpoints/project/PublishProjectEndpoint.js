@@ -1,7 +1,7 @@
 import {Endpoint} from "@eryxcoop/appyx-comm";
 import SuccessfulApiResponse from "@eryxcoop/appyx-comm/src/responses/generalResponses/SuccessfulApiResponse";
 
-export default class GradeProjectEndpoint extends Endpoint {
+export default class PublishProjectEndpoint extends Endpoint {
 
     constructor(projectId) {
         super();
@@ -10,7 +10,7 @@ export default class GradeProjectEndpoint extends Endpoint {
 
 
     url() {
-        return 'projects/' + this._projectId + '/grade';
+        return 'projects/' + this._projectId + '/publish';
     }
 
     method() {
