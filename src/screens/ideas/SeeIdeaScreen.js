@@ -77,8 +77,9 @@ export default function SeeIdeaScreen({app}) {
                              onChange={(a) => setComment(a.target.value)}/>
               </div>
               <div style={style.buttonsContainer}>
-                  <FillButton styles={{width: 'fit-content'}} label="Comentar" onClick={addCommentToIdea}
-                              disabled={uploadingComment}/>
+                  <FillButton styles={{width: 'fit-content'}}
+                              label="Comentar" onClick={addCommentToIdea}
+                              disabled={!comment || uploadingComment}/>
                   <OutlineButton styles={{width: 'fit-content'}}
                                  label="Volver"
                                  onClick={() => {navigation(-1)}}

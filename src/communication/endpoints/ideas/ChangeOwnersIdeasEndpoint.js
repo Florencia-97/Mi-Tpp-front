@@ -1,20 +1,24 @@
-import {Endpoint} from "@eryxcoop/appyx-comm";
-import IdeasListResponse from "../../responses/IdeasListResponse";
+import {Endpoint, SuccessfulApiResponse} from "@eryxcoop/appyx-comm";
 
 export default class ChangeOwnersIdeasEndpoint extends Endpoint {
-    url() {
-        return 'ideas/'
-    }
+  constructor(idea) {
+    super();
+    this._idea = idea;
+  }
 
-    method() {
-        this.constructor.getMethod()
-    }
+  url() {
+    return 'ideas/' + this._idea.id
+  }
 
-    ownResponses() {
-        return [IdeasListResponse];
-    }
+  method() {
+    return 'PUT';
+  }
 
-    needsAuthorization() {
-        return true;
-    }
+  ownResponses() {
+    return [SuccessfulApiResponse];
+  }
+
+  needsAuthorization() {
+    return true;
+  }
 }

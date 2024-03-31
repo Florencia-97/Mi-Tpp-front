@@ -42,22 +42,32 @@ function IdeasScreen({app}) {
     }
 
     const deleteIdea = async (idea) => {
-        const response = await app.apiClient().deleteIdea(idea);
-        if (response.hasError()) {
-            setAlert({message: 'No se pudo eliminar la idea.', type: 'error'});
-        } else {
+        try {
+            await app.apiClient().deleteIdea(idea);
             showSuccessAlert("Se ha eliminado la idea correctamente.");
             await getIdeas();
+        } catch (e) {
+            setAlert({message: 'No se pudo eliminar la idea.', type: 'error'});
         }
     }
 
     const publishIdea = async (idea) => {
-        const response = await app.apiClient().publishIdea(idea);
-        if (response.hasError()) {
-            setAlert({message: 'No se pudo publicar la idea.', type: 'error'});
-        } else {
+        try {
+            await app.apiClient().publishIdea(idea);
             showSuccessAlert("Se ha publicado la idea correctamente.");
             await getIdeas();
+        } catch (e) {
+            setAlert({message: 'No se pudo publicar la idea.', type: 'error'});
+        }
+    }
+
+    const changeOwnerOfIdea = async (idea, newOwnersEmail) => {
+        try {
+            await app.apiClient().changeOwnersIdeas(idea, newOwnersEmail);
+            showSuccessAlert("Se cambio el dueño correctamente!");
+            await getIdeas();
+        } catch (e) {
+            setAlert({message: 'No se pudo publicar la idea.', type: 'error'});
         }
     }
 
@@ -66,6 +76,7 @@ function IdeasScreen({app}) {
                              app={app}
                              onActionSucceded={onActionSucceded}
                              deleteIdea={() => deleteIdea(idea)}
+                             changeOwnerOfIdea={(newOwnersEmail) => changeOwnerOfIdea(idea, newOwnersEmail)}
                              publishIdea={(idea) => publishIdea(idea)}/>
     });
 

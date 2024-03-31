@@ -1,5 +1,6 @@
 import {Endpoint, SuccessfulApiResponse} from "@eryxcoop/appyx-comm";
 import UsersListResponse from "../../responses/UsersListResponse";
+import {SimpleErrorResponse} from "@eryxcoop/appyx-comm/src/responses/generalResponses/SimpleErrorResponse";
 
 export default class AddAdminUserEndpoints extends Endpoint {
     url() {
@@ -11,7 +12,7 @@ export default class AddAdminUserEndpoints extends Endpoint {
     }
 
     ownResponses() {
-        return [SuccessfulApiResponse];
+        return [SuccessfulApiResponse, SimpleErrorResponse];
     }
 
     needsAuthorization() {

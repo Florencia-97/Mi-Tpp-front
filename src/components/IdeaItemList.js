@@ -10,7 +10,7 @@ import ChangeIdeasOwnerModal from "../screens/ideas/ChangeIdeasOwnerModal";
 import EditIdeaModal from "../screens/ideas/EditIdeaModal";
 
 
-export default function IdeaItemList({app, idea, deleteIdea, publishIdea, onActionSucceded}) {
+export default function IdeaItemList({app, idea, deleteIdea, publishIdea, changeOwnerOfIdea, onActionSucceded}) {
     const theme = useTheme();
     const style = styles(theme);
 
@@ -29,7 +29,7 @@ export default function IdeaItemList({app, idea, deleteIdea, publishIdea, onActi
         <div style={style.ideaRightContainer}>
             <div>
                 <Typography variant="h6" fontWeight='700'>
-                    {idea.name}
+                    {idea.title}
                 </Typography>
                 <Typography variant="body2">
                     {idea.description}
@@ -52,10 +52,7 @@ export default function IdeaItemList({app, idea, deleteIdea, publishIdea, onActi
                         publishIdea(idea);
                     }}
                 />
-                <ChangeIdeasOwnerModal
-                    app={app}
-                    onChangeInOwner={onActionSucceded}
-                />
+                <ChangeIdeasOwnerModal app={app} changeOwnerOfIdea={changeOwnerOfIdea}/>
                 <EditIdeaModal app={app} idea={idea} onEdit={onActionSucceded}/>
             </>
                 :

@@ -26,18 +26,14 @@ export class App {
         return this._session;
     }
 
-    loginUser(user, token) {
+    async loginUser(user, token) {
         this._session = new Session(user, token);
-        this._sessionStore.store(this._session);
+        await this._sessionStore.store(this._session);
     }
 
     logoutUser() {
         this._session = new Session();
         this._sessionStore.remove();
-    }
-
-    isATeacher() {
-        return false;
     }
 
     currentUser() {

@@ -6,7 +6,6 @@ import PublishIdeaEndpoint from "./endpoints/ideas/PublishIdeaEndpoint";
 import ChangeOwnersIdeasEndpoint from "./endpoints/ideas/ChangeOwnersIdeasEndpoint";
 import GetIdeaEndpoint from "./endpoints/ideas/GetIdeaEndpoint";
 import IdeaResponse from "./responses/IdeaResponse";
-import LoginEndpoint from "./endpoints/LoginEndpoint";
 import AccessEndpoint from "./endpoints/AccessEndpoint";
 import AddBinnacleEntryEndpoint from "./endpoints/binnacle/AddBinnacleEntryEndpoint";
 import GetBinnacleEntriesEndpoint from "./endpoints/binnacle/GetBinnacleEntriesEndpoint";
@@ -125,20 +124,18 @@ export default class UniApiClient extends ApiClient {
 
   async publishIdea(idea) {
     let values = {
-      title: idea.id,
-      description: idea.description,
-      published: 'True',
-      owner: idea.owner,
+      published: 'True'
     };
 
     const endpoint = new PublishIdeaEndpoint(idea);
     return this._callEndpoint(endpoint, values);
   }
 
-  async changeOwnersIdeas(idea) {
-    let values = {};
-
-    const endpoint = new ChangeOwnersIdeasEndpoint();
+  async changeOwnersIdeas(idea, newOwnersEmail) {
+    let values = {
+      owner: newOwnersEmail
+    };
+    const endpoint = new ChangeOwnersIdeasEndpoint(idea);
     return this._callEndpoint(endpoint, values);
   }
 
