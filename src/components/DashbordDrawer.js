@@ -22,7 +22,6 @@ export default function DashboardDrawer({app, children, setActiveScreen, activeS
 
     useEffect(() => {
         const path = location.pathname.split('/')[1];
-        console.log(path);
         setActiveScreen(path);
     }, [location]);
 

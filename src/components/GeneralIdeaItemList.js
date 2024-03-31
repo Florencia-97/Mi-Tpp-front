@@ -3,11 +3,14 @@ import {Typography} from "@mui/material";
 
 
 // Icons
-import SeeIdeaModal from "../screens/ideas/SeeIdeaModal";
+import IconButton from "./buttons/IconButton";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import {useNavigate} from "react-router-dom";
 
 
 export default function GeneralIdeaItemList({idea, app }) {
     const theme = useTheme();
+    const navigator = useNavigate();
     const style = styles(theme);
 
     const typeColors = {
@@ -43,8 +46,10 @@ export default function GeneralIdeaItemList({idea, app }) {
             </div>
         </div>
             <div style={style.iconsContainer}>
-                <SeeIdeaModal idea={idea} app={app}/>
+                <IconButton icon={<VisibilityIcon/>} onClick={() =>{navigator('/see_idea', {state: {idea}})}}/>
+                {/*<SeeIdeaModal idea={idea} app={app}/>*/}
             </div>
+
         </div>
     )
 }

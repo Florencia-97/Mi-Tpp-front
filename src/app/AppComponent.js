@@ -16,6 +16,7 @@ import StatsScreen from "../screens/StatsScreen";
 import TeacherListScreen from "../screens/admin/TeacherListScreen";
 import AdminListScreen from "../screens/admin/AdminListScreen";
 import ProjectsAsRoleScreen from "../screens/ProjectsAsTeacherScreen";
+import SeeIdeaScreen from "../screens/ideas/SeeIdeaScreen";
 
 
 function AppComponent({app}) {
@@ -80,6 +81,7 @@ function AppComponent({app}) {
                         <Route path="my_ideas" element={<IdeasScreen app={app}/>}/>
                         <Route path="profile" element={<ProfileScreen app={app}/>}/>
                         <Route path="public_ideas" element={<PublicIdeasScreen app={app}/>}/>
+                        <Route path="see_idea" element={<SeeIdeaScreen app={app}/>}/>
                         <Route path="projects_list" element={<ProjectsAsRoleScreen app={app} asSupervisor={false} key={'supervisor'}/>}/>
                         <Route path="projects_supervisor_list" element={<ProjectsAsRoleScreen app={app} asSupervisor={true} key={'teacher'}/>}/>
                         <Route path="stats" element={<StatsScreen app={app}/>}/>
