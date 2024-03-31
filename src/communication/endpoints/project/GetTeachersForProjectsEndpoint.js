@@ -1,5 +1,5 @@
 import {Endpoint} from "@eryxcoop/appyx-comm";
-import StudentsResponse from "../../responses/StudentsResponse";
+import UsersResponse from "../../responses/UsersResponse";
 
 export default class GetTeachersForProjectsEndpoint extends Endpoint {
 
@@ -12,7 +12,7 @@ export default class GetTeachersForProjectsEndpoint extends Endpoint {
   }
 
   ownResponses() {
-    return [StudentsResponse];
+    return [UsersResponse];
   }
 
   needsAuthorization() {

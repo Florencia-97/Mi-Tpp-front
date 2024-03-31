@@ -13,7 +13,7 @@ import ArticleIcon from '@mui/icons-material/Article';
 import PendingOfApprovalView from "./PendingOfApprovalView";
 import FinishedView from "./FinishedView";
 import {useEffect, useState} from "react";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 
 function StepsProjectState({currentStep}) {
@@ -66,12 +66,15 @@ export default function ProjectsScreen({app}) {
     const [hasStartedProject, setHasStartedProject] = useState(false); // false
     const [project, setProject] = useState({});
     const [currentStep, setCurrentStep] = useState(0);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const navigator = useNavigate();
+
     let { id } = useParams();
     const style = styles(theme);
 
     const isStudent = app.currentUser().isStudent();
     const stepsDic = {
+        'INITIAL': 0,
         'WAITING_FOR_APPROVE': 1,
         'IN_DEVELOPMENT': 2,
         'PENDING_OF_PRESENTATION': 3,
@@ -110,10 +113,13 @@ export default function ProjectsScreen({app}) {
         setLoading(true);
         app.apiClient().getProjectInfoFor().then((response) => {
             const project = response.project();
-            if (project) {
+            if (project.status) {
                 setProject(project);
-                setCurrentStep(stepsDic[response.project().status]);
+                setCurrentStep(stepsDic[project.status]);
                 setHasStartedProject(true);
+            } else {
+                setHasStartedProject(false);
+                setCurrentStep(0);
             }
         }).catch((e) => {
             setHasStartedProject(false);
@@ -132,6 +138,11 @@ export default function ProjectsScreen({app}) {
         await updateProject();
     }
 
+    const declineProject = async (comment) => {
+        await app.apiClient().declineProject(project.id, comment);
+        navigator('/projects_list');
+    }
+
     const updateProjectToPublish = (title, description, linkToProject, linkToFutureWork) => {
         app.apiClient().updateProjectToPublishProject(project.id, title, description, linkToProject, linkToFutureWork);
     }
@@ -146,10 +157,15 @@ export default function ProjectsScreen({app}) {
                 </div>
                 <StepsProjectState currentStep={currentStep}/>
                 {currentStep === 0 ?
-                    <PendingOfProposalView app={app} presentProposal={() => setCurrentStep((1))}/>
+                    <PendingOfProposalView app={app}
+                                           project={project}
+                                           onProposalPresented={() => setCurrentStep(1)}/>
                     :
                     currentStep === 1 ?
-                        <PendingOfRevisionView project={project} isStudent={isStudent}
+                        <PendingOfRevisionView project={project}
+                                               app={app}
+                                               declineProject={declineProject}
+                                               isStudent={isStudent}
                                                approveProject={() => {
                                                    app.apiClient().approveProject(project.id);
                                                    setCurrentStep(2);
@@ -176,7 +192,7 @@ export default function ProjectsScreen({app}) {
     }
 
     if (loading) {
-        // Todo: make prettier
+        // Todo: make nicer
         return (
             <div>Loading</div>
         );

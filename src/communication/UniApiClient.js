@@ -35,6 +35,9 @@ import GradeProjectEndpoint from "./endpoints/project/GradeProjectEndpoint";
 import PublishProjectEndpoint from "./endpoints/project/PublishProjectEndpoint";
 import UpdateProjectEndpoint from "./endpoints/project/UpdateProjectEndpoint";
 import GetAllPublishedProjectsEndpoint from "./endpoints/project/GetAllProjectsEndpoint";
+import GetProjectsAsSupervisorEndpoint from "./endpoints/project/GetProjectsAsSupervisorEndpoint";
+import UpdateSupervisorOfProjectEndpoint from "./endpoints/project/AddSupervisorToProjectEndpoint";
+import DeclineProjectEndpoint from "./endpoints/project/DeclineProjectEndpoint";
 
 export default class UniApiClient extends ApiClient {
   async getIdeas(searchText = undefined) {
@@ -135,7 +138,7 @@ export default class UniApiClient extends ApiClient {
       title: idea.id,
       description: idea.description,
       published: 'True',
-      owner: 'frodriguez@eryxsoluciones.com.ar'
+      owner: idea.owner,
     };
 
     const endpoint = new PublishIdeaEndpoint(idea);
@@ -179,6 +182,16 @@ export default class UniApiClient extends ApiClient {
     return this._callEndpoint(endpoint, {}, errorHandler);
   }
 
+  async getSupervisorProjects(errorHandler) {
+    const endpoint = new GetProjectsAsSupervisorEndpoint();
+    return this._callEndpoint(endpoint, {}, errorHandler);
+  }
+
+  async addSupervisorToProject(projectId, supervisorEmail) {
+    const endpoint = new UpdateSupervisorOfProjectEndpoint(projectId);
+    return this._callEndpoint(endpoint, {supervisor: supervisorEmail});
+  }
+
   async getStudentsWithoutProjects() {
     const endpoint = new GetStudentsWithoutProjectsEndpoint();
     return this._callEndpoint(endpoint, {});
@@ -207,6 +220,11 @@ export default class UniApiClient extends ApiClient {
   async publishProject(projectId) {
     const endpoint = new PublishProjectEndpoint(projectId);
     return this._callEndpoint(endpoint, {});
+  }
+
+  async declineProject(projectId, comment) {
+    const endpoint = new DeclineProjectEndpoint(projectId);
+    return this._callEndpoint(endpoint, {comment});
   }
 
   async updateProjectToPublishProject(projectId, title, description, linkToProject, linkToFutureWork) {

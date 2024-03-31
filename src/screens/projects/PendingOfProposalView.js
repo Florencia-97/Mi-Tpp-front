@@ -4,34 +4,35 @@ import ValidateActionTextDialog from "../../components/dialogs/ValidateActionTex
 import {useEffect, useState} from "react";
 import AddStudentToProjectModal from "./AddStudentToProjectModal";
 
-export default function PendingOfProposalView({app, presentProposal}) {
+export default function PendingOfProposalView({app, project, onProposalPresented}) {
   const theme = useTheme();
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [link, setLink] = useState('');
+  const [title, setTitle] = useState(project.title);
+  const [description, setDescription] = useState(project.description);
+  const [link, setLink] = useState(project.link);
   const [students, setStudents] = useState([]);
   const [teachers, setTeachers] = useState([]);
   const [tags, setTags] = useState('');
-
   const [possibleStudents, setPossibleStudents] = useState([]);
+  const [possibleTeachers, setPossibleTeachers] = useState([]);
 
   useEffect(() => {
     app.apiClient().getStudentsWithoutProjects().then((response) => {
-      setPossibleStudents(response.students());
+      setPossibleStudents(response.users());
     });
   }, []);
 
   useEffect(() => {
     app.apiClient().getTeachersToSelect().then((response) => {
-      setPossibleStudents(response.students());
+      setPossibleTeachers(response.users());
     });
   }, []);
+
 
   const style = styles(theme);
   const currentUser = app.currentUser();
 
   const presentBtn = () => {
-    const _students = [...students, {email:currentUser.email()}];
+    const _students = [...students, {email: currentUser.email()}];
     const onAccept = async () => {
       const project = {
         title: title,
@@ -42,7 +43,7 @@ export default function PendingOfProposalView({app, presentProposal}) {
         link: link
       }
       await app.apiClient().createProject(project);
-      presentProposal();
+      onProposalPresented();
     }
 
     return (
@@ -89,7 +90,7 @@ export default function PendingOfProposalView({app, presentProposal}) {
       <div style={style.personsContainer}>
         {teachers.map((student) => renderPerson(student))}
         <div style={style.personContainer}>
-          <AddStudentToProjectModal options={possibleStudents} onAdd={onAddTeacher} type={'Tutor/Co-Tutor'}/>
+          <AddStudentToProjectModal options={possibleTeachers} onAdd={onAddTeacher} type={'Tutor/Co-Tutor'}/>
         </div>
       </div>
     );
@@ -104,13 +105,20 @@ export default function PendingOfProposalView({app, presentProposal}) {
           </Typography>
           {presentBtn()}
         </div>
-        <TextField id="project-title" label="Titulo" variant="outlined" onChange={
+        <TextField id="project-title"
+                   value={title|| ''}
+                   label="Titulo" variant="outlined" onChange={
           (e) => setTitle(e.target.value)}
         />
-        <TextField id="description" label="Breve descripción" multiline rows={3} variant="outlined" onChange={
+        <TextField id="description"
+                   value={description || ''}
+                   label="Breve descripción" multiline rows={3} variant="outlined" onChange={
           (e) => setDescription(e.target.value)}
         />
-        <TextField id="drive-link" label="Link Drive" variant="outlined" onChange={
+        <TextField id="drive-link"
+                   value={link ||  ''}
+                   label="Link Drive" variant="outlined"
+                   onChange={
           (e) => setLink(e.target.value)}
         />
         <div style={{display: "flex", justifyContent: "space-between"}}>

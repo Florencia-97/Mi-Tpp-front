@@ -1,6 +1,6 @@
 import {SuccessfulApiResponse} from "@eryxcoop/appyx-comm";
 
-export default class StudentsResponse extends SuccessfulApiResponse {
+export default class UsersResponse extends SuccessfulApiResponse {
   static defaultResponse() {
     return {
       object: [
@@ -18,7 +18,7 @@ export default class StudentsResponse extends SuccessfulApiResponse {
     }
   }
 
-  students() {
+  users() {
     return this.content();
   }
 }

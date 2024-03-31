@@ -4,6 +4,7 @@ import {useTheme} from '@mui/material/styles';
 import LogoutIcon from '@mui/icons-material/Logout';
 import LightbulbOutlinedIcon from '@mui/icons-material/LightbulbOutlined';
 import FolderOpenIcon from '@mui/icons-material/FolderOpen';
+import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
 import PublicIcon from '@mui/icons-material/Public';
 import IconButton from './buttons/IconButton';
 import ValidateActionIconDialog from './dialogs/ValidateActionIconDialog';
@@ -11,11 +12,20 @@ import {Avatar, Button} from "@mui/material";
 import BarChartIcon from '@mui/icons-material/BarChart';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import SchoolIcon from '@mui/icons-material/School';
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
+import {useEffect} from "react";
 
 export default function DashboardDrawer({app, children, setActiveScreen, activeScreen, user}) {
     const theme = useTheme();
     const navigate = useNavigate();
+    const location = useLocation();
+
+    useEffect(() => {
+        const path = location.pathname.split('/')[1];
+        console.log(path);
+        setActiveScreen(path);
+    }, [location]);
+
     const style = styles(theme);
 
     const isStudent = user.isStudent();
@@ -54,8 +64,6 @@ export default function DashboardDrawer({app, children, setActiveScreen, activeS
         );
     }
 
-    // render user picture as icon
-
     const userIcon = () => {
         return (
             <Button onClick={() => {
@@ -82,6 +90,7 @@ export default function DashboardDrawer({app, children, setActiveScreen, activeS
             {userIcon()}
             {iconDrawerButton(<PublicIcon sx={{color: '#ffffff'}}/>, "public_ideas")}
             {iconDrawerButton(<FolderOpenIcon sx={{color: '#ffffff'}}/>, "projects_list")}
+            {iconDrawerButton(<SupervisedUserCircleIcon sx={{color: '#ffffff'}}/>, "projects_supervisor_list")}
             {iconDrawerButton(<BarChartIcon sx={{color: '#ffffff'}}/>, "stats")}
             {logOutBtn()}
         </>

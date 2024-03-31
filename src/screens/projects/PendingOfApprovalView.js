@@ -19,7 +19,7 @@ export default function PendingOfApprovalView({isStudent, gradeProject, project}
   const studentView = () => {
     return (
       <div style={style.contentContainer}>
-        <Typography variant="h6">
+        <Typography variant="h5">
           El proyecto está pendiente de revisión!
         </Typography>
         <Typography variant="body1">
@@ -41,10 +41,12 @@ export default function PendingOfApprovalView({isStudent, gradeProject, project}
   const teacherView = () => {
     return (
       <div style={style.contentContainer}>
-        {gradeBtn()}
-        <Typography variant="h6">
-          El proyecto está pendiente de revisión!
-        </Typography>
+        <div style={style.headerContainer}>
+          <Typography variant="h5">
+            El proyecto está pendiente de revisión!
+          </Typography>
+          {gradeBtn()}
+        </div>
         <Typography variant="body1">
           Drive al proyecto completado por el equipo.
         </Typography>
@@ -80,6 +82,11 @@ const styles = (theme) => {
       flexDirection: 'column',
       gap: '15px',
       height: '100%'
+    },
+    headerContainer: {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
     },
     noProjectContainer: {
       display: 'flex',

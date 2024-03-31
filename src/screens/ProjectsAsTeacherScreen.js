@@ -5,7 +5,7 @@ import {useEffect, useState} from "react";
 import ProjectItemList from "../components/ProjectItemList";
 import {useNavigate} from "react-router-dom";
 
-function ProjectsAsTeacherScreen({app}) {
+function ProjectsAsRoleScreen({app, asSupervisor, key}) {
   const theme = useTheme();
   const navigate = useNavigate();
   const [projects, setProjects] = useState([])
@@ -19,30 +19,38 @@ function ProjectsAsTeacherScreen({app}) {
     const errorHandler = (error) => {
       setProjects([]);
     }
-    const response = await app.apiClient().getTeacherProjects(errorHandler);
+    let response;
+    if (asSupervisor) {
+      response = await app.apiClient().getSupervisorProjects(errorHandler);
+    } else {
+      response = await app.apiClient().getTeacherProjects(errorHandler);
+    }
     if (!response.hasError()) {
-      setProjects(response.projects());
+      const _projects = response.projects();
+      if (_projects[0]) {
+        setProjects(_projects);
+      } else {
+        setProjects([]);
+      }
     }
   }
 
   return (
     <>
-      <div style={style.barContainer}>
+      <div style={style.barContainer} key={key}>
         <Typography variant="h5">
-          Tus proyectos
+          Tus proyectos {asSupervisor ? "como supervisor" : "como tutor/ co-tutor"}
         </Typography>
       </div>
       <div style={style.projectListContainer}>
         {projects.map(
           project => {
             return (
-              <div style={style.projectContainer}>
-                <ProjectItemList project={project} goToProject={
-                  (id) => {
-                    navigate('/see_project/' + id)
-                  }
-                }/>
-              </div>
+              <ProjectItemList project={project} goToProject={
+                (id) => {
+                  navigate('/see_project/' + id)
+                }
+              }/>
             )
           }
         )}
@@ -68,13 +76,8 @@ const styles = (theme) => {
       flexDirection: 'column',
       justifyContent: 'flex-start',
       gap: '15px'
-    },
-    projectContainer: {
-      backgroundColor: theme.palette.background.white,
-      width: '100%',
-      padding: '1rem',
     }
   }
 }
 
-export default observer(ProjectsAsTeacherScreen);
+export default observer(ProjectsAsRoleScreen);

@@ -4,7 +4,7 @@ import React from "react";
 import NotfoundScreen from '../screens/NotFoundScreen';
 import GlobalStyles from '../components/GlobalStyles';
 import HomeScreen from '../screens/HomeScreen';
-import LoginStudentScreen from "../screens/login/LoginStudentScreen";
+import AccessScreen from "../screens/login/AccessScreen";
 import {observer} from "mobx-react";
 import TeacherWaitingForApprovalScreen from "../screens/TeacherWaitingForApprovalScreen";
 import PublicProjectsScreen from "../screens/PublicProjectsScreen";
@@ -13,9 +13,9 @@ import ProjectsScreen from "../screens/projects/ProjectsScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import PublicIdeasScreen from "../screens/ideas/PublicIdeasScreen";
 import StatsScreen from "../screens/StatsScreen";
-import ProjectsAsTeacherScreen from "../screens/ProjectsAsTeacherScreen";
 import TeacherListScreen from "../screens/admin/TeacherListScreen";
 import AdminListScreen from "../screens/admin/AdminListScreen";
+import ProjectsAsRoleScreen from "../screens/ProjectsAsTeacherScreen";
 
 
 function AppComponent({app}) {
@@ -57,7 +57,7 @@ function AppComponent({app}) {
                 <BrowserRouter>
                     <Routes>
                         <Route path="/projects" element={<PublicProjectsScreen app={app}/>}/>
-                        <Route path="/*" element={<LoginStudentScreen app={app}/>}/>
+                        <Route path="/*" element={<AccessScreen app={app}/>}/>
                     </Routes>
                 </BrowserRouter>
             );
@@ -80,13 +80,14 @@ function AppComponent({app}) {
                         <Route path="my_ideas" element={<IdeasScreen app={app}/>}/>
                         <Route path="profile" element={<ProfileScreen app={app}/>}/>
                         <Route path="public_ideas" element={<PublicIdeasScreen app={app}/>}/>
-                        <Route path="projects_list" element={<ProjectsAsTeacherScreen app={app}/>}/>
+                        <Route path="projects_list" element={<ProjectsAsRoleScreen app={app} asSupervisor={false} key={'supervisor'}/>}/>
+                        <Route path="projects_supervisor_list" element={<ProjectsAsRoleScreen app={app} asSupervisor={true} key={'teacher'}/>}/>
                         <Route path="stats" element={<StatsScreen app={app}/>}/>
                         <Route path="admins_list" element={<AdminListScreen app={app}/>}/>
                         <Route path="teachers_list" element={<TeacherListScreen app={app}/>}/>
                     </Route>
                     <Route path="/projects" element={<PublicProjectsScreen app={app}/>}/>
-                    {/*<Route path="*" element={<Navigate to="/404"/>}/>*/}
+                    <Route path="*" element={<Navigate to="/404"/>}/>
                 </Routes>
             </BrowserRouter>
         );

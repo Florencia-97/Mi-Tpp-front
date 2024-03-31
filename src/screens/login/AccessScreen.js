@@ -6,9 +6,9 @@ import {useNavigate} from "react-router-dom";
 import User from "../../app/User";
 
 
-export default function LoginStudentScreen({app}) {
+export default function AccessScreen({app}) {
     const theme = useTheme();
-    const navigation = useNavigate();
+    const navigator = useNavigate();
     const [userLogin, setUserLogin] = React.useState('STUDENT');
 
     const roleOptions = ['STUDENT', 'TEACHER', 'ADMIN'];
@@ -25,6 +25,7 @@ export default function LoginStudentScreen({app}) {
                 role: userLogin
             })
             await app.loginUser(appUser, response.token());
+            navigator('/public_ideas');
         },
         onError: (error) => {
             console.log('Login Failed:', error)
@@ -43,6 +44,7 @@ export default function LoginStudentScreen({app}) {
                 role: userLogin
             })
             await app.loginUser(appUser, response.token());
+            navigator('/public_ideas');
         },
         onError: (error) => console.log('Register Failed:', error)
     });
