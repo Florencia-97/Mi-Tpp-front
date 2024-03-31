@@ -1,9 +1,7 @@
 import React from "react";
 import {Typography} from "@mui/material";
 import {useTheme} from "@emotion/react";
-
-// TODO: Design 404
-
+import OutlineButton from "../components/buttons/OutlineButton";
 
 
 export default function TeacherWaitingForApprovalScreen({app}) {
@@ -19,6 +17,7 @@ export default function TeacherWaitingForApprovalScreen({app}) {
                 <Typography variant="body1" color={'white'}>
                     Tu cuenta será revisada por un administrador y confirmada lo antes posible!
                 </Typography>
+                <OutlineButton onClick={() => app.logoutUser()} label={'Cerrar sesión'} styles={{color: 'white'}}/>
             </div>
         </main>
     )

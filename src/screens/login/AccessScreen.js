@@ -14,33 +14,15 @@ export default function AccessScreen({app}) {
     const roleOptions = ['STUDENT', 'TEACHER', 'ADMIN'];
     const otherRoleOptions = roleOptions.filter(role => role !== userLogin);
 
-    const login = useGoogleLogin({
+    const access = useGoogleLogin({
         onSuccess: async (codeResponse) => {
-            const response = await app.apiClient().loginUser(codeResponse.access_token);
-            const appUser = new User({
-                email: response.email(),
-                name: '',
-                picture: response.picture(),
-                canOperate: response.canUserOperate(),
-                role: userLogin
-            })
-            await app.loginUser(appUser, response.token());
-            navigator('/public_ideas');
-        },
-        onError: (error) => {
-            console.log('Login Failed:', error)
-        }
-    });
-
-    const register = useGoogleLogin({
-        onSuccess: async (codeResponse) => {
-            const response = await app.apiClient().registerUser(codeResponse.access_token, userLogin);
+            const response = await app.apiClient().accessUser(codeResponse.access_token, userLogin);
 
             const appUser = new User({
                 email: response.email(),
                 name: response.username(),
                 picture: response.picture(),
-                canOperate: response.canOperate,
+                canOperate: response.canUserOperate(),
                 role: userLogin
             })
             await app.loginUser(appUser, response.token());
@@ -61,14 +43,10 @@ export default function AccessScreen({app}) {
                 </div>
                 <div style={style.rightContainer}>
                     <Typography variant="h4"> Mi TPP </Typography>
-                    <div style={{display: 'flex', gap: '10px', flexDirection: 'column'}}>
+                    <div>
                         <Button style={{color: 'white', backgroundColor: theme.palette.primary.main, width: '100%'}}
-                                variant={'outlined'} onClick={() => login()}>
-                            Ingresá con Google
-                        </Button>
-                        <Button style={{color: theme.palette.primary.main, width: '100%'}} variant={'outlined'}
-                                onClick={() => register()}>
-                            registrate
+                                variant={'outlined'} onClick={() => access()}>
+                            Accedé con Google
                         </Button>
                     </div>
                     <div style={style.optionsContainer}>

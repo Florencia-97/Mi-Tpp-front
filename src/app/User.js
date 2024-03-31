@@ -5,7 +5,7 @@ export default class User {
         this._name = name;
         this._picture = picture;
         this._role = role;
-        this._canOperate = true; // TODO: fix
+        this._canOperate = canOperate
     }
 
     email() {

@@ -1,9 +1,9 @@
 import {Endpoint} from "@eryxcoop/appyx-comm";
 import AccessResponse from "../responses/AccessResponse";
 
-export default class RegisterEndpoint extends Endpoint {
+export default class AccessEndpoint extends Endpoint {
     url() {
-        return 'users/register'
+        return 'users/access'
     }
 
     method() {

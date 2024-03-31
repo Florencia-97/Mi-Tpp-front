@@ -7,7 +7,7 @@ import ChangeOwnersIdeasEndpoint from "./endpoints/ideas/ChangeOwnersIdeasEndpoi
 import GetIdeaEndpoint from "./endpoints/ideas/GetIdeaEndpoint";
 import IdeaResponse from "./responses/IdeaResponse";
 import LoginEndpoint from "./endpoints/LoginEndpoint";
-import RegisterEndpoint from "./endpoints/RegisterEndpoint";
+import AccessEndpoint from "./endpoints/AccessEndpoint";
 import AddBinnacleEntryEndpoint from "./endpoints/binnacle/AddBinnacleEntryEndpoint";
 import GetBinnacleEntriesEndpoint from "./endpoints/binnacle/GetBinnacleEntriesEndpoint";
 import CreateProjectEndpoint from "./endpoints/project/CreateProjectEndpoint";
@@ -68,22 +68,12 @@ export default class UniApiClient extends ApiClient {
     const endpoint = new CreateIdeaEndpoint();
     return this._callEndpoint(endpoint, values);
   }
-
-
-  async loginUser(accessToken) {
-    let values = {
-      token: accessToken
-    };
-    const endpoint = new LoginEndpoint();
-    return this._callEndpoint(endpoint, values);
-  }
-
-  async registerUser(accessToken, userLogin) {
+  async accessUser(accessToken, userLogin) {
     let values = {
       token: accessToken,
-      user_type: userLogin === 'TEACHER' ? 'Professor' : 'Student'
+      user_type: userLogin === 'TEACHER' ? 'Professor' : 'Student' // add admin
     };
-    const endpoint = new RegisterEndpoint();
+    const endpoint = new AccessEndpoint();
     return this._callEndpoint(endpoint, values);
   }
 
