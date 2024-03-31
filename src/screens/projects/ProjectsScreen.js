@@ -99,7 +99,7 @@ export default function ProjectsScreen({app}) {
         app.apiClient().getProjectInfoFor().then((response) => {
             setHasStartedProject(true);
             const projects = response.projects();
-            const projectSelected = projects.find((project) => project.id === id);
+            const projectSelected = projects.find((project) => project.id === Number(id));
             setProject(projectSelected);
             setCurrentStep(stepsDic[projectSelected.status]);
         }).catch((e) => {

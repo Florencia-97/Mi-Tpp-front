@@ -64,15 +64,26 @@ export default function PendingOfRevisionView({app, project, isStudent, approveP
       </div>
     )
   }
+
+  const renderReadField = (label, value) => {
+    return (
+      <div style={style.readFieldContainer}>
+        <Typography variant="h7">{label}</Typography>
+        <Typography variant="body1">
+          {value}
+        </Typography>
+      </div>
+    )
+  }
   const teacherView = () => {
     return (
       <>
         {currentUserEmail !== project.supervisor ? renderAddSupervisor() : null}
         <div style={style.teacherContentContainer}>
-          <TextField value={project.title} label="Título" disabled/>
-          <TextField multiline rows={3} value={project.description} label="Descripcion" disabled/>
-          <TextField value={project.link} label="Link" disabled/>
-          <TextField value={project.students} label="Alumnos" disabled/>
+          {renderReadField("Titulo", project.title)}
+          {renderReadField("Descripcion", project.description)}
+          {renderReadField("Link", <a href={project.link} target={'_blank'}>project.link</a>)}
+          {renderReadField("Alumnos", project.students)}
           {approveBtn()}
           {denyBtn()}
         </div>
@@ -138,6 +149,11 @@ const styles = (theme) => {
       flexDirection: 'row',
       gap: '15px',
       alignItems: 'space-between'
+    },
+    readFieldContainer: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '8px'
     }
   }
 }

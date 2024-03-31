@@ -3,6 +3,8 @@ import {useTheme} from "@emotion/react";
 import ValidateActionTextDialog from "../../components/dialogs/ValidateActionTextDialog";
 import {useEffect, useState} from "react";
 import AddStudentToProjectModal from "./AddStudentToProjectModal";
+import IconButton from "../../components/buttons/IconButton";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 export default function PendingOfProposalView({app, project, onProposalPresented}) {
   const theme = useTheme();
@@ -56,7 +58,12 @@ export default function PendingOfProposalView({app, project, onProposalPresented
     setStudents([...students, student]);
   }
 
-  const renderPerson = (person) => {
+  const removeStudent = (student) => {
+    const newStudents = students.filter(s => s.email !== student.email);
+    setStudents(newStudents);
+  }
+
+  const renderPerson = (person, isStudent = true, canBeRemoved = true) => {
     const name = person.username.split(' ')[0].substring(0, 5);
     return (
       <div style={style.personContainer}>
@@ -64,6 +71,9 @@ export default function PendingOfProposalView({app, project, onProposalPresented
         <Typography style={{fontSize: "12px"}}>
           {name}
         </Typography>
+        {canBeRemoved && <IconButton icon={<DeleteIcon sx={{color: '#ffgfff'}}/>}
+                                     styles={style.deleteIconContainer}
+                                     onClick={() => isStudent ? removeStudent(person) : removeTeacher(person)}/>}
       </div>
     );
   }
@@ -72,10 +82,11 @@ export default function PendingOfProposalView({app, project, onProposalPresented
 
     return (
       <div style={style.personsContainer}>
-        {renderPerson({picture: currentUser.picture(), username: currentUser.name()})}
+        {renderPerson({picture: currentUser.picture(), username: currentUser.name()}, true, false)}
         {students.map((student) => renderPerson(student))}
         <div style={style.personContainer}>
-          <AddStudentToProjectModal options={possibleStudents} onAdd={onAddStudent}/>
+          <AddStudentToProjectModal options={possibleStudents}
+                                    onAdd={onAddStudent}/>
         </div>
       </div>
     );
@@ -85,12 +96,19 @@ export default function PendingOfProposalView({app, project, onProposalPresented
     setTeachers([...teachers, teacher]);
   }
 
+  const removeTeacher = (teacher) => {
+    const newTeachers = teachers.filter(t => t.email !== teacher.email);
+    setTeachers(newTeachers);
+  }
+
   const renderTeachers = () => {
     return (
       <div style={style.personsContainer}>
-        {teachers.map((student) => renderPerson(student))}
+        {teachers.map((student) => renderPerson(student, false))}
         <div style={style.personContainer}>
-          <AddStudentToProjectModal options={possibleTeachers} onAdd={onAddTeacher} type={'Tutor/Co-Tutor'}/>
+          <AddStudentToProjectModal options={possibleTeachers}
+                                    onAdd={onAddTeacher}
+                                    type={'Tutor/Co-Tutor'}/>
         </div>
       </div>
     );
@@ -106,7 +124,7 @@ export default function PendingOfProposalView({app, project, onProposalPresented
           {presentBtn()}
         </div>
         <TextField id="project-title"
-                   value={title|| ''}
+                   value={title || ''}
                    label="Titulo" variant="outlined" onChange={
           (e) => setTitle(e.target.value)}
         />
@@ -116,10 +134,10 @@ export default function PendingOfProposalView({app, project, onProposalPresented
           (e) => setDescription(e.target.value)}
         />
         <TextField id="drive-link"
-                   value={link ||  ''}
+                   value={link || ''}
                    label="Link Drive" variant="outlined"
                    onChange={
-          (e) => setLink(e.target.value)}
+                     (e) => setLink(e.target.value)}
         />
         <div style={{display: "flex", justifyContent: "space-between"}}>
           <div style={{flex: 1}}>
@@ -190,6 +208,7 @@ const styles = (theme) => {
       paddingBottom: '1rem',
     },
     personContainer: {
+      position: "relative",
       borderRadius: "5px",
       alignItems: "center",
       justifyContent: "center",
@@ -199,6 +218,12 @@ const styles = (theme) => {
       backgroundColor: "#dddddd",
       display: "flex",
       gap: "5px",
+    },
+    deleteIconContainer: {
+      position: 'absolute',
+      top: 0,
+      right: '-6px',
+      marginTop: '5px'
     }
   }
 }

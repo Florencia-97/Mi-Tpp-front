@@ -21,22 +21,24 @@ export default function AddStudentToProjectModal({options, onAdd, type='Estudian
   return (
     <BaseIconButtonDialog title={"Sumar " + type} open={open} setOpen={setOpen}
                           icon={<AddIcon sx={{color: '#ffgfff'}}/>}>
-      <FormGroup style={style.newIdeaFormContainer}>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={email}
-          onChange={(event) => {
-            setEmail(event.target.value);
-          }}
-        >
-          {options.map((option, index) => {
-            return <MenuItem key={option.email} value={option.email}>{option.email}</MenuItem>
-          })}
-        </Select>
-      </FormGroup>
-      <div style={style.buttonsContainer}>
-        <FillButton styles={{width: 'fit-content'}} label="Agregar" onClick={_onAdd}/>
+      <div style={style.newIdeaFormContainer}>
+        <FormGroup>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={email}
+            onChange={(event) => {
+              setEmail(event.target.value);
+            }}
+          >
+            {options.map((option, index) => {
+              return <MenuItem key={option.email} value={option.email}>{option.email}</MenuItem>
+            })}
+          </Select>
+        </FormGroup>
+        <div style={style.buttonsContainer}>
+          <FillButton styles={{width: 'fit-content'}} label="Agregar" onClick={_onAdd}/>
+        </div>
       </div>
     </BaseIconButtonDialog>
   );

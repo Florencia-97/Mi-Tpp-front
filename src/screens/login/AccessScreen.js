@@ -46,7 +46,7 @@ export default function AccessScreen({app}) {
                     <div>
                         <Button style={{color: 'white', backgroundColor: theme.palette.primary.main, width: '100%'}}
                                 variant={'outlined'} onClick={() => access()}>
-                            Accedé con Google
+                            Accede con Google
                         </Button>
                     </div>
                     <div style={style.optionsContainer}>
