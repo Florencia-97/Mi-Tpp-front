@@ -71,6 +71,9 @@ export default function SeeIdeaScreen({app}) {
                   Comentarios
               </Typography>
               {renderComments()}
+              <Typography variant="h7" fontWeight='500'>
+                  Sumar comentario
+              </Typography>
               <div style={{width: '100%'}}>
                   <TextField fullWidth label={"Comentario"} multiline rows={2} id={"comment"}
                              value={comment}
