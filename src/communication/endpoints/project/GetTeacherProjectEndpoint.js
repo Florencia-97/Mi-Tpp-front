@@ -1,10 +1,14 @@
 import {Endpoint} from "@eryxcoop/appyx-comm";
 import ProjectResponse from "../../responses/ProjectResponse";
 
-export default class GetProjectEndpoint extends Endpoint {
+export default class GetTeacherProjectEndpoint extends Endpoint {
+    constructor(projectId) {
+        super();
+        this._projectId = projectId;
+    }
 
     url() {
-        return 'projects'
+        return 'projects/' + this._projectId;
     }
 
     method() {

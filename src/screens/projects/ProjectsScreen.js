@@ -96,13 +96,12 @@ export default function ProjectsScreen({app}) {
 
     const getProjectForTeacher = async () => {
         setLoading(true);
-        app.apiClient().getProjectInfoFor().then((response) => {
+        app.apiClient().getProjectInfoForTeacher(id).then((response) => {
             setHasStartedProject(true);
-            const projects = response.projects();
-            const projectSelected = projects.find((project) => project.id === Number(id));
-            setProject(projectSelected);
-            setCurrentStep(stepsDic[projectSelected.status]);
-        }).catch((e) => {
+            const project = response.project();
+            setProject(project);
+            setCurrentStep(stepsDic[project.status]);
+        }).catch((_) => {
             setHasStartedProject(false);
         }).finally(
           () => setLoading(false)
@@ -111,7 +110,7 @@ export default function ProjectsScreen({app}) {
 
     const getProjectForStudent = async () => {
         setLoading(true);
-        app.apiClient().getProjectInfoFor().then((response) => {
+        app.apiClient().getProjectInfoForStudent().then((response) => {
             const project = response.project();
             if (project.status) {
                 setProject(project);

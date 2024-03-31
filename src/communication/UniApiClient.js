@@ -11,7 +11,7 @@ import CreateProjectEndpoint from "./endpoints/project/CreateProjectEndpoint";
 import FinishProjectEndpoint from "./endpoints/project/FinishProjectEndpoint";
 import CreateIdeaEndpoint from "./endpoints/ideas/CreateIdeaEndpoint";
 import PublishedIdeasEndpoint from "./endpoints/ideas/PublishedIdeasEndpoint";
-import GetProjectEndpoint from "./endpoints/project/GetProjectEndpoint";
+import GetTeacherProjectEndpoint from "./endpoints/project/GetTeacherProjectEndpoint";
 import GetProjectsEndpoint from "./endpoints/project/GetProjectsEndpoint";
 import GetAdminUsersEndpoints from "./endpoints/admin/GetAdminUsersEndpoints";
 import GetTeachersUsersEndpoints from "./endpoints/admin/GetTeachersUsersEndpoints";
@@ -35,6 +35,8 @@ import GetAllPublishedProjectsEndpoint from "./endpoints/project/GetAllProjectsE
 import GetProjectsAsSupervisorEndpoint from "./endpoints/project/GetProjectsAsSupervisorEndpoint";
 import UpdateSupervisorOfProjectEndpoint from "./endpoints/project/AddSupervisorToProjectEndpoint";
 import DeclineProjectEndpoint from "./endpoints/project/DeclineProjectEndpoint";
+import GetStudentProjectEndpoint from "./endpoints/project/GetStudentProjectEndpoint";
+import GetStatsEndpoint from "./endpoints/GetStatsEndpoint";
 
 export default class UniApiClient extends ApiClient {
   async getIdeas(searchText = undefined) {
@@ -149,8 +151,13 @@ export default class UniApiClient extends ApiClient {
     return this._callEndpoint(endpoint, values);
   }
 
-  async getProjectInfoFor() {
-    const endpoint = new GetProjectEndpoint();
+  async getProjectInfoForTeacher(projectId) {
+    const endpoint = new GetTeacherProjectEndpoint(projectId);
+    return this._callEndpoint(endpoint, {});
+  }
+
+  async getProjectInfoForStudent() {
+    const endpoint = new GetStudentProjectEndpoint();
     return this._callEndpoint(endpoint, {});
   }
 
@@ -284,6 +291,13 @@ export default class UniApiClient extends ApiClient {
 
   getUserProfile(email) {
     const endpoint = new GetUserProfileEndpoint(email);
+    return this._callEndpoint(endpoint, {});
+  }
+
+  //  Stats
+
+  getStats() {
+    const endpoint = new GetStatsEndpoint();
     return this._callEndpoint(endpoint, {});
   }
 }

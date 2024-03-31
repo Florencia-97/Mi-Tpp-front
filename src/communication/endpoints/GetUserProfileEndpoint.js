@@ -1,4 +1,4 @@
-import {Endpoint, SuccessfulApiResponse} from "@eryxcoop/appyx-comm";
+import {Endpoint} from "@eryxcoop/appyx-comm";
 import UserResponse from "../responses/UserResponse";
 
 export default class GetUserProfileEndpoint extends Endpoint {
