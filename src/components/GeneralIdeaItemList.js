@@ -28,7 +28,7 @@ export default function GeneralIdeaItemList({idea, app }) {
         <div style={style.ideaRightContainer}>
             <div>
                 <Typography variant="h6" fontWeight='700'>
-                    {idea.name}
+                    {idea.title}
                 </Typography>
                 <Typography variant="body2">
                     {idea.description}

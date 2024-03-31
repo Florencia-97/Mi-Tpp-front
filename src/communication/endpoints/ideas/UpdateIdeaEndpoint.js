@@ -1,6 +1,6 @@
 import {Endpoint, SuccessfulApiResponse} from "@eryxcoop/appyx-comm";
 
-export default class ChangeOwnersIdeasEndpoint extends Endpoint {
+export default class UpdateIdeaEndpoint extends Endpoint {
   constructor(idea) {
     super();
     this._idea = idea;

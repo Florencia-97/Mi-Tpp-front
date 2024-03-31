@@ -1,9 +1,7 @@
 import {ApiClient} from "@eryxcoop/appyx-comm";
 import IdeasEndpoint from "./endpoints/ideas/IdeasEndpoint";
 import DeleteIdeaEndpoint from "./endpoints/ideas/DeleteIdeaEndpoint";
-import EditIdeaEndpoint from "./endpoints/ideas/EditIdeaEndpoint";
-import PublishIdeaEndpoint from "./endpoints/ideas/PublishIdeaEndpoint";
-import ChangeOwnersIdeasEndpoint from "./endpoints/ideas/ChangeOwnersIdeasEndpoint";
+import UpdateIdeaEndpoint from "./endpoints/ideas/UpdateIdeaEndpoint";
 import GetIdeaEndpoint from "./endpoints/ideas/GetIdeaEndpoint";
 import IdeaResponse from "./responses/IdeaResponse";
 import AccessEndpoint from "./endpoints/AccessEndpoint";
@@ -50,7 +48,7 @@ export default class UniApiClient extends ApiClient {
 
   async getPublicIdeas(searchText = undefined) {
     let values = {
-      searchText: searchText || '',
+      title: searchText || '',
     };
 
     const endpoint = new PublishedIdeasEndpoint();
@@ -98,15 +96,12 @@ export default class UniApiClient extends ApiClient {
     return this._callEndpoint(endpoint, {});
   }
 
-  async editIdea(idea) {
+  async editIdea(idea, description) {
     let values = {
-      id: idea.id,
-      title: idea.title,
-      description: idea.description,
-      labels: idea.labels,
+      description: description,
     };
 
-    const endpoint = new EditIdeaEndpoint();
+    const endpoint = new UpdateIdeaEndpoint(idea);
     return this._callEndpoint(endpoint, values);
   }
 
@@ -127,7 +122,7 @@ export default class UniApiClient extends ApiClient {
       published: 'True'
     };
 
-    const endpoint = new PublishIdeaEndpoint(idea);
+    const endpoint = new UpdateIdeaEndpoint(idea);
     return this._callEndpoint(endpoint, values);
   }
 
@@ -135,7 +130,7 @@ export default class UniApiClient extends ApiClient {
     let values = {
       owner: newOwnersEmail
     };
-    const endpoint = new ChangeOwnersIdeasEndpoint(idea);
+    const endpoint = new UpdateIdeaEndpoint(idea);
     return this._callEndpoint(endpoint, values);
   }
 

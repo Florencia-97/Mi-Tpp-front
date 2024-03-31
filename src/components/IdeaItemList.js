@@ -10,7 +10,7 @@ import ChangeIdeasOwnerModal from "../screens/ideas/ChangeIdeasOwnerModal";
 import EditIdeaModal from "../screens/ideas/EditIdeaModal";
 
 
-export default function IdeaItemList({app, idea, deleteIdea, publishIdea, changeOwnerOfIdea, onActionSucceded}) {
+export default function IdeaItemList({app, idea, deleteIdea, publishIdea, changeOwnerOfIdea, editIdea}) {
     const theme = useTheme();
     const style = styles(theme);
 
@@ -53,7 +53,6 @@ export default function IdeaItemList({app, idea, deleteIdea, publishIdea, change
                     }}
                 />
                 <ChangeIdeasOwnerModal app={app} changeOwnerOfIdea={changeOwnerOfIdea}/>
-                <EditIdeaModal app={app} idea={idea} onEdit={onActionSucceded}/>
             </>
                 :
             <></>
@@ -64,6 +63,7 @@ export default function IdeaItemList({app, idea, deleteIdea, publishIdea, change
                 actionLabel="eliminar esta idea"
                 onAccept={deleteIdea}
             />
+            <EditIdeaModal idea={idea} editIdea={editIdea}/>
         </div>
     </div>
     )
