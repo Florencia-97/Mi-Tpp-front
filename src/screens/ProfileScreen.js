@@ -1,12 +1,16 @@
 import {useTheme} from "@emotion/react";
-import {Avatar, Button, TextField, Typography} from "@mui/material";
+import {Avatar, Button, FormGroup, MenuItem, Select, TextField, Typography} from "@mui/material";
 import {useEffect, useState} from "react";
 
-
+const possibleCareers = [
+    'Ingeniería en Informática',
+    'Lic. en Sistemas',
+]
 export default function ProfileScreen({app}) {
     const theme = useTheme();
     const [user, setUser] = useState(undefined);
     const [career, setCareer] = useState('');
+    const [username, setUsername] = useState('');
 
     useEffect(
         () => {
@@ -14,6 +18,7 @@ export default function ProfileScreen({app}) {
                 const user = response.user();
                 setUser(user);
                 setCareer(user.career);
+                setUsername(user.username)
             })
         }, []
     )
@@ -27,7 +32,7 @@ export default function ProfileScreen({app}) {
     }
 
     const updateProfile = async () => {
-        const response = await app.apiClient().updateUserProfile(user.email, career);
+        const response = await app.apiClient().updateUserProfile(user.email, username, career);
         setUser(response.user());
     }
 
@@ -44,15 +49,24 @@ export default function ProfileScreen({app}) {
                             {user.email}
                         </Typography>
                     </div>
-                    <div style={style.rightContainer}>
-                        <TextField fullWidth label="Nombre" value={user.username}/>
-                        <TextField fullWidth label="Apellido" value={user.username}/>
-                        <TextField fullWidth label="Carrera" value={career} onChange={
-                            (event) => {
-                                setCareer(event.target.value);
-                            }
-                        }/>
-                    </div>
+                    <FormGroup style={style.rightContainer}>
+                        <TextField fullWidth label="Nombre y Apellido"
+                                    onChange={(event) => {setUsername(event.target.value)}}
+                                    value={username}/>
+                        <Select
+                          labelId="demo-simple-select-career-label"
+                          id="select-career-select"
+                          fullWidth={true}
+                          value={career}
+                          onChange={(event) => {
+                              setCareer(event.target.value);
+                          }}
+                        >
+                            {possibleCareers.map((c) => {
+                                return <MenuItem key={c} value={c}>{c}</MenuItem>
+                            })}
+                        </Select>
+                    </FormGroup>
                 </div>
             </div>
         </>

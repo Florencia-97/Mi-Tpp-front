@@ -271,10 +271,10 @@ export default class UniApiClient extends ApiClient {
 
   // Users
 
-  updateUserProfile(email, career) {
+  updateUserProfile(email, username, career) {
     const values = {
       career: career,
-      username: 'username?',
+      username: username,
     };
     const endpoint = new UpdateUserProfileEndpoint(email);
     return this._callEndpoint(endpoint, values);

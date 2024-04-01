@@ -32,7 +32,7 @@ export default function ChangeIdeasOwnerModal({app, changeOwnerOfIdea}) {
                           icon={<ManageAccountsIcon sx={{color: '#ffgfff'}}/>}>
       <FormGroup style={style.newIdeaFormContainer}>
         <Select
-          labelId="demo-simple-select-label"
+          labelId="select-student-label"
           id="demo-simple-select"
           value={email}
           onChange={(event) => {
