@@ -4,12 +4,13 @@ import IconButton from "../buttons/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {useTheme} from "@emotion/react";
 
-export function DataPerson({initials, name, career, size = 48, fontSize = '18px'}) {
+export function DataPerson({name, career, picture, size = 48, fontSize = '18px'}) {
   return (
     <div style={{display: 'flex', gap: '15px', alignItems: 'center'}}>
-      <Avatar sx={{bgcolor: deepOrange[500], width: size, height: size, fontSize: fontSize}}>
+{/*      <Avatar sx={{bgcolor: deepOrange[500], width: size, height: size, fontSize: fontSize}}>
         {initials}
-      </Avatar>
+      </Avatar>*/}
+      <Avatar alt="Remy Sharp" src={picture}/>
       <div style={{display: 'flex', flexDirection: 'column'}}>
         <Typography style={{fontSize: '15px'}}>{name}</Typography>
         <Typography style={{fontSize: '12px'}}>{career}</Typography>
@@ -34,7 +35,10 @@ export function PersonComment({comment, userEmail, handleDelete}) {
   return (
     <div style={style.mainContainer}>
       <div style={style.leftContainer}>
-        <DataPerson fontSize={'12px'} size={32} initials={'fr'} name={owner.name} career={owner.career}/>
+        <DataPerson fontSize={'12px'} size={32}
+                    picture={owner.picture}
+                    name={owner.name}
+                    career={owner.career}/>
         <Typography style={{fontSize: '15px'}}>{comment.comment}</Typography>
       </div>
       {userEmail === owner.email && deleteCommentBtn()}

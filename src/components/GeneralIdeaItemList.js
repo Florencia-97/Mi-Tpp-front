@@ -41,13 +41,12 @@ export default function GeneralIdeaItemList({idea, app }) {
                     </Typography>
                 </div>
                 <Typography fontSize="12px">
-                    Dueño: {idea.owner}
+                    Dueño: {idea.owner.name}
                 </Typography>
             </div>
         </div>
             <div style={style.iconsContainer}>
                 <IconButton icon={<VisibilityIcon/>} onClick={() =>{navigator('/see_idea', {state: {idea}})}}/>
-                {/*<SeeIdeaModal idea={idea} app={app}/>*/}
             </div>
 
         </div>

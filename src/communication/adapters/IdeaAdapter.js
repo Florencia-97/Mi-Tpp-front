@@ -5,7 +5,7 @@ export default class IdeaAdapter {
     }
     parse() {
         return {
-            id: this._idea.title,
+            id: this._idea.id,
             title: this._idea.title,
             type: this._idea.published ? 'published' : 'draft',
             description: this._idea.description,

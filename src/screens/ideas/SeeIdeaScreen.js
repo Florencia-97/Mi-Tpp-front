@@ -24,8 +24,12 @@ export default function SeeIdeaScreen({app}) {
 
     const getComments = async () => {
         setLoading(true);
-        const response = await app.apiClient().getComments(idea.id);
-        setComments(response.comments());
+        try {
+            const response = await app.apiClient().getComments(idea.id);
+            setComments(response.comments());
+        } catch (e) {
+            setComments([]);
+        }
         setLoading(false);
     }
 
@@ -65,7 +69,10 @@ export default function SeeIdeaScreen({app}) {
               <Typography variant="h4" fontWeight='700'>
                   {idea.title}
               </Typography>
-              <DataPerson initials={"DB"} name={idea.owner} career={idea.owner}/>
+              <DataPerson initials={"DB"}
+                          picture={idea.owner.picture}
+                          name={idea.owner.name}
+                          career={idea.owner.career}/>
               {idea.description}
               <Typography variant="h6" fontWeight='700'>
                   Comentarios

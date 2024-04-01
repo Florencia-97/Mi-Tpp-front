@@ -2,8 +2,6 @@ import {ApiClient} from "@eryxcoop/appyx-comm";
 import IdeasEndpoint from "./endpoints/ideas/IdeasEndpoint";
 import DeleteIdeaEndpoint from "./endpoints/ideas/DeleteIdeaEndpoint";
 import UpdateIdeaEndpoint from "./endpoints/ideas/UpdateIdeaEndpoint";
-import GetIdeaEndpoint from "./endpoints/ideas/GetIdeaEndpoint";
-import IdeaResponse from "./responses/IdeaResponse";
 import AccessEndpoint from "./endpoints/AccessEndpoint";
 import AddBinnacleEntryEndpoint from "./endpoints/binnacle/AddBinnacleEntryEndpoint";
 import GetBinnacleEntriesEndpoint from "./endpoints/binnacle/GetBinnacleEntriesEndpoint";
@@ -104,13 +102,6 @@ export default class UniApiClient extends ApiClient {
     };
 
     const endpoint = new UpdateIdeaEndpoint(idea);
-    return this._callEndpoint(endpoint, values);
-  }
-
-  async getIdea(ideaId) {
-    let values = {id: ideaId};
-    const endpoint = new GetIdeaEndpoint();
-    return new IdeaResponse({});
     return this._callEndpoint(endpoint, values);
   }
 

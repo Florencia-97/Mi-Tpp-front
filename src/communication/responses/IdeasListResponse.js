@@ -5,6 +5,7 @@ export default class IdeasListResponse extends SuccessfulApiResponse {
     static defaultResponse() {
         return {
             object: [{
+                'id': 1,
                 'title': 'title',
                 'description': 'short description',
                 'published': true,
