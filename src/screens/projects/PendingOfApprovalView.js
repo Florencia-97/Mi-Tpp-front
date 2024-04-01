@@ -1,19 +1,23 @@
 import {TextField, Typography} from "@mui/material";
 import {useTheme} from "@emotion/react";
 import {useState} from "react";
-import ValidateActionTextDialog from "../../components/dialogs/ValidateActionTextDialog";
 import GradeProjectDialog from "./GradeProjectDialog";
+import FillButton from "../../components/buttons/FillButton";
 
-export default function PendingOfApprovalView({isStudent, gradeProject, project}) {
+export default function PendingOfApprovalView({isStudent, gradeProject, updateProjectLink, project}) {
   const theme = useTheme();
   const style = styles(theme);
 
-  const [linkToDrive, setLinkToDrive] = useState('');
+  const [linkToPresentation, setLinkToPresentation] = useState(project.link_to_presentation);
 
   const gradeBtn = () => {
     return (
       <GradeProjectDialog onGrade={gradeProject}/>
     );
+  }
+
+  const saveLinkToDrive = async () => {
+    updateProjectLink(linkToPresentation);
   }
 
   const studentView = () => {
@@ -27,13 +31,16 @@ export default function PendingOfApprovalView({isStudent, gradeProject, project}
         </Typography>
         <div style={{display: 'flex', flexDirection: 'column', gap: '15px'}}>
           <TextField label="Link a carpeta" onChange={(link) => {
-            setLinkToDrive(link.target.value);
-          }} value={linkToDrive}/>
+            setLinkToPresentation(link.target.value);
+          }} value={linkToPresentation}/>
           <Typography variant="body1">
             Recomendamos que la carpeta tenga permisos de lectura para que podamos revisar tu proyecto.
             Además Presentación, doc projecto y links a repositorios externos.
           </Typography>
         </div>
+        <FillButton label="Guardar"
+                    disabled={linkToPresentation === ''}
+                    onClick={saveLinkToDrive}/>
       </div>
     )
   }
@@ -53,7 +60,8 @@ export default function PendingOfApprovalView({isStudent, gradeProject, project}
         {
           project.link_to_presentation ?
             <Typography>
-              Link: <a rel='noopener noreferrer' href={linkToDrive} target="_blank">{project.link_to_presentation}</a>
+              Link: <a rel='noopener noreferrer' href={linkToPresentation}
+                       target="_blank">{project.link_to_presentation}</a>
             </Typography>
             :
             <Typography>

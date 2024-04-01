@@ -146,6 +146,10 @@ export default function ProjectsScreen({app}) {
         app.apiClient().updateProjectToPublishProject(project.id, title, description, linkToProject, linkToFutureWork);
     }
 
+    const updateProjectLink = async (link) => {
+        app.apiClient().updateProjectLink(project.id, link);
+    }
+
     const renderProject = () => {
         return (
             <>
@@ -177,7 +181,7 @@ export default function ProjectsScreen({app}) {
                             }}/>
                             :
                             currentStep === 3 ?
-                                <PendingOfApprovalView project={project} isStudent={isStudent} gradeProject={
+                                <PendingOfApprovalView project={project} updateProjectLink={updateProjectLink} isStudent={isStudent} gradeProject={
                                     (comment) => {
                                         app.apiClient().gradeProject(project.id, comment);
                                         setCurrentStep(4);

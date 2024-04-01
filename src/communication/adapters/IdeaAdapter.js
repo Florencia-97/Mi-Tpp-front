@@ -10,6 +10,7 @@ export default class IdeaAdapter {
             type: this._idea.published ? 'published' : 'draft',
             description: this._idea.description,
             owner: this._idea.owner,
+            similarIdea: this._idea.max_similar_idea,
         }
     }
 }

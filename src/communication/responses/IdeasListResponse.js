@@ -11,7 +11,7 @@ export default class IdeasListResponse extends SuccessfulApiResponse {
                 'published': true,
                 'owner': 'owner',
                 'tags': "tag1,tag2, tag3",
-                'maxSimilarityTitle': "title"
+                'max_similar_idea': "title"
             }],
         }
     }

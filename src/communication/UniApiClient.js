@@ -229,6 +229,14 @@ export default class UniApiClient extends ApiClient {
     return this._callEndpoint(endpoint, values);
   }
 
+  async updateProjectLink(projectId, link) {
+    const values = {
+      link_to_presentation: link
+    }
+    const endpoint = new UpdateProjectEndpoint(projectId);
+    return this._callEndpoint(endpoint, values);
+  }
+
   // Admin functions
 
   async getAdminUsers() {
