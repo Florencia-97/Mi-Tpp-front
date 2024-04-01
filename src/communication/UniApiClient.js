@@ -35,6 +35,7 @@ import UpdateSupervisorOfProjectEndpoint from "./endpoints/project/AddSupervisor
 import DeclineProjectEndpoint from "./endpoints/project/DeclineProjectEndpoint";
 import GetStudentProjectEndpoint from "./endpoints/project/GetStudentProjectEndpoint";
 import GetStatsEndpoint from "./endpoints/GetStatsEndpoint";
+import LoginAdminEndpoint from "./endpoints/LoginAdminEndpoint";
 
 export default class UniApiClient extends ApiClient {
   async getIdeas(searchText = undefined) {
@@ -65,12 +66,21 @@ export default class UniApiClient extends ApiClient {
     const endpoint = new CreateIdeaEndpoint();
     return this._callEndpoint(endpoint, values);
   }
+
   async accessUser(accessToken, userLogin) {
     let values = {
       token: accessToken,
-      user_type: userLogin === 'TEACHER' ? 'Professor' : 'Student' // add admin
+      user_type: userLogin === 'TEACHER' ? 'Professor' : 'Student'
     };
     const endpoint = new AccessEndpoint();
+    return this._callEndpoint(endpoint, values);
+  }
+
+  async loginAdmin(accessToken) {
+    let values = {
+      token: accessToken,
+    };
+    const endpoint = new LoginAdminEndpoint();
     return this._callEndpoint(endpoint, values);
   }
 

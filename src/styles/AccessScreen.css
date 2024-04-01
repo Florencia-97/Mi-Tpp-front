@@ -1,0 +1,33 @@
+
+.login-screen {
+    .main-container {
+        display: flex;
+        justify-content: center;
+        height: 100vh;
+    }
+
+    .left-container {
+        background-color: #54428E;
+        background: linear-gradient(90deg, rgba(84, 66, 142, 1) 21%, rgba(221, 67, 67, 1) 80%, rgba(219, 182, 130, 1) 100%);
+        flex: 2;
+        display: flex;
+        align-items: flex-end;
+        padding: 1rem;
+    }
+}
+
+/*Media query*/
+
+@media (max-width: 800px) {
+    .login-screen {
+        .main-container {
+            flex-direction: column;
+        }
+
+        .left-container {
+            flex: 1;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+}

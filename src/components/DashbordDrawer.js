@@ -57,7 +57,10 @@ export default function DashboardDrawer({app, children, setActiveScreen, activeS
                     icon={<LogoutIcon sx={{color: '#ffffff'}}/>}
                     acceptBtnLabel="Cerrar"
                     actionLabel="cerrar sesión"
-                    onAccept={() => app.logoutUser()}
+                    onAccept={() => {
+                        app.logoutUser();
+                        navigate('/');
+                    }}
                 />
             </div>
         );
