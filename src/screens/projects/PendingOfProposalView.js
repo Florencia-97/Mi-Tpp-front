@@ -5,6 +5,7 @@ import {useEffect, useState} from "react";
 import AddStudentToProjectModal from "./AddStudentToProjectModal";
 import IconButton from "../../components/buttons/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
+import RenderChips from "../../components/RenderChips";
 
 export default function PendingOfProposalView({app, project, onProposalPresented}) {
   const theme = useTheme();
@@ -13,7 +14,8 @@ export default function PendingOfProposalView({app, project, onProposalPresented
   const [link, setLink] = useState(project.link);
   const [students, setStudents] = useState([]);
   const [teachers, setTeachers] = useState([]);
-  const [tags, setTags] = useState('');
+  const [tags, setTags] = useState([]);
+  const [newTag, setNewTag] = useState('');
   const [possibleStudents, setPossibleStudents] = useState([]);
   const [possibleTeachers, setPossibleTeachers] = useState([]);
 
@@ -39,7 +41,7 @@ export default function PendingOfProposalView({app, project, onProposalPresented
       const project = {
         title: title,
         description: description,
-        tags: 'hola,chau',
+        tags: tags.join(','),
         students: _students.map(s => s.email).join(','),
         professors: teachers.map(t => t.email).join(','),
         link: link
@@ -92,6 +94,12 @@ export default function PendingOfProposalView({app, project, onProposalPresented
     );
   }
 
+  const removeTagNamed = (tagName) => {
+    return () => {
+      setTags(tags.filter(tag => tag !== tagName));
+    }
+  }
+
   const onAddTeacher = (teacher) => {
     setTeachers([...teachers, teacher]);
   }
@@ -111,6 +119,24 @@ export default function PendingOfProposalView({app, project, onProposalPresented
                                     type={'Tutor/Co-Tutor'}/>
         </div>
       </div>
+    );
+  }
+
+  const renderAddTag = () => {
+    return (
+      <TextField
+        label="Añadir etiqueta"
+        disabled={tags.length > 4}
+        onKeyDown={(ev) => {
+          if (ev.key === 'Enter') {
+            ev.preventDefault();
+            setTags([...tags, newTag]);
+            setNewTag('');
+          }
+        }}
+        value={newTag}
+        onChange={(e) => setNewTag(e.target.value)}
+        id="tags-add-field"/>
     );
   }
 
@@ -139,6 +165,10 @@ export default function PendingOfProposalView({app, project, onProposalPresented
                    onChange={
                      (e) => setLink(e.target.value)}
         />
+        <div style={style.tagsContainer}>
+          {renderAddTag()}
+          <RenderChips tags={tags} removeTagNamed={removeTagNamed}/>
+        </div>
         <div style={{display: "flex", justifyContent: "space-between"}}>
           <div style={{flex: 1}}>
             <Typography variant="h6">
@@ -224,6 +254,15 @@ const styles = (theme) => {
       top: 0,
       right: '-6px',
       marginTop: '5px'
+    },
+    tagsContainer: {
+      display: 'flex',
+      flexDirection: 'row',
+      gap: '15px',
+      alignItems: 'center',
+      justifyContent: 'flex-start',
+      paddingTop: '1rem',
+      paddingBottom: '1rem',
     }
   }
 }

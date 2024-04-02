@@ -3,6 +3,7 @@ import {useTheme} from "@emotion/react";
 import ValidateActionTextDialog from "../../components/dialogs/ValidateActionTextDialog";
 import {useState} from "react";
 import FillButton from "../../components/buttons/FillButton";
+import RenderChips from "../../components/RenderChips";
 
 export default function PendingOfRevisionView({app, project, isStudent, approveProject, declineProject}) {
   const theme = useTheme();
@@ -84,6 +85,10 @@ export default function PendingOfRevisionView({app, project, isStudent, approveP
           {renderReadField("Descripcion", project.description)}
           {renderReadField("Link", <a href={project.link} target={'_blank'}>project.link</a>)}
           {renderReadField("Alumnos", project.students)}
+          <div style={style.tagsContainer}>
+            <Typography variant="h7">Tags</Typography>
+            <RenderChips tags={project.tags}/>
+          </div>
           {approveBtn()}
           {denyBtn()}
         </div>
@@ -154,6 +159,13 @@ const styles = (theme) => {
       display: 'flex',
       flexDirection: 'column',
       gap: '8px'
+    },
+    tagsContainer: {
+      display: 'flex',
+      flexDirection: 'row',
+      gap: '18px',
+      flexWrap: 'wrap',
+      alignItems: 'center'
     }
   }
 }
