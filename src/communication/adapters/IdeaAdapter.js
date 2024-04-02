@@ -11,6 +11,7 @@ export default class IdeaAdapter {
             description: this._idea.description,
             owner: this._idea.owner,
             similarIdea: this._idea.max_similar_idea,
+            tags: this._idea.tags,
         }
     }
 }

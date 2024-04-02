@@ -1,23 +1,32 @@
-import {Chip, FormGroup, TextField} from "@mui/material";
+import {FormGroup, TextField} from "@mui/material";
 import {useTheme} from "@emotion/react";
 import FillButton from "../../components/buttons/FillButton";
 import EditIcon from "@mui/icons-material/Edit";
 import BaseIconButtonDialog from "../../components/dialogs/BaseIconButtonDialog";
 import {useState} from "react";
+import RenderChips from "../../components/RenderChips";
 
 export default function EditIdeaModal({idea, editIdea}) {
   const theme = useTheme();
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [description, setDescription] = useState(idea.description);
+  const [tags, setTags] = useState(idea.tags);
+  const [newTag, setNewTag] = useState('');
 
   const style = styles(theme);
 
   const _editIdea = async () => {
     setLoading(true);
-    await editIdea(description);
+    await editIdea(description, tags.join(','));
     setLoading(false);
     setOpen(false);
+  }
+
+  const removeTagNamed = (tagName) => {
+    return () => {
+      setTags(tags.filter(tag => tag !== tagName));
+    }
   }
 
   if (loading) {
@@ -26,18 +35,20 @@ export default function EditIdeaModal({idea, editIdea}) {
     );
   }
 
-  const labelsCreated = () => {
+  const renderAddTag = () => {
     return (
-      <div>
-        <Chip
-          label={"Inteligencia artificial"}
-          onDelete={() => console.log('asdf')}
-        />
-        <Chip
-          label={"ORM"}
-          onDelete={() => console.log('asdf')}
-        />
-      </div>
+      <TextField
+        label="Añadir etiqueta"
+        onKeyDown={(ev) => {
+          if (ev.key === 'Enter') {
+            ev.preventDefault();
+            setTags([...tags, newTag]);
+            setNewTag('');
+          }
+        }}
+        value={newTag}
+        onChange={(e) => setNewTag(e.target.value)}
+        id="tags-add-field"/>
     );
   }
 
@@ -53,7 +64,8 @@ export default function EditIdeaModal({idea, editIdea}) {
           multiline
           rows={5}
           id="idea-body"/>
-        {labelsCreated()}
+        {renderAddTag()}
+        <RenderChips tags={tags} removeTagNamed={removeTagNamed}/>
         <div style={style.buttonsContainer}>
           <FillButton styles={{width: 'fit-content'}}
                       disabled={loading || !description}

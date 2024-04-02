@@ -106,9 +106,10 @@ export default class UniApiClient extends ApiClient {
     return this._callEndpoint(endpoint, {});
   }
 
-  async editIdea(idea, description) {
+  async editIdea(idea, description, tags) {
     let values = {
       description: description,
+      tags: tags
     };
 
     const endpoint = new UpdateIdeaEndpoint(idea);

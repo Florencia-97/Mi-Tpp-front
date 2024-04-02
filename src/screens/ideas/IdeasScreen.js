@@ -51,9 +51,9 @@ function IdeasScreen({app}) {
         }
     }
 
-    const editIdea = async (idea, description) => {
+    const editIdea = async (idea, description, tags) => {
         try {
-            await app.apiClient().editIdea(idea, description);
+            await app.apiClient().editIdea(idea, description, tags);
             showSuccessAlert("Se ha editado la idea correctamente.");
             await getIdeas();
         } catch (e) {
@@ -84,7 +84,7 @@ function IdeasScreen({app}) {
     const renderedIdeas = ideas.map(idea => {
         return <IdeaItemList idea={idea}
                              app={app}
-                             editIdea={(description) => editIdea(idea, description)}
+                             editIdea={(description, tags) => editIdea(idea, description, tags)}
                              deleteIdea={() => deleteIdea(idea)}
                              changeOwnerOfIdea={(newOwnersEmail) => changeOwnerOfIdea(idea, newOwnersEmail)}
                              publishIdea={(idea) => publishIdea(idea)}/>

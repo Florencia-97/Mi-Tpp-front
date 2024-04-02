@@ -5,7 +5,7 @@ import {Typography} from '@mui/material';
 import IconButton from '../buttons/IconButton';
 
 
-export default function BaseIconButtonDialog({children, title, icon, open, setOpen, iconStyle=undefined}) {
+export default function BaseIconButtonDialog({children, title, icon, open, setOpen, iconStyle = undefined}) {
   const theme = useTheme();
   const style = styles(theme);
 
@@ -13,22 +13,22 @@ export default function BaseIconButtonDialog({children, title, icon, open, setOp
     setOpen(true);
   };
 
-  const handleClose = (value) => {
+  const handleClose = () => {
     setOpen(false);
   };
 
   return (
     <>
       <IconButton onClick={handleClickOpen} icon={icon} styles={iconStyle || {}}/>
-      <Dialog 
+      <Dialog
         onClose={handleClose}
         style={style.dialogContainer}
         open={open}>
         <div style={style.modalContainer}>
-            <Typography variant="h5" fontWeight="700" marginBottom="25px">
-                {title}
-            </Typography>
-            {children}
+          <Typography variant="h5" fontWeight="700" marginBottom="25px">
+            {title}
+          </Typography>
+          {children}
         </div>
       </Dialog>
     </>
@@ -37,20 +37,21 @@ export default function BaseIconButtonDialog({children, title, icon, open, setOp
 
 
 const styles = (theme) => {
-    return {
-        modalContainer: {
-            backgroundColor: theme.palette.background.white,
-            padding: '3rem',
-            borderRadius: '5px',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            minHeight: '300px',
-        },
-        dialogContainer: {
-            overflowX: 'hidden',
-            overflowY: 'scroll',
-            minWidth: '500px',
-        }
+  return {
+    modalContainer: {
+      backgroundColor: theme.palette.background.white,
+      padding: '3rem',
+      borderRadius: '5px',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      minHeight: '300px',
+      minWidth: '500px',
+    },
+    dialogContainer: {
+      overflowX: 'hidden',
+      overflowY: 'scroll',
+      minWidth: '500px',
     }
+  }
 }

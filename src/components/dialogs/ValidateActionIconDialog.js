@@ -32,7 +32,7 @@ export default function ValidateActionIconDialog({actionLabel, icon, acceptBtnLa
                 </Typography>
                 <div style={style.buttonsContainer}>
                     <FillButton styles={{width: 'fit-content'}} label={acceptBtnLabel} onClick={_onAccept}/>
-                    <OutlineButton styles={{width: 'fit-content'}} label="Cancelar"/>
+                    <OutlineButton styles={{width: 'fit-content'}} label="Cancelar" onClick={() => setOpen(false)}/>
                 </div>
             </div>
         </BaseIconButtonDialog>

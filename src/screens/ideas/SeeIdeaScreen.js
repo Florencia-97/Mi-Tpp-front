@@ -58,6 +58,9 @@ export default function SeeIdeaScreen({app}) {
         <div>Loading</div>
       );
     }
+    if (comments.length === 0) {
+      return <div>No hay comentarios</div>
+    }
     return comments.map(comment => {
       return <PersonComment handleDelete={onCommentDeleted}
                             comment={comment} userEmail={app.currentUser().email()}/>
