@@ -12,7 +12,7 @@ export default function PublicProjectsScreen({app}) {
 
     useEffect(() => {
         app.apiClient().getPublishedProjects().then((response) => {
-            setProjects(response.projects());
+            setProjects(response.project());
         });
     }, []);
 

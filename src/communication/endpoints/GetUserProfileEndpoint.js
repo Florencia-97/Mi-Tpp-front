@@ -9,7 +9,7 @@ export default class GetUserProfileEndpoint extends Endpoint {
     }
 
     url() {
-        return '/users/' + this._email;
+        return 'users/' + this._email;
     }
 
     method() {

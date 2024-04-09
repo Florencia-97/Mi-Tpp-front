@@ -70,7 +70,7 @@ export default function AccessScreen({app, role}) {
         </div>
         <div style={style.rightContainer}>
           <img src={LogoFiuba} alt="Logo Fiuba" style={style.imageContainer}/>
-          <Typography variant="h4"> Mi TPP </Typography>
+          <Typography variant="h4"> Mi TP </Typography>
           {alert.message !== '' ?
             <Alert severity={alert.type} variant="outlined">
               {alert.message}

@@ -17,6 +17,11 @@ import AdminListScreen from "../screens/admin/AdminListScreen";
 import ProjectsAsRoleScreen from "../screens/ProjectsAsTeacherScreen";
 import SeeIdeaScreen from "../screens/ideas/SeeIdeaScreen";
 
+// Toasts
+import {ToastContainer} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+
+
 
 function AppComponent({app}) {
 
@@ -81,7 +86,7 @@ function AppComponent({app}) {
           <Route path="/" element={<HomeScreen app={app}/>}>
             <Route path="see_project/:id" element={<ProjectsScreen app={app}/>}/>
             <Route path="my_ideas" element={<IdeasScreen app={app}/>}/>
-            <Route path="profile" element={<ProfileScreen app={app}/>}/>
+            <Route path="my-profile" element={<ProfileScreen app={app}/>}/>
             <Route path="public_ideas" element={<PublicIdeasScreen app={app}/>}/>
             <Route path="see_idea" element={<SeeIdeaScreen app={app}/>}/>
             <Route path="projects_list"
@@ -102,6 +107,7 @@ function AppComponent({app}) {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyles/>
+      <ToastContainer/>
       {renderRoutes()}
     </ThemeProvider>
   );

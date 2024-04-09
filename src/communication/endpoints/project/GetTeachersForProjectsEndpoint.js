@@ -4,7 +4,7 @@ import UsersResponse from "../../responses/UsersResponse";
 export default class GetTeachersForProjectsEndpoint extends Endpoint {
 
   url() {
-    return 'users/professors';
+    return 'users/professors-for-project';
   }
 
   method() {

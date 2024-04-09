@@ -10,6 +10,8 @@ export default class UserResponse extends SuccessfulApiResponse {
                 'token': 'token',
                 'picture': 'picture',
                 'role': 'role',
+                'description': 'description',
+                'projects_cap': 3,
                 'can_operate': 'can_operate'
             },
             "errors": []

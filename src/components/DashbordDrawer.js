@@ -71,8 +71,8 @@ export default function DashboardDrawer({app, children, setActiveScreen, activeS
   const userIcon = () => {
     return (
       <Button onClick={() => {
-        setActiveScreen("profile");
-        navigate("profile");
+        setActiveScreen("my-profile");
+        navigate("my-profile");
       }}>
         <Avatar alt="Remy Sharp" src={app.currentUser().picture()}/>
       </Button>
