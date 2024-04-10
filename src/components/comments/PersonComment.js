@@ -1,15 +1,18 @@
 import {Avatar, Typography} from "@mui/material";
-import {deepOrange} from "@mui/material/colors";
 import IconButton from "../buttons/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {useTheme} from "@emotion/react";
+import {useNavigate} from "react-router-dom";
 
-export function DataPerson({name, career, picture, size = 48, fontSize = '18px'}) {
+export function DataPerson({name, career, email, picture}) {
+  const navigate = useNavigate();
+
+  const goToProfile = () => {
+    navigate(`/profile`, {state: {email: email}});
+  }
+
   return (
-    <div style={{display: 'flex', gap: '15px', alignItems: 'center'}}>
-{/*      <Avatar sx={{bgcolor: deepOrange[500], width: size, height: size, fontSize: fontSize}}>
-        {initials}
-      </Avatar>*/}
+    <div style={{display: 'flex', gap: '15px', alignItems: 'center'}} onClick={goToProfile}>
       <Avatar alt="Remy Sharp" src={picture}/>
       <div style={{display: 'flex', flexDirection: 'column'}}>
         <Typography style={{fontSize: '15px'}}>{name}</Typography>
@@ -35,9 +38,9 @@ export function PersonComment({comment, userEmail, handleDelete}) {
   return (
     <div style={style.mainContainer}>
       <div style={style.leftContainer}>
-        <DataPerson fontSize={'12px'} size={32}
-                    picture={owner.picture}
+        <DataPerson picture={owner.picture}
                     name={owner.name}
+                    email={owner.email}
                     career={owner.career}/>
         <Typography style={{fontSize: '15px'}}>{comment.comment}</Typography>
       </div>

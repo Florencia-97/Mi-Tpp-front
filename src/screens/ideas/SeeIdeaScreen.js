@@ -74,7 +74,7 @@ export default function SeeIdeaScreen({app}) {
           {idea.title}
         </Typography>
         <SimilarIdeaAlert idea={idea}/>
-        <DataPerson initials={"DB"}
+        <DataPerson email={idea.owner.email}
                     picture={idea.owner.picture}
                     name={idea.owner.name}
                     career={idea.owner.career}/>

@@ -9,7 +9,7 @@ import TeacherWaitingForApprovalScreen from "../screens/TeacherWaitingForApprova
 import PublicProjectsScreen from "../screens/PublicProjectsScreen";
 import IdeasScreen from "../screens/ideas/IdeasScreen";
 import ProjectsScreen from "../screens/projects/ProjectsScreen";
-import ProfileScreen from "../screens/ProfileScreen";
+import MyProfileScreen from "../screens/MyProfileScreen";
 import PublicIdeasScreen from "../screens/ideas/PublicIdeasScreen";
 import StatsScreen from "../screens/StatsScreen";
 import TeacherListScreen from "../screens/admin/TeacherListScreen";
@@ -20,6 +20,7 @@ import SeeIdeaScreen from "../screens/ideas/SeeIdeaScreen";
 // Toasts
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import ProfileScreen from "../screens/ProfileScreen";
 
 
 
@@ -86,7 +87,8 @@ function AppComponent({app}) {
           <Route path="/" element={<HomeScreen app={app}/>}>
             <Route path="see_project/:id" element={<ProjectsScreen app={app}/>}/>
             <Route path="my_ideas" element={<IdeasScreen app={app}/>}/>
-            <Route path="my-profile" element={<ProfileScreen app={app}/>}/>
+            <Route path="my_profile" element={<MyProfileScreen app={app}/>}/>
+            <Route path="profile" element={<ProfileScreen app={app}/>}/>
             <Route path="public_ideas" element={<PublicIdeasScreen app={app}/>}/>
             <Route path="see_idea" element={<SeeIdeaScreen app={app}/>}/>
             <Route path="projects_list"
