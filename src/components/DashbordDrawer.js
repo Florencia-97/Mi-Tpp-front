@@ -93,6 +93,7 @@ export default function DashboardDrawer({app, children, setActiveScreen, activeS
     return <>
       {userIcon()}
       {iconDrawerButton(<PublicIcon sx={{color: '#ffffff'}}/>, "public_ideas")}
+      {iconDrawerButton(<LightbulbOutlinedIcon sx={{color: '#ffffff'}}/>, "my_ideas")}
       {iconDrawerButton(<FolderOpenIcon sx={{color: '#ffffff'}}/>, "projects_list")}
       {iconDrawerButton(<SupervisedUserCircleIcon sx={{color: '#ffffff'}}/>, "projects_supervisor_list")}
       {iconDrawerButton(<BarChartIcon sx={{color: '#ffffff'}}/>, "stats")}
