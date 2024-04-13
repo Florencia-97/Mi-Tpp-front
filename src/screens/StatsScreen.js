@@ -1,23 +1,29 @@
 import {useTheme} from "@emotion/react";
 import HorizontalBarChart from "../components/charts/HorizontalBarChart";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {Typography} from "@mui/material";
 
 
 export default function StatsScreen({app}) {
   const theme = useTheme();
+  const [stats, setStats] = useState({});
 
   useEffect(
     () => {
       app.apiClient().getStats().then((response) => {
-        console.log(response.stats());
+        setStats(response.stats());
       }).catch((error) => {
         console.log(error)
       })
-    }, []
-  )
+    }, []);
 
   const style = styles(theme);
+
+  if (!stats) {
+    return (
+      <div>Cargando...</div>
+    )
+  }
 
   return (
     <>
@@ -27,11 +33,10 @@ export default function StatsScreen({app}) {
         </Typography>
       </div>
       <section style={style.mainContainer}>
-        {/*Poner la aclaración de los gráficos así queda más lindo ?*/}
-        <HorizontalBarChart name={"Ideas más comentadas"}/>
-        <HorizontalBarChart name={"Promedio estados"}/>
-        <HorizontalBarChart name={"Tags más populares"}/>
-        <HorizontalBarChart name={"Cantidad por estado"}/>
+        <HorizontalBarChart key={'1-chart'} name={"Ideas más comentadas"} data={stats.most_commented_ideas}/>
+        <HorizontalBarChart name={"Promedio estados"} data={stats.mean_time_diff}/>
+        <HorizontalBarChart name={"Tags más populares"} data={stats.top_tags}/>
+        <HorizontalBarChart name={"Cantidad por estado"} data={stats.projects_by_status}/>
       </section>
     </>
   );
