@@ -41,7 +41,7 @@ export default function CreateIdeaModal({createIdea}) {
 
   const updateDescription = (e) => {
     const newDescription = e.target.value;
-    if (newDescription.length > 250) {
+    if (newDescription.length > 298) {
       return;
     }
     setDescription(newDescription);

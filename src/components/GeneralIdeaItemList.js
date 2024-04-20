@@ -72,7 +72,6 @@ const styles = (theme) => {
             gap: '15px'
         },
         iconsContainer: {
-            width:'5%',
             display: 'flex',
             gap: '10px',
             flexDirection: 'column',

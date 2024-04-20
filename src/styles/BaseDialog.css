@@ -1,0 +1,33 @@
+.modal-text-container {
+    background-color: #ffffff;
+    padding: 3rem;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    min-width: 450px;
+    min-height: 300px;
+}
+
+.modal-icon-container {
+    background-color: #ffffff;
+    padding: 3rem;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    min-width: 400px;
+    min-height: 300px;
+}
+
+/*Media query*/
+
+@media (max-width: 800px) {
+    .modal-text-container {
+        min-width: 300px;
+        padding: 2.5rem;
+    }
+
+    .modal-icon-container {
+        min-width: 300px;
+        padding: 2.5rem;
+    }
+}

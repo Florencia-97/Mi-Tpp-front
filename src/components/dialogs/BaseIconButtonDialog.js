@@ -1,13 +1,13 @@
 import * as React from 'react';
 import Dialog from '@mui/material/Dialog';
-import {useTheme} from '@emotion/react';
 import {Typography} from '@mui/material';
 import IconButton from '../buttons/IconButton';
 
+import '../../styles/BaseDialog.css';
+
 
 export default function BaseIconButtonDialog({children, title, icon, open, setOpen, iconStyle = undefined}) {
-  const theme = useTheme();
-  const style = styles(theme);
+  const style = styles();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -24,7 +24,7 @@ export default function BaseIconButtonDialog({children, title, icon, open, setOp
         onClose={handleClose}
         style={style.dialogContainer}
         open={open}>
-        <div style={style.modalContainer}>
+        <div className={"modal-icon-container"}>
           <Typography variant="h5" fontWeight="700" marginBottom="25px">
             {title}
           </Typography>
@@ -36,22 +36,11 @@ export default function BaseIconButtonDialog({children, title, icon, open, setOp
 }
 
 
-const styles = (theme) => {
+const styles = () => {
   return {
-    modalContainer: {
-      backgroundColor: theme.palette.background.white,
-      padding: '3rem',
-      borderRadius: '5px',
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      minHeight: '300px',
-      minWidth: '500px',
-    },
     dialogContainer: {
       overflowX: 'hidden',
       overflowY: 'scroll',
-      minWidth: '500px',
     }
   }
 }
