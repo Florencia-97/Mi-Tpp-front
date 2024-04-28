@@ -6,7 +6,7 @@ import HomeScreen from '../screens/HomeScreen';
 import AccessScreen from "../screens/login/AccessScreen";
 import {observer} from "mobx-react";
 import TeacherWaitingForApprovalScreen from "../screens/TeacherWaitingForApprovalScreen";
-import PublicProjectsScreen from "../screens/PublicProjectsScreen";
+import PublicProjectsScreen from "../screens/public/PublicProjectsScreen";
 import IdeasScreen from "../screens/ideas/IdeasScreen";
 import ProjectsScreen from "../screens/projects/ProjectsScreen";
 import MyProfileScreen from "../screens/MyProfileScreen";
@@ -21,6 +21,7 @@ import SeeIdeaScreen from "../screens/ideas/SeeIdeaScreen";
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import ProfileScreen from "../screens/ProfileScreen";
+import SeePublicProjectScreen from "../screens/public/SeePublicProjectScreen";
 
 
 
@@ -63,6 +64,7 @@ function AppComponent({app}) {
         <BrowserRouter>
           <Routes>
             <Route path="/projects" element={<PublicProjectsScreen app={app}/>}/>
+            <Route path="/see-public-project/:id" element={<SeePublicProjectScreen app={app}/>}/>
             <Route path="/login/professor" element={<AccessScreen key={'login-professor'}
                                                                   role={'TEACHER'} app={app}/>}/>
             <Route path="/login/admin" element={<AccessScreen key={'login-admin'} role={'ADMIN'} app={app}/>}/>
@@ -76,6 +78,7 @@ function AppComponent({app}) {
         <BrowserRouter>
           <Routes>
             <Route path="/projects" element={<PublicProjectsScreen app={app}/>}/>
+            <Route path="/see-public-project/:id" element={<SeePublicProjectScreen app={app}/>}/>
             <Route path="/*" element={<TeacherWaitingForApprovalScreen app={app}/>}/>
           </Routes>
         </BrowserRouter>

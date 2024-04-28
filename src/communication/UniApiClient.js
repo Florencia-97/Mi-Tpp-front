@@ -36,6 +36,7 @@ import DeclineProjectEndpoint from "./endpoints/project/DeclineProjectEndpoint";
 import GetStudentProjectEndpoint from "./endpoints/project/GetStudentProjectEndpoint";
 import GetStatsEndpoint from "./endpoints/GetStatsEndpoint";
 import LoginAdminEndpoint from "./endpoints/LoginAdminEndpoint";
+import GetPublishedProjectEndpoint from "./endpoints/project/GetPublishedProjectEndpoint";
 
 export default class UniApiClient extends ApiClient {
   async getIdeas(searchText = undefined) {
@@ -163,8 +164,13 @@ export default class UniApiClient extends ApiClient {
     return this._callEndpoint(endpoint, {});
   }
 
-  async getPublishedProjects() {
+  async getPublishedProjects(search) {
     const endpoint = new GetAllPublishedProjectsEndpoint();
+    return this._callEndpoint(endpoint, {q: search});
+  }
+
+  async getPublishedProject(projectId) {
+    const endpoint = new GetPublishedProjectEndpoint(projectId);
     return this._callEndpoint(endpoint, {});
   }
 

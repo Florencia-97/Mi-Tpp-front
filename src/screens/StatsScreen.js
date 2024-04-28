@@ -33,7 +33,6 @@ export default function StatsScreen({app}) {
         </Typography>
       </div>
       <section style={style.mainContainer}>
-        <HorizontalBarChart key={'1-chart'} name={"Ideas más comentadas"} data={stats.most_commented_ideas}/>
         <HorizontalBarChart name={"Promedio estados"} data={stats.mean_time_diff}/>
         <HorizontalBarChart name={"Tags más populares"} data={stats.top_tags}/>
         <HorizontalBarChart name={"Cantidad por estado"} data={stats.projects_by_status}/>

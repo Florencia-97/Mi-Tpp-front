@@ -1,12 +1,12 @@
 import {useTheme} from "@emotion/react";
 import {Typography} from "@mui/material";
 
-export default function ProjectFinished({title, description, workLink, futureWorkLink}) {
+export default function ProjectFinished({title, description, workLink, futureWorkLink, onClick}) {
     const theme = useTheme();
     const style = styles(theme);
 
     return (
-        <div style={style.projectFinishedContainer}>
+        <div style={style.projectFinishedContainer} onClick={onClick}>
             <div style={style.projectInfoContainer}>
                 <Typography variant="h5">
                     {title}
