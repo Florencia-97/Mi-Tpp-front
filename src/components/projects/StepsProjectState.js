@@ -1,4 +1,3 @@
-import {useTheme} from "@emotion/react";
 import ArticleIcon from "@mui/icons-material/Article";
 import PendingActionsIcon from "@mui/icons-material/PendingActions";
 import HardwareIcon from "@mui/icons-material/Hardware";
@@ -8,9 +7,7 @@ import {Avatar, Typography} from "@mui/material";
 
 import '../../styles/ProjectBar.css';
 
-export default function StepsProjectState({currentStep}) {
-  const theme = useTheme();
-  const style = styles(theme);
+export default function StepsProjectState({currentStep, changeStep, projectStep}) {
 
   const steps = [
     {name: 'Pend. de propuesta', icon: ArticleIcon},
@@ -26,11 +23,26 @@ export default function StepsProjectState({currentStep}) {
   // pendiente de aprobación -> seria mas poner la nota y el comentario del tutor. Solo el tutor
   // finalizada -> no se puede hacer nada. Permitir avisar que se va publicar.
 
-  const newAvatar = (step, index) => {
-    const backgroundColor = index < currentStep ? '#ccffcc' : index === currentStep ? '#80b1db' : 'lightgray';
-    const iconColor = index < currentStep ? '#5b775b' : index === currentStep ? '#ffffff' : '#282f33';
+  const getColors = (index) => {
+    if (index === projectStep) {
+      return {backgroundColor: '#80b1db', iconColor: '#ffffff'};
+    }else if (index === currentStep){
+      return {backgroundColor: '#ff99f4', iconColor: '#ffffff'};
+    } else if (index < projectStep) {
+      return {backgroundColor: '#ccffcc', iconColor: '#5b775b'};
+    } else {
+      return {backgroundColor: 'lightgray', iconColor: '#282f33'};
+    }
+  }
+
+  const newAvatar = (step, index, changeStep) => {
+    const colors = getColors(index);
+    const backgroundColor = colors.backgroundColor;
+    const iconColor = colors.iconColor;
     return (
-      <div className={"step-container"}>
+      <div className={"step-container"} onClick={() => {
+        changeStep(index)
+      }}>
         <Avatar
           style={{border: '5px solid ' + backgroundColor}}
           sx={{bgcolor: backgroundColor}} className={"avatar-style"}>
@@ -46,21 +58,8 @@ export default function StepsProjectState({currentStep}) {
   return (
     <div className={"state-bar-container"}>
       {steps.map((step, index) => {
-        return newAvatar(step, index)
+        return newAvatar(step, index, changeStep)
       })}
     </div>
   )
-}
-
-const styles = (theme) => {
-  return {
-    stepContainer: {
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
-      gap: '15px',
-      width: '180px',
-    },
-  }
 }

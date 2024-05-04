@@ -5,7 +5,14 @@ import {useState} from "react";
 import FillButton from "../../components/buttons/FillButton";
 import RenderChips from "../../components/RenderChips";
 
-export default function PendingOfRevisionView({app, project, isStudent, approveProject, declineProject}) {
+export default function PendingOfRevisionView({
+                                                app,
+                                                project,
+                                                isStudent,
+                                                approveProject,
+                                                declineProject,
+                                                onlyLecture = false
+                                              }) {
   const theme = useTheme();
   const [supervisor, setSupervisor] = useState(project.supervisor);
   const style = styles(theme);
@@ -48,6 +55,13 @@ export default function PendingOfRevisionView({app, project, isStudent, approveP
   }
 
   const renderAddSupervisor = () => {
+    if (onlyLecture) {
+      return (
+        <Typography variant="body1">
+          Supervisor: {project.supervisor}
+        </Typography>
+      )
+    }
     return (
       <div key={"add-supervisor"} style={style.teacherContentContainer}>
         <Typography variant="body1">
@@ -89,8 +103,8 @@ export default function PendingOfRevisionView({app, project, isStudent, approveP
             <Typography variant="h7">Tags</Typography>
             <RenderChips tags={project.tags}/>
           </div>
-          {approveBtn()}
-          {denyBtn()}
+          {!onlyLecture && approveBtn()}
+          {!onlyLecture && denyBtn()}
         </div>
       </>
     )

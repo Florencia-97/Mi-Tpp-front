@@ -7,7 +7,7 @@ import IconButton from "../../components/buttons/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import RenderChips from "../../components/RenderChips";
 
-export default function PendingOfProposalView({app, project, onProposalPresented}) {
+export default function PendingOfProposalView({app, project, onProposalPresented, onlyLecture = false}) {
   const theme = useTheme();
   const [title, setTitle] = useState(project.title);
   const [description, setDescription] = useState(project.description);
@@ -86,10 +86,10 @@ export default function PendingOfProposalView({app, project, onProposalPresented
       <div style={style.personsContainer}>
         {renderPerson({picture: currentUser.picture(), username: currentUser.name()}, true, false)}
         {students.map((student) => renderPerson(student))}
-        <div style={style.personContainer}>
+        {!onlyLecture && <div style={style.personContainer}>
           <AddStudentToProjectModal options={possibleStudents}
                                     onAdd={onAddStudent}/>
-        </div>
+        </div>}
       </div>
     );
   }
@@ -113,11 +113,11 @@ export default function PendingOfProposalView({app, project, onProposalPresented
     return (
       <div style={style.personsContainer}>
         {teachers.map((student) => renderPerson(student, false))}
-        <div style={style.personContainer}>
+        {!onlyLecture && <div style={style.personContainer}>
           <AddStudentToProjectModal options={possibleTeachers}
                                     onAdd={onAddTeacher}
                                     type={'Tutor/Co-Tutor'}/>
-        </div>
+        </div>}
       </div>
     );
   }
@@ -126,7 +126,7 @@ export default function PendingOfProposalView({app, project, onProposalPresented
     return (
       <TextField
         label="Añadir etiqueta"
-        disabled={tags.length > 4}
+        disabled={tags.length > 4 || onlyLecture}
         onKeyDown={(ev) => {
           if (ev.key === 'Enter') {
             ev.preventDefault();
@@ -147,20 +147,23 @@ export default function PendingOfProposalView({app, project, onProposalPresented
           <Typography variant="h5">
             Pendiente de propuesta
           </Typography>
-          {presentBtn()}
+          {!onlyLecture && presentBtn()}
         </div>
         <TextField id="project-title"
                    value={title || ''}
+                   disabled={onlyLecture}
                    label="Titulo" variant="outlined" onChange={
           (e) => setTitle(e.target.value)}
         />
         <TextField id="description"
                    value={description || ''}
+                   disabled={onlyLecture}
                    label="Breve descripción" multiline rows={3} variant="outlined" onChange={
           (e) => setDescription(e.target.value)}
         />
         <TextField id="drive-link"
                    value={link || ''}
+                   disabled={onlyLecture}
                    label="Link Drive" variant="outlined"
                    onChange={
                      (e) => setLink(e.target.value)}

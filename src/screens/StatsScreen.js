@@ -36,6 +36,8 @@ export default function StatsScreen({app}) {
         <HorizontalBarChart name={"Promedio estados"} data={stats.mean_time_diff}/>
         <HorizontalBarChart name={"Tags más populares"} data={stats.top_tags}/>
         <HorizontalBarChart name={"Cantidad por estado"} data={stats.projects_by_status}/>
+        <HorizontalBarChart name={"Ideas más comentadas"} data={stats.most_commented_ideas}/>
+        <HorizontalBarChart name={"Ideas más comentadas"} data={stats.most_commented_ideas}/>
       </section>
     </>
   );

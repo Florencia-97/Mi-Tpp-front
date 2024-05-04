@@ -14,7 +14,7 @@ function currentDay() {
   return new Date();
 }
 
-export default function BinnacleView({app, projectId, finishProject}) {
+export default function BinnacleView({app, projectId, finishProject, onlyLecture = false}) {
   const theme = useTheme();
   const [binnacleEntries, setBinnacleEntries] = useState([]);
   const [binnacleEntriesSelected, setBinnacleEntriesSelected] = useState([]);
@@ -50,7 +50,7 @@ export default function BinnacleView({app, projectId, finishProject}) {
       await app.apiClient().deleteBinnacleEntry(projectId, binnacle.id);
       await getBinnacleEntries();
     }
-    return  (
+    return (
       <div style={{position: 'absolute', top: '1rem', right: '1rem', width: '50px'}}>
         <ValidateActionIconDialog icon={<DeleteIcon/>}
                                   acceptBtnLabel={"eliminar"}
@@ -93,6 +93,28 @@ export default function BinnacleView({app, projectId, finishProject}) {
     setDateSelected(date);
   }
 
+  const newEntry = () => {
+    return (
+      <div style={{display: 'flex', gap: '5px'}}>
+        <TextField fullWidth label={"Nueva entrada"} multiline rows={3}
+                   onChange={(event) => {
+                     setNewBinnacleEntry(event.target.value);
+                   }}
+                   value={newBinnacleEntry}/>
+        <FillButton
+          label={"+"}
+          disabled={newBinnacleEntry === ''}
+          styles={{width: 'fit-content'}}
+          onClick={
+            async () => {
+              await addNewBinnacle();
+              setNewBinnacleEntry('');
+            }
+          }/>
+      </div>
+    )
+  }
+
   return (
     <>
       <div style={style.mainContainer}>
@@ -100,7 +122,7 @@ export default function BinnacleView({app, projectId, finishProject}) {
           <Typography variant="h5">
             Bitácora
           </Typography>
-          {!isStudent && finishBtn()}
+          {!isStudent && !onlyLecture && finishBtn()}
         </div>
         <div style={style.contentContainer}>
           <div style={style.binnacleContainer}>
@@ -108,23 +130,7 @@ export default function BinnacleView({app, projectId, finishProject}) {
           </div>
           <div style={style.calendarContainer}>
             <Calendar dateSelectedChanged={dateSelectedChanged}/>
-            <div style={{display: 'flex', gap: '5px'}}>
-              <TextField fullWidth label={"Nueva entrada"} multiline rows={3}
-                         onChange={(event) => {
-                           setNewBinnacleEntry(event.target.value);
-                         }}
-                         value={newBinnacleEntry}/>
-              <FillButton
-                label={"+"}
-                disabled={newBinnacleEntry === ''}
-                styles={{width: 'fit-content'}}
-                onClick={
-                  async () => {
-                    await addNewBinnacle();
-                    setNewBinnacleEntry('');
-                  }
-                }/>
-            </div>
+            {!onlyLecture && newEntry()}
           </div>
         </div>
       </div>
