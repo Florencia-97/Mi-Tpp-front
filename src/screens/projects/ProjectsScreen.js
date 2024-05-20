@@ -51,6 +51,7 @@ export default function ProjectsScreen({app}) {
       const project = response.project();
       setProject(project);
       setCurrentStep(stepsDic[project.status]);
+      setHasStartedProject(true);
     }).catch((_) => {
       setHasStartedProject(false);
     }).finally(
@@ -134,24 +135,24 @@ export default function ProjectsScreen({app}) {
                                    declineProject={declineProject}
                                    isStudent={isStudent}
                                    approveProject={async () => {
-                                     app.apiClient().approveProject(project.id);
-                                     updateProject();
+                                     await app.apiClient().approveProject(project.id);
+                                     await updateProject();
                                    }}/>
             :
             currentStep === 2 ?
               <BinnacleView app={app} projectId={project.id}
                             onlyLecture={onlyLecture(currentStep)}
                             finishProject={async () => {
-                              app.apiClient().finishProject(project.id);
-                              updateProject();
+                              await app.apiClient().finishProject(project.id);
+                              await updateProject();
                             }}/>
               :
               currentStep === 3 ?
                 <PendingOfApprovalView project={project} updateProjectLink={updateProjectLink} isStudent={isStudent}
                                        gradeProject={
                                          async (comment) => {
-                                           app.apiClient().gradeProject(project.id, comment);
-                                           updateProject();
+                                           await app.apiClient().gradeProject(project.id, comment);
+                                           await updateProject();
                                          }}/>
                 : <FinishedView project={project} isStudent={isStudent}
                                 updateProjectToPublish={updateProjectToPublish}

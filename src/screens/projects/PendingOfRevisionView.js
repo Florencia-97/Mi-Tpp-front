@@ -98,7 +98,7 @@ export default function PendingOfRevisionView({
           {renderReadField("Titulo", project.title)}
           {renderReadField("Descripcion", project.description)}
           {renderReadField("Link", <a href={project.link} target={'_blank'}>project.link</a>)}
-          {renderReadField("Alumnos", project.students)}
+          {renderReadField("Alumnos", project.students.map((studentName) => studentName).join(', '))}
           <div style={style.tagsContainer}>
             <Typography variant="h7">Tags</Typography>
             <RenderChips tags={project.tags}/>

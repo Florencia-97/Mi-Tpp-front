@@ -1,12 +1,12 @@
 import {useTheme} from "@emotion/react";
-import HorizontalBarChart from "../components/charts/HorizontalBarChart";
 import {useEffect, useState} from "react";
 import {Typography} from "@mui/material";
-
+import HorizontalBarChart2 from "../components/charts/HorizontalBarChart2";
+import DoughnutChart from "../components/charts/DoughnutChart";
 
 export default function StatsScreen({app}) {
   const theme = useTheme();
-  const [stats, setStats] = useState({});
+  const [stats, setStats] = useState(undefined);
 
   useEffect(
     () => {
@@ -33,12 +33,11 @@ export default function StatsScreen({app}) {
         </Typography>
       </div>
       <section style={style.mainContainer}>
-        <HorizontalBarChart name={"Promedio estados"} data={stats.mean_time_diff}/>
-        <HorizontalBarChart name={"Tags más populares"} data={stats.top_tags}/>
-        <HorizontalBarChart name={"Cantidad por estado"} data={stats.projects_by_status}/>
-        <HorizontalBarChart name={"Ideas más comentadas"} data={stats.most_commented_ideas}/>
-        <HorizontalBarChart name={"Ideas más comentadas"} data={stats.most_commented_ideas}/>
-      </section>
+        <HorizontalBarChart2 name={"Promedio en espera"} dataDict={stats.mean_time_diff} label={"Días"}/>
+        <HorizontalBarChart2 name={"Tags más populares"} dataDict={stats.top_tags}/>
+        <DoughnutChart name={"Cantidad por estado"} dataDict={stats.projects_by_status}/>
+        <HorizontalBarChart2 name={"Ideas más comentadas"} dataDict={stats.most_commented_ideas}/>
+      </section>s
     </>
   );
 }

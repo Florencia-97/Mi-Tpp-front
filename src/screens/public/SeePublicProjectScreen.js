@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import {useTheme} from "@emotion/react";
 import {useParams} from "react-router-dom";
-import {Chip, Typography} from "@mui/material";
+import {Box, Chip, Typography} from "@mui/material";
 import OutlineButton from "../../components/buttons/OutlineButton";
 
 
@@ -35,7 +35,9 @@ export default function SeePublicProjectScreen({app}) {
     return (
       <div style={style.mainContainer}>
         <h1>{project.title}</h1>
-        {renderTags(project.tags)}
+        <Box sx={{display:'flex', gap:'10px'}}>
+          {renderTags(project.tags)}
+        </Box>
         <Typography variant="body1">
           {project.description}
         </Typography>

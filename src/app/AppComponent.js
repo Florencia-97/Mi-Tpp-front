@@ -89,6 +89,7 @@ function AppComponent({app}) {
         <Routes>
           <Route path="/" element={<HomeScreen app={app}/>}>
             <Route path="see_project/:id" element={<ProjectsScreen app={app}/>}/>
+            <Route path="/see-public-project/:id" element={<SeePublicProjectScreen app={app}/>}/>
             <Route path="my_ideas" element={<IdeasScreen app={app}/>}/>
             <Route path="my_profile" element={<MyProfileScreen app={app}/>}/>
             <Route path="profile" element={<ProfileScreen app={app}/>}/>

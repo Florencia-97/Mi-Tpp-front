@@ -3,6 +3,7 @@ import {useTheme} from "@emotion/react";
 import {useState} from "react";
 import GradeProjectDialog from "./GradeProjectDialog";
 import FillButton from "../../components/buttons/FillButton";
+import {toast} from "react-toastify";
 
 export default function PendingOfApprovalView({isStudent, gradeProject, updateProjectLink, project}) {
   const theme = useTheme();
@@ -18,6 +19,7 @@ export default function PendingOfApprovalView({isStudent, gradeProject, updatePr
 
   const saveLinkToDrive = async () => {
     updateProjectLink(linkToPresentation);
+    toast.success('Link guardado correctamente!');
   }
 
   const studentView = () => {

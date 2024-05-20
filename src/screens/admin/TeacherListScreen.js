@@ -39,8 +39,8 @@ export default function TeacherListScreen({app}) {
       }
     }
     return (
-      <ValidateActionTextDialog buttonLabel="Eliminar" actionLabel={"eliminar al usuario " + userEmail}
-                                acceptBtnLabel={"eliminar"} onAccept={onConfirm}/>
+      <ValidateActionTextDialog buttonLabel="Suspender" actionLabel={"eliminar al usuario " + userEmail}
+                                acceptBtnLabel={"suspender"} onAccept={onConfirm}/>
     );
   }
 
