@@ -18,6 +18,9 @@ export default function PendingOfRevisionView({
   const style = styles(theme);
   const currentUserEmail = app.currentUser().email();
 
+  const projectLink = "https://docs.google.com/document/d/1ozKMT3GfjNBKRsm9ZNYOWLgJ36m1MES43jZxVkokPR8/edit";
+  // const projectLink = project.link; // sacar
+
   const studentView = () => {
     return (
       <div style={style.contentContainer}>
@@ -97,7 +100,7 @@ export default function PendingOfRevisionView({
         <div style={style.teacherContentContainer}>
           {renderReadField("Titulo", project.title)}
           {renderReadField("Descripcion", project.description)}
-          {renderReadField("Link", <a href={project.link} target={'_blank'}>project.link</a>)}
+          {renderReadField("Link", <a href={projectLink} target={'_blank'}>Link al proyecto</a>)}
           {renderReadField("Alumnos", project.students.map((studentName) => studentName).join(', '))}
           <div style={style.tagsContainer}>
             <Typography variant="h7">Tags</Typography>
